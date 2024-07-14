@@ -1,0 +1,133 @@
+.canvasMain{
+    color: white;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+}
+
+.message{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.canvas{
+    position: relative;
+    background: white;
+    background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.2)
+    );
+    backdrop-filter: blur(1rem);
+    width: 60%;
+    height: 50%;
+    z-index: 1;
+    margin: 10%;
+    margin-top: 50px;
+    margin-left: 20%;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2); 
+}
+
+.canvas img{
+    margin: 10px;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+}
+
+.choices{
+    margin: auto;
+    width: 60%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.generate{
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+    background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.2)
+    );
+    backdrop-filter: blur(1rem);
+    width: 60%;
+    margin: 10%;
+    margin-top: 40px;
+    margin-left:20%;
+    padding: 3px;
+    border-radius: 50px;
+}
+
+.input{
+    border: none;
+    outline: none;
+    width: 75%;
+    height: 20px;
+    padding: 2px;
+    margin-left: 10px;
+    background: transparent;
+    color: white;
+}
+
+.input::placeholder{
+    color:lightgray;
+}
+
+.toggleView{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggleView button{
+    width: 20%;
+    background: #333399;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    padding: 5px;
+    font-size: 10px;
+    color: white;
+    border: none;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.toggleView button:hover{
+    cursor: pointer;
+    font-size: 12px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.generatebtn{
+    width: 25%;
+    background: #333399;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    padding: 5px;
+    font-size: 10px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.generatebtn:hover{
+    cursor: pointer;
+    font-size: 12px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
