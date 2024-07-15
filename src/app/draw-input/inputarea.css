@@ -1,0 +1,39 @@
+.inputContainer{
+    width: 30%;
+    min-height: 800px;
+    background: #ced8ea;
+    font-family: 'Chivo Mono', monospace;
+    border: 2px solid white;
+    padding: 10px;
+}
+
+.choices{
+    display: flex;
+    flex-direction: column;
+}
+
+.choices label{
+    padding: 2px;
+}
+
+.textarea{
+    width:95%;
+    min-height: 200px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.submitButton{
+    margin-top:15px;
+    border: none;
+    border-radius: 50px;
+    height: 30px;
+    color:white;
+    background: rgb(66, 135, 245);
+    padding: 5px 10px;
+}
+
+.submitButton:hover{
+    cursor: pointer;
+    background: rgb(2, 96, 246);
+}

@@ -1,0 +1,35 @@
+.outputContainer{
+    width:70%;
+    background: white;
+    padding: 2px;
+}
+
+.canvas{
+
+}
+
+.editor{
+    padding: 5px;
+}
+
+.editor button {
+   border: none;
+   margin-right: 15px;
+   background: white;
+}
+
+.editor button a{
+    color:slategray;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.editor button a:hover{
+    color: rgb(66, 135, 245);
+}
+
+.canvas{
+    border: 10px solid black;
+    height: 630px;
+}
+

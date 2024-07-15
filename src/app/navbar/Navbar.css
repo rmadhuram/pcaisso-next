@@ -1,0 +1,12 @@
+.navbar{
+    font-family: 'Poppins', sans-serif;
+    background: rgb(11, 59, 135);
+    color: white;
+    font-size: 16px;
+    padding: 0px 2px;
+    font-weight: 100;
+}
+
+.navbar h1{
+    margin: 0;
+}
