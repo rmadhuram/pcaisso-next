@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-// import { Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./navbar/Navbar";
 
-// const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pcaisso",
@@ -22,7 +22,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&family=Poppins&family=Roboto:wght@400;700&family=Rubik+Pixels&display=swap" rel="stylesheet"/>
       </head>
-      <body /*className={inter.className}*/>
+      <body className={inter.className}>
         <Navbar/>
         {children}
         </body>
