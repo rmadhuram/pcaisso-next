@@ -1,12 +1,22 @@
-.navbar{
+.navbar  {
     font-family: 'Poppins', sans-serif;
-    background: rgb(11, 59, 135);
+    background-color: rgb(11, 59, 135);
     color: white;
-    font-size: 16px;
-    padding: 0px 2px;
-    font-weight: 100;
+    font-size: 24px;
+    padding: 5px 10px;
+    height: 35px;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    z-index: 3;
 }
 
-.navbar h1{
+.navbar h3  {
     margin: 0;
+}
+
+.app-navbar {
+    margin-left: auto;
+    font-size: 14px;
+    margin-top: 5px;
 }

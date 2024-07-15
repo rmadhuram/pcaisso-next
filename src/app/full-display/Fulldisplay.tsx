@@ -5,8 +5,8 @@ import Outputarea from "../draw-output/Outputarea";
 import Homepage from "../home/Homepage";
 import { CSSProperties, useState } from "react";
 
-export default function Fulldisplay() {
-  const [generated, setGenerated] = useState<Boolean>(false);
+export default function Fulldisplay()  {
+  const [generated, setGenerated] = useState<Boolean>(true);
 
   const displayContainer: CSSProperties = {
     display: "flex",

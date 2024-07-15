@@ -1,29 +1,56 @@
-.inputContainer{
+.input-container  {
     width: 30%;
-    min-height: 800px;
-    background: #ced8ea;
+    height: calc(100vh - 35px);
+    background-color: #ced8ea;
     font-family: 'Chivo Mono', monospace;
-    border: 2px solid white;
-    padding: 10px;
-}
-
-.choices{
     display: flex;
     flex-direction: column;
+    padding: 15px;
+    gap: 20px;
+}
+
+p{
+    margin-top:33px;
+}
+.choices{
+    margin-bottom: 10px;
 }
 
 .choices label{
-    padding: 2px;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
 }
 
-.textarea{
+.choices label span{
+    margin-right: 0.5rem ;
+    padding-bottom: 5px;
+}
+
+.choices label span input{
+    margin-left: 0px;
+    cursor: pointer;
+}
+
+
+.input-area p{
+    font-size: 14;
+    font-weight: bold;
+}
+
+.text-area  {
     width:95%;
-    min-height: 200px;
+    height: 200px;
     border-radius: 5px;
-    outline: none;
+    background: #eee;
+    border: 2px solid #aaa;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
 }
 
-.submitButton{
+.submit-button  {
     margin-top:15px;
     border: none;
     border-radius: 50px;
@@ -33,7 +60,7 @@
     padding: 5px 10px;
 }
 
-.submitButton:hover{
+.submit-button:hover  {
     cursor: pointer;
     background: rgb(2, 96, 246);
 }

@@ -1,21 +1,21 @@
 import "./Outputarea.css";
 
-export default function Outputarea() {
+export default function Outputarea()  {
   return (
-    <div className="outputContainer">
+    <div className="output-container">
       <div className="editor">
         <button>
-          <a className="underline" href="#">
+          <a href="#">
             Result
           </a>
         </button>
         <button>
-          <a className="underline" href="#">
+          <a href="#">
             Code
           </a>
         </button>
         <button>
-          <a className="underline" href="#">
+          <a href="#">
             Debug
           </a>
         </button>
