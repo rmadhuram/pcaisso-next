@@ -6,7 +6,7 @@ import Homepage from "../home/Homepage";
 import { CSSProperties, useState } from "react";
 
 export default function Fulldisplay()  {
-  const [generated, setGenerated] = useState<Boolean>(true);
+  const [generated, setGenerated] = useState<Boolean>(false);
 
   const displayContainer: CSSProperties = {
     display: "flex",
