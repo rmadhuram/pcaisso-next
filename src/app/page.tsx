@@ -1,4 +1,4 @@
-import Fulldisplay from "./full-display/Fulldisplay";
+import Fulldisplay from "./fulldisplay/Fulldisplay";
 
 export default function Home()  {
   return (

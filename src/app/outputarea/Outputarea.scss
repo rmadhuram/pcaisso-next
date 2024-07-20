@@ -1,0 +1,33 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.output-container {
+  width: 70%;
+  background: white;
+  padding: 2px;
+
+  .editor {
+    margin-top: 45px;
+    padding: 5px;
+
+    button {
+      border: none;
+      margin-right: 15px;
+      background: white;
+
+      a {
+        color: slategray;
+        text-decoration: none;
+        font-size: 16px;
+
+        &:hover {
+          color: $blue-variation;
+        }
+      }
+    }
+  }
+  .canvas {
+    border: 10px solid black;
+    height: 630px;
+  }
+}

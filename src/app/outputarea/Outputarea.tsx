@@ -1,23 +1,17 @@
-import "./Outputarea.css";
+import "./Outputarea.scss";
 
-export default function Outputarea()  {
+export default function Outputarea() {
   return (
     <div className="output-container">
       <div className="editor">
         <button>
-          <a href="#">
-            Result
-          </a>
+          <a href="#">Result</a>
         </button>
         <button>
-          <a href="#">
-            Code
-          </a>
+          <a href="#">Code</a>
         </button>
         <button>
-          <a href="#">
-            Debug
-          </a>
+          <a href="#">Debug</a>
         </button>
       </div>
       <div className="canvas"></div>

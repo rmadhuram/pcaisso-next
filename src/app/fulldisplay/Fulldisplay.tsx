@@ -1,17 +1,16 @@
 "use client";
 
-import Inputarea from "../draw-input/Inputarea";
-import Outputarea from "../draw-output/Outputarea";
+import Inputarea from "../inputarea/Inputarea";
+import Outputarea from "../outputarea/Outputarea";
 import Homepage from "../home/Homepage";
 import { CSSProperties, useState } from "react";
 
-export default function Fulldisplay()  {
+export default function Fulldisplay() {
   const [generated, setGenerated] = useState<Boolean>(false);
 
   const displayContainer: CSSProperties = {
     display: "flex",
     flexDirection: "row",
-    // justifyContent: 'space-between'
   };
 
   return (
