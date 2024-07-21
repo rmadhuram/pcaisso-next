@@ -8,28 +8,24 @@ export default function Inputarea() {
       </p>
       <div className="choices">
         <label>
-          <span>
-            <input type="radio" value="2D" name="option" />
-          </span>
-          2D (Canvas)
+          <span className="circle"></span>
+          <input type="radio" value="2D" name="option" />
+          <div>2D (Canvas)</div>
         </label>
         <label>
-          <span>
-            <input type="radio" value="SVG" name="option" />
-          </span>
-          SVG (Vector Graphics)
+          <span className="circle"></span>
+          <input type="radio" value="SVG" name="option" />
+          <div>SVG (Vector Graphics)</div>
         </label>
         <label>
-          <span>
-            <input type="radio" value="3D" name="option" />
-          </span>
-          3D (Three.js)
+          <span className="circle"></span>
+          <input type="radio" value="3D" name="option" />
+          <div>3D (Three.js)</div>
         </label>
         <label>
-          <span>
-            <input type="radio" value="d3" name="option" />
-          </span>
-          d3 (Data Visualization)
+          <span className="circle"></span>
+          <input type="radio" value="d3" name="option" />
+          <div>d3 (Data Visualization)</div>
         </label>
       </div>
       <div className="input-area">
