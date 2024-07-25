@@ -14,9 +14,9 @@ interface Category {
 export default function Home() {
   const categories = [
     { name: "2D (Canvas)", key: "2D" },
-    { name: "SVG (Vector Graphics", key: "SVG" },
+    { name: "SVG (Vector Graphics)", key: "SVG" },
     { name: "3D (Three.js)", key: "3D" },
-    { name: "d3", key: "d3" },
+    { name: "d3 (Data Visualization)", key: "d3" },
   ];
 
   const [selectedCategory, setSelectedCategory] = useState<Category>(
@@ -31,12 +31,12 @@ export default function Home() {
       >
         <div className="input-container">
           <p>
-            Describe what you imagine , and the system will draw it for you!
+            Describe what you imagine, and the system will draw it for you!
             This is powered by OpenAI APIs (ChatGPT).
           </p>
           <div className="choices">
             <div className="card flex justify-content-center">
-              <div className="flex flex-column gap-3">
+              <div className="flex flex-column gap-3" >
                 {categories.map((category) => {
                   return (
                     <div
@@ -48,7 +48,7 @@ export default function Home() {
                         marginBottom: "10px",
                       }}
                     >
-                      <span style={{ padding: "0.5rem", paddingLeft: "0px" }}>
+                      <span>
                         <RadioButton
                           inputId={category.key}
                           name="category"

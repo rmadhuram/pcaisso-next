@@ -1,6 +1,7 @@
 @import "../styles/variables";
 @import "../styles/animations";
 @import "../styles/mixins";
+
 .left {
   .input-container {
     background-color: #ced8ea;
@@ -14,10 +15,20 @@
     p {
       margin-top: 30px;
       font-size: 14px;
+      line-height: 1.4rem;
     }
 
     .choices {
       margin-bottom: 10px;
+
+      span {
+        padding: 0.5rem;
+        padding-left: 0px; 
+      }
+      
+      label {
+        cursor: pointer;
+      }
     }
 
     .input-area {
@@ -81,7 +92,9 @@
 
       span {
         color: $red-variation;
+
       }
+
     }
 
     h2 {
