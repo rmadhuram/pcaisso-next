@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@import "../../../styles/variables";
 
 .navbar {
   background-color: #0b3b87;
@@ -6,9 +6,7 @@
   height: 35px;
   display: flex;
   align-items: center;
-  position: fixed;
   width: 100%;
-  z-index: 3;
 
   h3 {
     font-family: "Poppins", sans-serif;

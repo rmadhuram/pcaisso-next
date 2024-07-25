@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import 'primereact/resources/themes/saga-blue/theme.css';  
 import 'primereact/resources/primereact.min.css';          
 import 'primeicons/primeicons.css';                        
@@ -27,8 +27,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Navbar/>
-        {children}
-        </body>
+        <div className="contents">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

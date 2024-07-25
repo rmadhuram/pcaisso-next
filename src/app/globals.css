@@ -9,6 +9,16 @@
   }
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+
+  .contents {
+    flex-grow: 1;
+  }
+}
+
+
 
 
 

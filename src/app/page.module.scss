@@ -2,6 +2,10 @@
 @import "../styles/animations";
 @import "../styles/mixins";
 
+body {
+  color: #444;
+}
+
 .left {
   .input-container {
     background-color: #ced8ea;

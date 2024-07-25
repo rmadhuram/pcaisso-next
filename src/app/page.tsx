@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 import { Splitter, SplitterPanel } from "primereact/splitter";
 import Link from "next/link";
-import "./page.scss";
+import NoSsr from "./components/NoSSR";
+import InputPanel from "./home/input-panel/input-panel";
+import HomePage from "./home/page";
 
 interface Category {
   name: string;
@@ -23,6 +25,14 @@ export default function Home() {
     categories[1]
   );
 
+  return (
+    <div>Hi</div>
+
+  )
+    
+
+
+  /*
   return (
     <Splitter layout="horizontal">
       <SplitterPanel
@@ -112,4 +122,5 @@ export default function Home() {
       </SplitterPanel>
     </Splitter>
   );
+  */
 }
