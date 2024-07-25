@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 import { Splitter, SplitterPanel } from "primereact/splitter";
+import Link from "next/link";
 import "./page.scss";
 
 interface Category {
@@ -87,7 +88,7 @@ export default function Home() {
         size={70}
       >
         <div className="home">
-          <h1>
+          <h1 className="animated bounceInUp animate-delay-1s">
             Pc<span>ai</span>sso
           </h1>
           <h2>AI Art + Code</h2>
@@ -96,12 +97,16 @@ export default function Home() {
             <div className="cover-1 cover"></div>
             <div className="cover-2 cover"></div>
           </div>
-          <p className="footer">
-            Made with 💖 by the <a href="#">students and friends</a> of{" "}
-            <a target="_blank" href="https://gct.ac.in/">
+          <p className="footer animated bounceInUp animate-delay-2s">
+            Made with 💖 by the{" "}
+            <Link href="/contributions">
+              students and friends
+            </Link>{" "}
+            of{" "}
+            <Link target="_blank" href="https://gct.ac.in/">
               {" "}
               GCT, Coimbatore
-            </a>
+            </Link>
           </p>
         </div>
       </SplitterPanel>

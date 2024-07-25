@@ -1,5 +1,6 @@
 @import "../styles/variables";
-
+@import "../styles/animations";
+@import "../styles/mixins";
 .left {
   .input-container {
     background-color: #ced8ea;
@@ -65,14 +66,12 @@
 .right {
   .home {
     height: calc(100vh);
-    background: #000;
-    background-image: url("../assets/light-sketch.png");
+    @include background;
     color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 10px;
-    font-family: "Chivo Mono", monospace;
 
     h1 {
       margin-top: 110px;
