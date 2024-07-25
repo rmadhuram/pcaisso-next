@@ -1,3 +1,12 @@
+import Link from 'next/link'
+
 export default function HomePage() {
-  return <h1>Hello, Intro Page!</h1>
+  return (
+    <div>
+      <h1>Hello, Intro Page!</h1> 
+      <div>
+        <Link href="/home/contributions">Contributions</Link>
+      </div>
+    </div>
+  )
 }
