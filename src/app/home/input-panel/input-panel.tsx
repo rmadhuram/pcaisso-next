@@ -1,6 +1,6 @@
 "use client";
 
-import './input-panel.module.scss';
+import styles from './input-panel.module.scss';
 import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 
@@ -22,7 +22,7 @@ export default function InputPanel() {
   );
 
   return (
-    <div className="input-panel">
+    <div className={styles['input-panel']}>
       <div className="input-container">
           <p>
             Describe what you imagine, and the system will draw it for you!
