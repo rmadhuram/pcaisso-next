@@ -10,14 +10,16 @@ export default function HomeLayout({
 }) {
   return (
     <NoSsr>
-      <Splitter layout="horizontal">
-        <SplitterPanel className="panel" size={30}>
-          <InputPanel></InputPanel>
-        </SplitterPanel>
-        <SplitterPanel className="panel" size={70}>
-          {children}
-        </SplitterPanel>
-      </Splitter>
+      <div className={styles.splitter}>
+        <Splitter layout="horizontal">
+          <SplitterPanel className="panel" size={25}>
+            <InputPanel></InputPanel>
+          </SplitterPanel>
+          <SplitterPanel className="panel" size={75}>
+            {children}
+          </SplitterPanel>
+        </Splitter>
+      </div>
     </NoSsr>
   );
 }
