@@ -1,21 +1,20 @@
-@import '../../../styles/animations';
 @import '../../../styles/mixins';
+@import '../../../styles/variables';
 
-
-.display {
-  height: 100vh;
+.display :global {
+  height: $default-height;
   @include background;
+  padding: 10px;
 
 .credits {
-  margin-top: 150px;
  display: flex;
  flex-direction: column;
   align-items: center;
 
 
   h2 {
+    margin-top: 150px;
     font-size: 24px;
-    margin-top: 30px;
     font-weight: normal;
   }
 
