@@ -1,5 +1,4 @@
 import { Splitter, SplitterPanel } from "primereact/splitter";
-import Link from "next/link";
 import NoSsr from "../components/NoSSR";
 import InputPanel from "./input-panel/input-panel";
 
