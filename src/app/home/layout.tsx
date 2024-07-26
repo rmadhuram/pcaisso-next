@@ -1,25 +1,25 @@
 import { Splitter, SplitterPanel } from "primereact/splitter";
-import Link from "next/link";
 import NoSsr from "../components/NoSSR";
 import InputPanel from "./input-panel/input-panel";
+import styles from "./layout.module.scss";
 
 export default function HomeLayout({
   children, // will be a page or nested layout
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-
   return (
     <NoSsr>
-      <Splitter layout="horizontal" style={{ height: 'calc(100vh - 35px)' }}>
-        <SplitterPanel>
-          <InputPanel></InputPanel>
-        </SplitterPanel>
-        <SplitterPanel>
-          {children}
-        </SplitterPanel>
-      </Splitter>
+      <div className={styles.splitter}>
+        <Splitter layout="horizontal">
+          <SplitterPanel className="panel" size={25}>
+            <InputPanel></InputPanel>
+          </SplitterPanel>
+          <SplitterPanel className="panel" size={75}>
+            {children}
+          </SplitterPanel>
+        </Splitter>
+      </div>
     </NoSsr>
-  )
-    
+  );
 }

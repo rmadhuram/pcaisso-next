@@ -1,0 +1,67 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.intro :global {
+  height: $default-height;
+  @include background;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+
+  h1 {
+    margin-top: 100px;
+    font-family: "Rubik Pixels", cursive;
+    font-size: 120px;
+    font-weight: normal;
+
+    span {
+      color: $red-variation;
+    }
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .cover-pages {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+    .cover {
+      width: 160px;
+      height: 160px;
+      border-radius: 100px;
+      border: 2px dotted #ccc;
+      background-size: contain;
+    }
+
+    .cover-1 {
+      background-image: url(../../assets/cover1.jpg);
+    }
+
+    .cover-2 {
+      background-image: url(../../assets/cover2-1.png);
+    }
+
+    .cover-3 {
+      background-image: url(../../assets/cover3.png);
+    }
+  }
+
+  .footer {
+    margin-top: 50px;
+    font-size: 14px;
+
+    a {
+      color: wheat;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
