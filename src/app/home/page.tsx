@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import './page.module.scss';
+import styles from './page.module.scss';
+import '../../styles/animations.scss';
 
 export default function HomePage() {
   return (
-    <div className="intro">
+    <div className={styles['intro']}>
       <h1 className="animated bounceInUp animate-delay-1s">
             Pc<span>ai</span>sso
           </h1>

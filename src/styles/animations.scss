@@ -1,5 +1,21 @@
 $animate-duration: 1s;
-$animate-repeat: 1;
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animate-delay-1s {
+  animation-delay: 1s;
+}
+
+.animate-delay-2s {
+  animation-delay: 2s;
+}
+
+.bounceInUp {
+  animation-name: bounceInUp;
+}
 
 @keyframes bounceInUp {
   0%,
@@ -27,22 +43,4 @@ $animate-repeat: 1;
   100% {
     transform: translateZ(0);
   }
-}
-
-
-.animated {
-  animation-duration: 1s;
-  animation-fill-mode: both;
-}
-
-.animate-delay-1s {
-  animation-delay: 1s;
-}
-
-.animate-delay-2s {
-  animation-delay: 2s;
-}
-
-.bounceInUp {
-  animation-name: bounceInUp;
 }

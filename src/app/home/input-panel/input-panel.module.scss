@@ -1,16 +1,17 @@
 @import '../../../styles/mixins';
-@import '../../../styles/animations';
 @import '../../../styles/variables';
 
-.input-panel {
+.input-panel :global {
+
   .input-container {
     background-color: #ced8ea;
     font-family: "Chivo Mono", monospace;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px;
     gap: 20px;
     color: $dark-gray-variation;
+    height: $default-height;
 
     p {
       margin-top: 30px;

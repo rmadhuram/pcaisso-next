@@ -1,8 +1,8 @@
-import "./Navbar.scss";
+import styles from './Navbar.module.scss';
 
 export default function Navbar() {
   return (
-    <div className="navbar">
+    <div className={styles['navbar']}>
       <h3>
         Pc<span>ai</span>sso
       </h3>
