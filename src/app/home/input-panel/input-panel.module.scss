@@ -1,8 +1,7 @@
-@import '../../../styles/mixins';
-@import '../../../styles/variables';
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
 
 .input-panel :global {
-
   .input-container {
     background-color: #ced8ea;
     font-family: "Chivo Mono", monospace;
@@ -24,9 +23,9 @@
 
       span {
         padding: 0.5rem;
-        padding-left: 0px; 
+        padding-left: 0px;
       }
-      
+
       label {
         cursor: pointer;
       }

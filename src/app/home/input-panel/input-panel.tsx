@@ -1,6 +1,6 @@
 "use client";
 
-import styles from './input-panel.module.scss';
+import styles from "./input-panel.module.scss";
 import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 
@@ -22,60 +22,60 @@ export default function InputPanel() {
   );
 
   return (
-    <div className={styles['input-panel']}>
+    <div className={styles["input-panel"]}>
       <div className="input-container">
-          <p>
-            Describe what you imagine, and the system will draw it for you!
-            This is powered by OpenAI APIs (ChatGPT).
-          </p>
-          <div className="choices">
-            <div className="card flex justify-content-center">
-              <div className="flex flex-column gap-3" >
-                {categories.map((category) => {
-                  return (
-                    <div
-                      key={category.key}
-                      className="flex align-items-start"
-                      style={{
-                        fontSize: "14px",
-                        fontFamily: "Chivo Mono, monospace",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <span>
-                        <RadioButton
-                          inputId={category.key}
-                          name="category"
-                          value={category}
-                          onChange={(e: RadioButtonChangeEvent) =>
-                            setSelectedCategory(e.value)
-                          }
-                          checked={selectedCategory.key === category.key}
-                        />
-                      </span>
-                      <label htmlFor={category.key} className="ml-2">
-                        {category.name}
-                      </label>
-                    </div>
-                  );
-                })}
-              </div>
+        <p>
+          Describe what you imagine, and the system will draw it for you! This
+          is powered by OpenAI APIs (ChatGPT).
+        </p>
+        <div className="choices">
+          <div className="card flex justify-content-center">
+            <div className="flex flex-column gap-3">
+              {categories.map((category) => {
+                return (
+                  <div
+                    key={category.key}
+                    className="flex align-items-start"
+                    style={{
+                      fontSize: "14px",
+                      fontFamily: "Chivo Mono, monospace",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <span>
+                      <RadioButton
+                        inputId={category.key}
+                        name="category"
+                        value={category}
+                        onChange={(e: RadioButtonChangeEvent) =>
+                          setSelectedCategory(e.value)
+                        }
+                        checked={selectedCategory.key === category.key}
+                      />
+                    </span>
+                    <label htmlFor={category.key} className="ml-2">
+                      {category.name}
+                    </label>
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <div className="input-area">
-            <p>What do you want to draw?</p>
-            <textarea
-              name="inputtext"
-              id="inputtext"
-              className="text-area"
-            ></textarea>
-          </div>
-          <div className="submit">
-            <button className="submit-button" type="submit">
-              Generate
-            </button>
-          </div>
-    </div>
+        </div>
+        <div className="input-area">
+          <p>What do you want to draw?</p>
+          <textarea
+            name="inputtext"
+            id="inputtext"
+            className="text-area"
+          ></textarea>
+        </div>
+        <div className="submit">
+          <button className="submit-button" type="submit">
+            Generate
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
