@@ -1,0 +1,6 @@
+@import '../../../styles/variables';
+
+.output-frame :global {
+  width: 100%;
+  height: $default-height;
+}
