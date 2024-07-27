@@ -73,8 +73,6 @@ export default function InputPanel() {
         <div className="input-area">
           <p>What do you want to draw?</p>
           <textarea
-            name="inputtext"
-            id="inputtext"
             className="text-area"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}

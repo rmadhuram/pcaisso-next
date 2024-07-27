@@ -1,4 +1,6 @@
+@import '../../../styles/variables';
+
 .output-frame :global {
   width: 100%;
-  height: calc(100vh - 35px);
+  height: $default-height;
 }
