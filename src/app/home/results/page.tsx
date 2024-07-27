@@ -1,40 +1,45 @@
 "use client";
-import { useRouter } from 'next/navigation';
+
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import styles from './page.module.scss';
 
 export default function Results() {
-  const router = useRouter();
-  const [code, setCode] = useState('');
+  const searchParams = useSearchParams();
+  const [code, setCode] = useState<string>('');
+  const [prompt, setPrompt] = useState<string>('');
+  const [format, setFormat] = useState<string>('');
 
   useEffect(() => {
-    if (router.query) {
-      const { prompt, format } = router.query as { prompt?: string; format?: string };
-      
-      if (prompt && format) {
-        const fetchCode = async () => {
-          try {
-            const response = await fetch('/api/generate', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ prompt, type: format }),
-            });
-            const data = await response.json();
-            setCode(data.code || '');
-          } catch (error) {
-            console.error('Error fetching code:', error);
-          }
-        };
+    const promptParam = searchParams.get('prompt') || '';
+    const formatParam = searchParams.get('format') || '';
 
-        fetchCode();
+    setPrompt(promptParam);
+    setFormat(formatParam);
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: promptParam, type: formatParam }),
+        });
+        const data = await response.json();
+        setCode(data.code || '');
+      } catch (error) {
+        console.error('Error fetching code:', error);
       }
+    };
+
+    if (promptParam && formatParam) {
+      fetchData();
     }
-  }, [router.query]);
+  }, [searchParams]);
 
   return (
     <div>
       <h1>Generated Code</h1>
-      <iframe className={styles['output-frame']} srcDoc={code}></iframe>
+      <iframe className={styles['output-frame']} srcDoc={code} />
     </div>
   );
 }
