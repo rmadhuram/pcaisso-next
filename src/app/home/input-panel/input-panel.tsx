@@ -3,6 +3,7 @@
 import styles from "./input-panel.module.scss";
 import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
+import { useRouter } from 'next/navigation';
 
 interface Category {
   name: string;
@@ -18,8 +19,15 @@ export default function InputPanel() {
   ];
 
   const [selectedCategory, setSelectedCategory] = useState<Category>(
-    categories[1]
+    categories[0]
   );
+  const [prompt, setPrompt] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    const queryString = `prompt=${encodeURIComponent(prompt)}&format=${encodeURIComponent(selectedCategory.key)}`;
+    router.push(`/home/results?${queryString}`);
+  };
 
   return (
     <div className={styles["input-panel"]}>
@@ -68,10 +76,13 @@ export default function InputPanel() {
             name="inputtext"
             id="inputtext"
             className="text-area"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Enter a prompt"
           ></textarea>
         </div>
         <div className="submit">
-          <button className="submit-button" type="submit">
+          <button className="submit-button" type="submit" onClick={handleSubmit}>
             Generate
           </button>
         </div>

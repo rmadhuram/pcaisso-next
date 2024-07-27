@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "next": "^14.2.5",
-    "openai": "^4.52.7",
+    "openai": "^4.53.2",
     "primeicons": "^7.0.0",
     "primereact": "^10.7.0",
     "react": "^18",
