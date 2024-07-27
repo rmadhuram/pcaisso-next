@@ -11,8 +11,8 @@ export default function Results() {
   const [format, setFormat] = useState<string>('');
 
   useEffect(() => {
-    const promptParam = searchParams.get('prompt') || '';
-    const formatParam = searchParams.get('format') || '';
+    const promptParam = searchParams?.get('prompt') || '';
+    const formatParam = searchParams?.get('format') || '';
 
     setPrompt(promptParam);
     setFormat(formatParam);
