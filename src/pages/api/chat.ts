@@ -24,8 +24,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         prompt = `Write a HTML code using canvas of size 800x600 pixels to draw this: ${input.prompt}`;
         break;
       case "SVG":
-        res.status(200).send("<html><body>TBD</body></html>");
-        return;
+        prompt = `Write a HTML code with SVG to draw this: ${input.prompt}`;
+        break;
       case "3D":
         prompt = `Write a HTML code using Three.js of size 800x600 pixels to render this: ${input.prompt}`;
         break;

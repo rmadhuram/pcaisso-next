@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "eventemitter3": "^5.0.1",
     "next": "^14.2.5",
