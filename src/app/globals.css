@@ -2,11 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
-  /* to avoid the scroll bar */
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 body {

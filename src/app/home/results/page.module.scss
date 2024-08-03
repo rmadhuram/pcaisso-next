@@ -1,6 +1,63 @@
-@import '../../../styles/variables';
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
 
-.output-frame :global {
-  width: 100%;
-  height: $default-height;
+.results :global {
+  flex-grow: 1;
+
+  .p-tabview {
+    width: 100%;
+
+    .p-tabview-nav-container {
+      .p-tabview-nav-content {
+        ul {
+          li {
+            margin-right: 10px;
+            border: 4px solid white;
+
+            &:hover {
+              border: 4px solid rgb(166, 213, 250);
+            }
+
+            a {
+              span {
+                font-size: 12px;
+                padding: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .p-tabview-panels {
+      .p-tabview-panel {
+        @include background;
+        height: $default-height;
+        font-size: 12px;
+        .output-frame {
+          overflow: scroll;
+          width: 100%;
+          background: black;
+          height: calc(100vh - 150px);
+          border: none;
+        }
+
+        .display-time {
+          background: white;
+          width: 100%;
+          color: rgb(118, 111, 111);
+          padding: 10px;
+        }
+
+        .code-panel {
+          overflow: scroll;
+          width: 100%;
+          height: $default-height;
+          background: white;
+          color: black;
+          padding: 10px;
+        }
+      }
+    }
+  }
 }
