@@ -29,8 +29,7 @@ export default function InputPanel() {
 
   const handleSubmit = async () => {
     await router.push(`/home/results`)
-    
-    // TODO: Make this deterministic. 
+
     setTimeout(function() {
       publish('CREATE_NEW', { prompt, category: selectedCategory.key })
     }, 300)
