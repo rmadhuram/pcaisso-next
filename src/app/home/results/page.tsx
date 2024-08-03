@@ -1,20 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-// import { useSearchParams } from "next/navigation";
+import {  useState } from "react";
 import { useSub } from "../../hooks/usePubSub";
 import { TabView, TabPanel } from "primereact/tabview";
 import styles from "./page.module.scss";
-import { time } from "console";
 
 export default function Results() {
-  // const searchParams = useSearchParams();
   const [diagram, setDiagram] = useState<string>("");
   const [text, setText] = useState<string>("");
-  const [timetaken, setTimeTaken] = useState(0.0);
+  const [timetaken, setTimeTaken] = useState(0);
 
   useSub("CREATE_NEW", (payload: any) => {
     console.log("Received", payload);
+   
     const fetchData = async () => {
       try {
         const response = await fetch("/api/chat", {
@@ -46,7 +44,7 @@ export default function Results() {
     };
     fetchData();
   });
-
+     
   return (
     <div className={styles["results"]}>
       <TabView>

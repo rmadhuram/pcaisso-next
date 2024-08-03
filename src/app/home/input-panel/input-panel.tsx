@@ -9,7 +9,7 @@ import { usePub } from '../../hooks/usePubSub';
 interface Category {
   name: string;
   key: string;
-}
+}    
 
 export default function InputPanel() {
   const categories = [
@@ -26,6 +26,7 @@ export default function InputPanel() {
   );
   const [prompt, setPrompt] = useState('');
   const router = useRouter();
+
 
   const handleSubmit = async () => {
     await router.push(`/home/results`)
