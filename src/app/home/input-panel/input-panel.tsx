@@ -4,11 +4,12 @@ import styles from "./input-panel.module.scss";
 import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 import { useRouter } from 'next/navigation';
+import { usePub } from '../../hooks/usePubSub';
 
 interface Category {
   name: string;
   key: string;
-}
+}    
 
 export default function InputPanel() {
   const categories = [
@@ -18,15 +19,21 @@ export default function InputPanel() {
     { name: "d3 (Data Visualization)", key: "d3" },
   ];
 
+  const publish = usePub();
+
   const [selectedCategory, setSelectedCategory] = useState<Category>(
     categories[0]
   );
   const [prompt, setPrompt] = useState('');
   const router = useRouter();
 
+
   const handleSubmit = async () => {
-    const queryString = `prompt=${encodeURIComponent(prompt)}&format=${encodeURIComponent(selectedCategory.key)}`;
-    router.push(`/home/results?${queryString}`);
+    await router.push(`/home/results`)
+
+    setTimeout(function() {
+      publish('CREATE_NEW', { prompt, category: selectedCategory.key })
+    }, 800)
   };
 
   return (

@@ -4,6 +4,7 @@ export enum DrawingType {
   'SVG' = 'SVG',
   'd3' = 'd3'
 }
+
 export type PromptInput = {
   type: DrawingType,
   promt: string
