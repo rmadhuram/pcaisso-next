@@ -11,6 +11,7 @@ export default function Results() {
   const [text, setText] = useState<string>("");
   const [timetaken, setTimeTaken] = useState(0);
 
+  console.log('creating sub')
   useSub("CREATE_NEW", (payload: any) => {
     console.log("Received", payload);
 

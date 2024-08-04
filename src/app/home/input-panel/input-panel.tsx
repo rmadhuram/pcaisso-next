@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 import { useRouter } from 'next/navigation';
 import { usePub } from '../../hooks/usePubSub';
+import { useAsyncRoutePush } from "@/app/utils/asyn-push";
 
 interface Category {
   name: string;
@@ -26,14 +27,16 @@ export default function InputPanel() {
   );
   const [prompt, setPrompt] = useState('');
   const router = useRouter();
-
+  const asyncPush = useAsyncRoutePush()
 
   const handleSubmit = async () => {
-    await router.push(`/home/results`)
+    await asyncPush(`/home/results`)
+
+    console.log('routing done')
 
     setTimeout(function() {
       publish('CREATE_NEW', { prompt, category: selectedCategory.key })
-    }, 800)
+    }, 1000)
   };
 
   return (
