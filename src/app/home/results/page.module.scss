@@ -1,5 +1,4 @@
 @import "../../../styles/variables";
-@import "../../../styles/mixins";
 
 .results :global {
   flex-grow: 1;
@@ -8,6 +7,8 @@
     width: 100%;
 
     .p-tabview-nav-container {
+      position: absolute;
+      width: 100%;
       .p-tabview-nav-content {
         ul {
           li {
@@ -31,14 +32,25 @@
 
     .p-tabview-panels {
       .p-tabview-panel {
-        @include background;
         height: $default-height;
+        font-size: 12px;
+
         .output-frame {
           overflow: scroll;
           width: 100%;
-          background:black ;
-          height: calc(100vh - 150px);
+          height: $default-height;
+          background: black;
           border: none;
+        }
+
+        .display-time {
+          position: absolute;
+          bottom: 0;
+          opacity: 0.5;
+          background: white;
+          width: 100%;
+          color: rgb(0, 0, 0);
+          padding: 10px;
         }
 
         .code-panel {
@@ -46,6 +58,9 @@
           width: 100%;
           height: $default-height;
           background: white;
+          color: black;
+          padding: 10px;
+          padding-top: 50px;
         }
       }
     }
