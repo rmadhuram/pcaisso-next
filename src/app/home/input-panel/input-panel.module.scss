@@ -13,7 +13,7 @@
     height: $default-height;
 
     p {
-      margin-top: 30px;
+      margin-top: 20px;
       font-size: 14px;
       line-height: 1.4rem;
     }
@@ -31,17 +31,38 @@
       }
     }
 
+    .choices {
+      margin: 5px 0px;
+    }
+
+    
+
     .input-area {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
+      gap: 5px;
 
       p {
         font-size: 14px;
         font-weight: bold;
-        margin-top: 10px;
         margin-left: 0px;
+       
+      }
+
+      .card {
+        .model-options {
+          background: #eee;
+          border: 2px solid $light-gray-variation;
+  
+          .p-dropdown-label {
+            padding: 5px;
+            border-radius: 5px;
+            color: #8a9197;
+            font-size: 16px;
+          }
+        }
       }
 
       .text-area {
@@ -52,7 +73,7 @@
         border: 2px solid $light-gray-variation;
         border-radius: 5px;
         padding: 10px;
-        margin-top: 10px;
+        margin-top: 5px;
       }
     }
 
