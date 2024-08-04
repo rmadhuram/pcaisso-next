@@ -1,9 +1,10 @@
 "use client";
 
-import {  useState } from "react";
+import { useState } from "react";
 import { useSub } from "../../hooks/usePubSub";
 import { TabView, TabPanel } from "primereact/tabview";
 import styles from "./page.module.scss";
+import CodeWithLineNumbers from "@/app/components/CodeWithLineNumbers";
 
 export default function Results() {
   const [diagram, setDiagram] = useState<string>("");
@@ -12,7 +13,7 @@ export default function Results() {
 
   useSub("CREATE_NEW", (payload: any) => {
     console.log("Received", payload);
-   
+
     const fetchData = async () => {
       try {
         const response = await fetch("/api/chat", {
@@ -44,7 +45,7 @@ export default function Results() {
     };
     fetchData();
   });
-     
+
   return (
     <div className={styles["results"]}>
       <TabView>
@@ -57,9 +58,13 @@ export default function Results() {
           </div>
         </TabPanel>
         <TabPanel header="Code">
-          <pre className="code-panel">{text}</pre>
+          <pre className="code-panel">
+            <CodeWithLineNumbers language="html" code={text} />
+            </pre>
         </TabPanel>
       </TabView>
     </div>
   );
 }
+
+

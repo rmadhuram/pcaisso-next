@@ -17,12 +17,15 @@
     "primereact": "^10.7.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-loading-skeleton": "^3.4.0",
+    "react-syntax-highlighter": "^15.5.0",
     "scss": "^0.2.4"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "sass": "^1.77.8",
