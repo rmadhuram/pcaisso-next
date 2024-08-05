@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const startTime = Date.now();
     const input = req.body;
 
-    if (!input || !input.prompt || !input.type) {
+    if (!input || !input.prompt || !input.type || !input.model) {
       return res.status(400).json({ error: "Invalid input" });
     }
 
@@ -21,16 +21,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     switch (input.type) {
       case "2D":
-        prompt = `Write a HTML code using canvas of size 800x600 pixels to draw this: ${input.prompt}`;
+        prompt = `Write an HTML code using canvas of size 800x600 pixels to draw this: ${input.prompt}`;
         break;
       case "SVG":
-        prompt = `Write a HTML code with SVG to draw this: ${input.prompt}`;
+        prompt = `Write an HTML code with SVG to draw this: ${input.prompt}`;
         break;
       case "3D":
-        prompt = `Write a HTML code using Three.js of size 800x600 pixels to render this: ${input.prompt}`;
+        prompt = `Write an HTML code using Three.js of size 800x600 pixels to render this: ${input.prompt}`;
         break;
       case "d3":
-        prompt = `Write a HTML code using d3.js to render this: ${input.prompt}`;
+        prompt = `Write an HTML code using d3.js to render this: ${input.prompt}`;
         break;
       default:
         return res.status(400).json({ error: "Invalid type" });
@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
       const completion = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: input.model,
         messages: [
           {
             role: "user",
@@ -49,24 +49,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const response = completion.choices[0].message?.content || "";
 
-      let startIndex =
+      const startIndex =
         response.indexOf("```html\n") !== -1
           ? response.indexOf("```html\n") + 7
           : 0;
-      let endIndex =
-        response.indexOf("```\n", startIndex + 6) !== -1
-          ? response.indexOf("```\n", startIndex + 6)
+      const endIndex =
+        response.indexOf("```", startIndex) !== -1
+          ? response.indexOf("```", startIndex)
           : response.length;
 
       const endTime = Date.now();
       const output = {
-        code: response.substring(startIndex, endIndex),
-        text: response.substring(0, startIndex),
+        code: response.substring(startIndex, endIndex).trim(),
+        text: response,
         timeTakenInSec: (endTime - startTime) / 1000,
       };
 
       res.status(200).json(output);
     } catch (error) {
+      console.error("Error fetching from OpenAI:", error);
       res.status(500).json({ error: "Unable to fetch from OpenAI" });
     }
   } else {

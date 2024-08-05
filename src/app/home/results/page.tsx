@@ -23,6 +23,7 @@ export default function Results() {
           body: JSON.stringify({
             prompt: payload.prompt,
             type: payload.category,
+            model: payload.model,
           }),
         });
 
@@ -61,11 +62,9 @@ export default function Results() {
         <TabPanel header="Code">
           <pre className="code-panel">
             <CodeWithLineNumbers language="html" code={text} />
-            </pre>
+          </pre>
         </TabPanel>
       </TabView>
     </div>
   );
 }
-
-
