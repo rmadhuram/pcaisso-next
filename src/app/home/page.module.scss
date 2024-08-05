@@ -1,6 +1,12 @@
 @import "../../styles/mixins";
 @import "../../styles/variables";
 
+.splitter :global {
+  .p-splitter {
+    border: none;
+  }
+}
+
 .intro :global {
   height: $default-height;
   @include background;

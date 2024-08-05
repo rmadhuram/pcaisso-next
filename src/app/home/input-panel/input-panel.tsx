@@ -18,7 +18,7 @@ interface model {
   code: string;
 }
 
-export default function InputPanel() {
+export default function InputPanel({ handleSubmission } : { handleSubmission: any}) {
   const categories = [
     { name: "2D (Canvas)", key: "2D" },
     { name: "SVG (Vector Graphics)", key: "SVG" },
@@ -46,13 +46,16 @@ export default function InputPanel() {
   const asyncPush = useAsyncRoutePush()
 
   const handleSubmit = async () => {
-    await asyncPush(`/home/results`)
+    //await asyncPush(`/home/results`)
 
     console.log('routing done')
 
-    setTimeout(function() {
+    /*setTimeout(function() {
       publish('CREATE_NEW', { prompt, category: selectedCategory.key, model : selectedModel?.name })
-    }, 1000)
+    }, 1000)*/
+
+    handleSubmission({ prompt, category: selectedCategory.key, model : selectedModel?.name })
+    
   };
 
   return (

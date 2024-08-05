@@ -1,8 +1,12 @@
+'use client';
+import { Splitter, SplitterPanel } from "primereact/splitter";
+import NoSsr from "../components/NoSSR";
+import InputPanel from "./input-panel/input-panel";
 import Link from "next/link";
 import styles from "./page.module.scss";
 import "../../styles/animations.scss";
 
-export default function HomePage() {
+export function Intro() {
   return (
     <div className={styles["intro"]}>
       <h1 className="animated bounceInUp animate-delay-1s">
@@ -24,4 +28,27 @@ export default function HomePage() {
       </p>
     </div>
   );
+}
+
+export default function HomePage() {
+  async function onSubmit(props: any) {
+    console.log('here', props)
+  }
+
+  return (
+    <NoSsr>
+      <div className={styles.splitter}>
+        <Splitter layout="horizontal">
+          <SplitterPanel className="panel" size={25}>
+            <InputPanel handleSubmission={onSubmit}></InputPanel>
+          </SplitterPanel>
+          <SplitterPanel className="panel" size={75}>
+            <Intro></Intro>
+          </SplitterPanel>
+        </Splitter>
+      </div>
+    </NoSsr>
+  );
+  
+
 }
