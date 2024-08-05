@@ -2,9 +2,11 @@
 import { Splitter, SplitterPanel } from "primereact/splitter";
 import NoSsr from "../components/NoSSR";
 import InputPanel from "./input-panel/input-panel";
+import Results from "./results/page";
 import Link from "next/link";
 import styles from "./page.module.scss";
 import "../../styles/animations.scss";
+import { useState } from "react";
 
 export function Intro() {
   return (
@@ -31,8 +33,46 @@ export function Intro() {
 }
 
 export default function HomePage() {
-  async function onSubmit(props: any) {
-    console.log('here', props)
+  const [diagram, setDiagram] = useState<string>("");
+  const [text, setText] = useState<string>("");
+  const [timetaken, setTimeTaken] = useState(0);
+  const [displayState, setDisplayState] = useState<string>("intro");
+
+  async function onSubmit(payload: any) {
+    const fetchData = async () => {
+      try {
+        setDisplayState('loading') 
+        console.log('fetch')
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt: payload.prompt,
+            type: payload.category,
+            model: payload.model,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        //console.log("API Response:", data);
+
+        const diagram = data.code;
+        const text = data.code;
+        const timetaken = data.timeTakenInSec;
+
+        setDiagram(diagram);
+        setText(text);
+        setTimeTaken(timetaken);
+        setDisplayState('results') 
+      } catch (error) {
+        console.error("Error fetching reply:", error);
+      }
+    };
+    fetchData();
   }
 
   return (
@@ -43,7 +83,9 @@ export default function HomePage() {
             <InputPanel handleSubmission={onSubmit}></InputPanel>
           </SplitterPanel>
           <SplitterPanel className="panel" size={75}>
-            <Intro></Intro>
+            { displayState == 'intro' && <Intro></Intro>}
+            { displayState == 'loading' && <div>Loading...</div>}
+            { displayState == 'results' && <Results diagram={diagram} text={text} timetaken={timetaken}></Results>}
           </SplitterPanel>
         </Splitter>
       </div>
