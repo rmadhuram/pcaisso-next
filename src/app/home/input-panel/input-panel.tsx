@@ -51,7 +51,7 @@ export default function InputPanel() {
     console.log('routing done')
 
     setTimeout(function() {
-      publish('CREATE_NEW', { prompt, category: selectedCategory.key })
+      publish('CREATE_NEW', { prompt, category: selectedCategory.key, model : selectedModel?.name })
     }, 1000)
   };
 
