@@ -11,6 +11,7 @@ export default function Results() {
   const [text, setText] = useState<string>("");
   const [timetaken, setTimeTaken] = useState(0);
 
+  console.log('creating sub')
   useSub("CREATE_NEW", (payload: any) => {
     console.log("Received", payload);
 
@@ -22,6 +23,7 @@ export default function Results() {
           body: JSON.stringify({
             prompt: payload.prompt,
             type: payload.category,
+            model: payload.model,
           }),
         });
 
@@ -60,11 +62,9 @@ export default function Results() {
         <TabPanel header="Code">
           <pre className="code-panel">
             <CodeWithLineNumbers language="html" code={text} />
-            </pre>
+          </pre>
         </TabPanel>
       </TabView>
     </div>
   );
 }
-
-

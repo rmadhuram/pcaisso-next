@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fern Fractal with Multiple Colors</title>
+</head>
+<body>
+<canvas id="fernCanvas" width="800" height="600"></canvas>
+<script>
+const canvas = document.getElementById('fernCanvas');
+const ctx = canvas.getContext('2d');
+
+let x = 0;
+let y = 0;
+
+function drawFern() {
+    for (let i = 0; i < 100000; i++) {
+        let nextX, nextY;
+        const random = Math.random();
+
+        if (random < 0.01) {
+            nextX = 0;
+            nextY = 0.16 * y;
+        } else if (random < 0.08) {
+            nextX = 0.2 * x - 0.26 * y;
+            nextY = 0.23 * x + 0.22 * y + 1.6;
+        } else if (random < 0.15) {
+            nextX = -0.15 * x + 0.28 * y;
+            nextY = 0.26 * x + 0.24 * y + 0.44;
+        } else {
+            nextX = 0.85 * x + 0.04 * y;
+            nextY = -0.04 * x + 0.85 * y + 1.6;
+        }
+
+        x = nextX;
+        y = nextY;
+
+        const color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+
+        ctx.fillStyle = color;
+        ctx.fillRect(400 + x * 50, 600 - y * 50, 1, 1);
+    }
+}
+
+drawFern();
+</script>
+</body>
+</html>

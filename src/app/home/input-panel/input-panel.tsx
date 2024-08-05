@@ -5,11 +5,18 @@ import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 import { useRouter } from 'next/navigation';
 import { usePub } from '../../hooks/usePubSub';
+import { useAsyncRoutePush } from "@/app/utils/asyn-push";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 
 interface Category {
   name: string;
   key: string;
-}    
+}
+
+interface model {
+  name: string;
+  code: string;
+}
 
 export default function InputPanel() {
   const categories = [
@@ -19,21 +26,33 @@ export default function InputPanel() {
     { name: "d3 (Data Visualization)", key: "d3" },
   ];
 
+  const models: model[] = [
+    { name: "gpt-3.5-turbo", code: "gpt3.5turbo" },
+    { name: "gpt-4o", code: "gpt4o" },
+    { name: "gpt-4o-mini", code: "gpt4omini" },
+    { name: "gpt-4-turbo", code: "gpt4turbo" },
+    { name: "gpt-4", code: "gpt4" },
+  ];
   const publish = usePub();
 
   const [selectedCategory, setSelectedCategory] = useState<Category>(
     categories[0]
   );
-  const [prompt, setPrompt] = useState('');
-  const router = useRouter();
 
+  const [selectedModel, setSelectedModel] = useState<model | null>(null);
+  const [prompt, setPrompt] = useState("");
+
+  const router = useRouter();
+  const asyncPush = useAsyncRoutePush()
 
   const handleSubmit = async () => {
-    await router.push(`/home/results`)
+    await asyncPush(`/home/results`)
+
+    console.log('routing done')
 
     setTimeout(function() {
-      publish('CREATE_NEW', { prompt, category: selectedCategory.key })
-    }, 800)
+      publish('CREATE_NEW', { prompt, category: selectedCategory.key, model : selectedModel?.name })
+    }, 1000)
   };
 
   return (
@@ -79,6 +98,19 @@ export default function InputPanel() {
         </div>
         <div className="input-area">
           <p>What do you want to draw?</p>
+          
+          <div className="card">
+            <Dropdown
+              value={selectedModel}
+              onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
+              options={models}
+              optionLabel="name"
+              editable
+              placeholder="Select a gpt model"
+              className="w-full md:w-14rem model-options"
+            />
+        
+          </div>
           <textarea
             className="text-area"
             value={prompt}
@@ -87,7 +119,11 @@ export default function InputPanel() {
           ></textarea>
         </div>
         <div className="submit">
-          <button className="submit-button" type="submit" onClick={handleSubmit}>
+          <button
+            className="submit-button"
+            type="submit"
+            onClick={handleSubmit}
+          >
             Generate
           </button>
         </div>
