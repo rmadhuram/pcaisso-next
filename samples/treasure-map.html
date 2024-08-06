@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Map</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0e68c; /* Light golden color to mimic parchment paper */
+        }
+        canvas {
+            border: 5px solid #8b4513; /* Brown border to represent the map frame */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="treasureMap" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('treasureMap');
+        const ctx = canvas.getContext('2d');
+
+        // Background color to mimic old paper
+        ctx.fillStyle = '#f0e68c';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw coast line
+        ctx.beginPath();
+        ctx.moveTo(100, 50);
+        ctx.lineTo(700, 100);
+        ctx.lineTo(650, 550);
+        ctx.lineTo(150, 500);
+        ctx.closePath();
+        ctx.fillStyle = '#00CED1'; // Water color
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw mountains
+        function drawMountain(x, y) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 50, y - 100);
+            ctx.lineTo(x + 100, y);
+            ctx.closePath();
+            ctx.fillStyle = '#8b4513'; // Brown color
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        drawMountain(200, 450);
+        drawMountain(600, 300);
+        drawMountain(450, 400);
+
+        // Draw trees
+        function drawTree(x, y) {
+            // Trunk
+            ctx.fillStyle = '#8b4513';
+            ctx.fillRect(x, y, 10, 30);
+            // Leaves
+            ctx.beginPath();
+            ctx.moveTo(x - 10, y);
+            ctx.lineTo(x + 5, y - 30);
+            ctx.lineTo(x + 20, y);
+            ctx.closePath();
+            ctx.fillStyle = '#228B22'; // Forest green
+            ctx.fill();
+        }
+
+        drawTree(300, 420);
+        drawTree(350, 400);
+        drawTree(320, 380);
+
+        // Draw path (dashed line)
+        ctx.setLineDash([15, 15]);
+        ctx.beginPath();
+        ctx.moveTo(100, 550);
+        ctx.lineTo(500, 350);
+        ctx.lineTo(700, 200);
+        ctx.lineTo(600, 100);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Draw 'X' mark for treasure
+        ctx.font = '40px Arial';
+        ctx.fillStyle = 'red';
+        ctx.fillText('X', 720, 180);
+
+        // Add some more details like a compass
+        function drawCompass(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 50, 0, 2 * Math.PI);
+            ctx.stroke();
+            // Draw N, E, S, W
+            ctx.font = '20px Arial';
+            ctx.fillText('N', x - 5, y - 35);
+            ctx.fillText('E', x + 35, y + 5);
+            ctx.fillText('S', x - 5, y + 45);
+            ctx.fillText('W', x - 45, y + 5);
+        }
+
+        drawCompass(100, 100);
+
+    </script>
+</body>
+</html>

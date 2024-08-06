@@ -32,6 +32,7 @@ export function Intro() {
   );
 }
 
+// spinner attribution: <a href="https://www.svgbackgrounds.com/elements/animated-svg-preloaders/">Animated SVG Preloaders by SVGBackgrounds.com</a>
 export function Loading() {
   let facts = [
     {
@@ -117,11 +118,11 @@ export function Loading() {
   ]
   
 
-  let n = Math.floor(Math.random() * 10)
+  let n = Math.floor(Math.random() * facts.length)
   
   return (
     <div className={styles["loading"]}>
-      <h3 className="generating">Generating Visual...</h3>
+      <h3 className="generating">Generating AI Art + Code...</h3>
       <div className="spinner"></div>
       <h3>{facts[n].fact}</h3>
       <p>{facts[n].description}</p>
