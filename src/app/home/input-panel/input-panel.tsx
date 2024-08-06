@@ -99,21 +99,20 @@ export default function InputPanel({ handleSubmission } : { handleSubmission: an
             </div>
           </div>
         </div>
+        <div className="select-model">
+          <span>Select Model </span>
+          <Dropdown
+            value={selectedModel}
+            onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
+            options={models}
+            optionLabel="name"
+            editable
+            placeholder="Select a gpt model"
+            className="w-full md:w-14rem model-options"
+          />
+        </div>
         <div className="input-area">
           <p>What do you want to draw?</p>
-          
-          <div className="card">
-            <Dropdown
-              value={selectedModel}
-              onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
-              options={models}
-              optionLabel="name"
-              editable
-              placeholder="Select a gpt model"
-              className="w-full md:w-14rem model-options"
-            />
-        
-          </div>
           <textarea
             className="text-area"
             value={prompt}

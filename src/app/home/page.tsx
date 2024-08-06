@@ -2,13 +2,13 @@
 import { Splitter, SplitterPanel } from "primereact/splitter";
 import NoSsr from "../components/NoSSR";
 import InputPanel from "./input-panel/input-panel";
-import Results from "./results/page";
+import Results from "./results";
 import Link from "next/link";
 import styles from "./page.module.scss";
 import "../../styles/animations.scss";
 import { useState } from "react";
 
-export function Intro() {
+function Intro() {
   return (
     <div className={styles["intro"]}>
       <h1 className="animated bounceInUp animate-delay-1s">
@@ -33,7 +33,7 @@ export function Intro() {
 }
 
 // spinner attribution: <a href="https://www.svgbackgrounds.com/elements/animated-svg-preloaders/">Animated SVG Preloaders by SVGBackgrounds.com</a>
-export function Loading() {
+function Loading() {
   let facts = [
     {
       "fact": "AI-Generated Art",

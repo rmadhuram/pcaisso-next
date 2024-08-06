@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useSub } from "../../hooks/usePubSub";
 import { TabView, TabPanel } from "primereact/tabview";
-import styles from "./page.module.scss";
+import styles from "./results.module.scss";
 import CodeWithLineNumbers from "@/app/components/CodeWithLineNumbers";
 
 export default function Results({diagram, text, timetaken}: {diagram: string, text: string, timetaken: number}) {
