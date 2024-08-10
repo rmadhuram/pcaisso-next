@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { usePub } from '../../hooks/usePubSub';
 import { useAsyncRoutePush } from "@/app/utils/asyn-push";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Button } from 'primereact/button';
 
 interface Category {
   name: string;
@@ -113,21 +115,21 @@ export default function InputPanel({ handleSubmission } : { handleSubmission: an
         </div>
         <div className="input-area">
           <p>What do you want to draw?</p>
-          <textarea
+          <InputTextarea
             className="text-area"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Enter a prompt"
-          ></textarea>
+          ></InputTextarea>
         </div>
         <div className="submit">
-          <button
+          <Button
             className="submit-button"
             type="submit"
             onClick={handleSubmit}
           >
             Generate
-          </button>
+          </Button>
         </div>
       </div>
     </div>
