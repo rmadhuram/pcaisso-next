@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { usePub } from '../../hooks/usePubSub';
 import { useAsyncRoutePush } from "@/app/utils/asyn-push";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Button } from 'primereact/button';
 
 interface Category {
   name: string;
@@ -18,7 +20,7 @@ interface model {
   code: string;
 }
 
-export default function InputPanel() {
+export default function InputPanel({ handleSubmission } : { handleSubmission: any}) {
   const categories = [
     { name: "2D (Canvas)", key: "2D" },
     { name: "SVG (Vector Graphics)", key: "SVG" },
@@ -46,13 +48,16 @@ export default function InputPanel() {
   const asyncPush = useAsyncRoutePush()
 
   const handleSubmit = async () => {
-    await asyncPush(`/home/results`)
+    //await asyncPush(`/home/results`)
 
     console.log('routing done')
 
-    setTimeout(function() {
+    /*setTimeout(function() {
       publish('CREATE_NEW', { prompt, category: selectedCategory.key, model : selectedModel?.name })
-    }, 1000)
+    }, 1000)*/
+
+    handleSubmission({ prompt, category: selectedCategory.key, model : selectedModel?.name })
+    
   };
 
   return (
@@ -96,36 +101,35 @@ export default function InputPanel() {
             </div>
           </div>
         </div>
+        <div className="select-model">
+          <span>Select Model </span>
+          <Dropdown
+            value={selectedModel}
+            onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
+            options={models}
+            optionLabel="name"
+            editable
+            placeholder="Select a gpt model"
+            className="w-full md:w-14rem model-options"
+          />
+        </div>
         <div className="input-area">
           <p>What do you want to draw?</p>
-          
-          <div className="card">
-            <Dropdown
-              value={selectedModel}
-              onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
-              options={models}
-              optionLabel="name"
-              editable
-              placeholder="Select a gpt model"
-              className="w-full md:w-14rem model-options"
-            />
-        
-          </div>
-          <textarea
+          <InputTextarea
             className="text-area"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Enter a prompt"
-          ></textarea>
+          ></InputTextarea>
         </div>
         <div className="submit">
-          <button
+          <Button
             className="submit-button"
             type="submit"
             onClick={handleSubmit}
           >
             Generate
-          </button>
+          </Button>
         </div>
       </div>
     </div>

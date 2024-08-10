@@ -1,4 +1,4 @@
-@import "../../../styles/variables";
+@import "../../styles/variables";
 
 .results :global {
   flex-grow: 1;
@@ -6,34 +6,21 @@
   .p-tabview {
     width: 100%;
 
-    .p-tabview-nav-container {
-      position: absolute;
-      width: 100%;
-      .p-tabview-nav-content {
-        ul {
-          li {
-            margin-right: 10px;
-            border: 4px solid white;
-
-            &:hover {
-              border: 4px solid rgb(166, 213, 250);
-            }
-
-            a {
-              span {
-                font-size: 12px;
-                padding: 10px;
-              }
-            }
-          }
-        }
+    .p-tabview-nav {
+      a {
+        font-weight: 400;
+        font-family: "Chivo Mono", monospace;
+        font-size: 14px;
       }
     }
 
     .p-tabview-panels {
+      padding: 0;
+
       .p-tabview-panel {
         height: $default-height;
-        font-size: 12px;
+        font-size: 11px;
+        position: relative;
 
         .output-frame {
           overflow: scroll;
@@ -45,12 +32,16 @@
 
         .display-time {
           position: absolute;
-          bottom: 0;
+          bottom: 60px;
+          left: 10px;
           opacity: 0.5;
           background: white;
-          width: 100%;
+          width: 300px;
           color: rgb(0, 0, 0);
-          padding: 10px;
+          padding: 0px 10px;
+          font-size: 0.9rem;
+          border-radius: 10px;
+          text-align: center;
         }
 
         .code-panel {
@@ -59,9 +50,15 @@
           height: $default-height;
           background: white;
           color: black;
-          padding: 10px;
-          padding-top: 50px;
+          margin: 0;
+
+          pre {
+            margin: 0 !important; 
+            padding-top: 10px;
+            padding-bottom: 20px;
+          }
         }
+
       }
     }
   }
