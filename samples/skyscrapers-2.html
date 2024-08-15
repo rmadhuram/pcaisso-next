@@ -1,0 +1,78 @@
+<!-- a cityscape.  road filled with skyscrapers -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cityscape on Canvas</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cityscapeCanvas" width="800" height="600"></canvas>
+    <script>
+        // Get the canvas element and context
+        var canvas = document.getElementById('cityscapeCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Function to draw the skyline
+        function drawBuilding(x, y, width, height, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, width, height);
+        }
+
+        // Draw sky
+        ctx.fillStyle = '#87CEEB';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw road
+        ctx.fillStyle = '#333333';
+        ctx.fillRect(0, 400, canvas.width, 100);
+        
+        // Draw road lines
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 3;
+        for (var i = 0; i < canvas.width; i += 40) {
+            ctx.beginPath();
+            ctx.moveTo(i, 450);
+            ctx.lineTo(i + 20, 450);
+            ctx.stroke();
+        }
+
+        // Draw buildings
+        var buildings = [
+            { x: 50, y: 200, width: 100, height: 200, color: '#8B0000' },
+            { x: 200, y: 100, width: 120, height: 300, color: '#2F4F4F' },
+            { x: 350, y: 250, width: 80, height: 150, color: '#708090' },
+            { x: 480, y: 180, width: 140, height: 220, color: '#DAA520' },
+            { x: 650, y: 240, width: 100, height: 160, color: '#556B2F' }
+        ];
+
+        for (var i = 0; i < buildings.length; i++) {
+            var building = buildings[i];
+            drawBuilding(building.x, building.y, building.width, building.height, building.color);
+        }
+
+        // Draw windows on buildings
+        function drawWindows(x, y, width, height, rows, cols) {
+            var windowWidth = (width - (cols + 1) * 4) / cols;
+            var windowHeight = (height - (rows + 1) * 4) / rows;
+            ctx.fillStyle = '#FFFFE0';
+            
+            for (var r = 0; r < rows; r++) {
+                for (var c = 0; c < cols; c++) {
+                    var winX = x + 4 + c * (windowWidth + 4);
+                    var winY = y + 4 + r * (windowHeight + 4);
+                    ctx.fillRect(winX, winY, windowWidth, windowHeight);
+                }
+            }
+        }
+
+        for (var i = 0; i < buildings.length; i++) {
+            var building = buildings[i];
+            drawWindows(building.x, building.y, building.width, building.height, 8, 4);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!-- a road filled with skyscrapers -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyscrapers and Road</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #eef;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<canvas id="cityCanvas" width="800" height="600"></canvas>
+<script>
+    const canvas = document.getElementById('cityCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    const roadHeight = 100;
+    const roadY = canvas.height - roadHeight;
+
+    // Draw Road
+    ctx.fillStyle = '#444';
+    ctx.fillRect(0, roadY, canvas.width, roadHeight);
+
+    // Draw Road Markings
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 5;
+    ctx.setLineDash([20, 15]);
+    ctx.beginPath();
+    ctx.moveTo(0, roadY + roadHeight / 2);
+    ctx.lineTo(canvas.width, roadY + roadHeight / 2);
+    ctx.stroke();
+
+    const skyscraperColors = ['#aaa', '#555', '#888', '#999', '#bbb'];
+    
+    // Draw Skyscrapers
+    function drawSkyscraper(x, width, height, color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, roadY - height, width, height);
+        
+        // Adding windows to the skyscraper
+        ctx.fillStyle = '#cef';
+        const windowRows = Math.floor(height / 30);
+        const windowCols = Math.floor(width / 30);
+        
+        for (let row = 0; row < windowRows; row++) {
+            for (let col = 0; col < windowCols; col++) {
+                ctx.fillRect(x + col * 30 + 5, roadY - height + row * 30 + 5, 20, 20);
+            }
+        }
+    }
+    
+    function drawCity() {
+        const skyscraperNum = 10;
+        const maxSkyscraperWidth = 70;
+        const maxSkyscraperHeight = 300;
+
+        for (let i = 0; i < skyscraperNum; i++) {
+            const width = maxSkyscraperWidth - Math.random() * 30;
+            const height = maxSkyscraperHeight - Math.random() * 100;
+            const x = i * (maxSkyscraperWidth + 20);
+            const color = skyscraperColors[Math.floor(Math.random() * skyscraperColors.length)];
+            
+            drawSkyscraper(x, width, height, color);
+        }
+    }
+
+    drawCity();
+</script>
+</body>
+</html>
