@@ -1,0 +1,20 @@
+.submitbtn {
+  
+  button {
+    background: white;
+    border: none;
+    width: 80px;
+    height: 25px;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    margin-right: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
