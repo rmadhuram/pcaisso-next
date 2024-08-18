@@ -1,1 +1,157 @@
+<<<<<<< HEAD
 
+=======
+@import "../styles/variables";
+@import "../styles/mixins";
+
+.intro :global {
+  height: $default-height;
+  @include background;
+  color: white;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  overflow: scroll;
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+  h1 {
+    font-family: "Rubik Pixels", cursive;
+    font-size: 80px;
+    font-weight: normal;
+    margin: 0;
+
+    span {
+      color: $red-variation;
+    }
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 300;
+    color: yellow;
+  }
+
+  h3 {
+    width: 1200px;
+    margin: 20px 0 0 0;
+  }
+
+  p.explain {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: #aaa;
+    width: 960px;
+    text-align: center;
+  }
+
+  .gallery {
+    width: 1200px;
+    display: grid;
+    grid-template-columns: 33% 34% 33%;
+    column-gap: 20px;
+    row-gap: 20px;
+
+    .item {
+      border: 1px solid #444;
+      border-radius: 10px;
+      height: 300px;
+      max-height: 300px;
+      -webkit-backdrop-filter: blur(8px);  /* Safari 9+ */
+      backdrop-filter: blur(8px); /* Chrome and Opera */
+      box-shadow: inset 0 0 0 200px rgba(255,255,255,0.08);
+      position: relative;
+
+      video {
+        max-height: 298px;
+      }
+
+      &.item-1 {
+        background: url(/demos/skyscraper-japan.png);
+        background-size: cover;
+      }
+
+      &.item-2 {
+        background: url(/demos/parabola-art.png);
+        background-size: cover;
+      }
+
+      &.item-3 {
+        background: url(/demos/church.png);
+        background-size: cover;
+      }
+
+      &.viz-1 {
+        background: url(/demos/viz1.png);
+        background-size: cover;
+      }
+
+      .bottom-section {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        height: 70px;
+        background-color: #444;
+        opacity: 0.8;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          opacity: 0.9;
+        }
+
+        p {
+          color: #fff;
+          flex-grow: 1;
+          line-height: 1rem;
+        }
+      }
+    }
+  }
+
+  .cover-pages {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+    .cover {
+      width: 160px;
+      height: 160px;
+      border-radius: 100px;
+      border: 2px dotted #ccc;
+      background-size: contain;
+    }
+
+    .cover-1 {
+      background-image: url(../assets/cover1.jpg);
+    }
+
+    .cover-2 {
+      background-image: url(../assets/cover2-1.png);
+    }
+
+    .cover-3 {
+      background-image: url(../assets/cover3.png);
+    }
+  }
+
+  .footer {
+    margin-top: 50px;
+    font-size: 14px;
+
+    a {
+      color: wheat;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+>>>>>>> 67d7c590f57737e34cc4863655eb09272cd9f7fe

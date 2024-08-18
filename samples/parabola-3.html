@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parabolas and Circles Art</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="artCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('artCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw parabolas
+        function drawParabolas() {
+            const height = 600;
+            const width = 800;
+            const step = 20;
+
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i <= width; i += step) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.quadraticCurveTo(width / 2, height / 2, i, height);
+                ctx.stroke();
+            }
+
+            for (let i = 0; i <= height; i += step) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.quadraticCurveTo(width / 2, height / 2, width, i);
+                ctx.stroke();
+            }
+        }
+
+        // Draw circles
+        function drawCircles() {
+            const centerX = 400;
+            const centerY = 300;
+            const radii = [50, 100, 150, 200];
+            const colors = ['red', 'green', 'purple', 'orange'];
+
+            radii.forEach((radius, index) => {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
+                ctx.strokeStyle = colors[index];
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            });
+        }
+
+        function drawArt() {
+            drawParabolas();
+            drawCircles();
+        }
+
+        drawArt();
+    </script>
+</body>
+</html>

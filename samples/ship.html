@@ -1,0 +1,81 @@
+<!-- A ship on the ocean. the waves are rough. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship on the Ocean</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-color: #87CEEB; /* Light sky blue */
+        }
+    </style>
+</head>
+<body>   
+    <canvas id="scene" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('scene');
+        const ctx = canvas.getContext('2d');
+
+        function drawWaves() {
+            ctx.beginPath();
+            ctx.moveTo(0, 350);
+            for (let i = 0; i < canvas.width; i += 10) {
+                ctx.quadraticCurveTo(i + 5, 300 + (Math.sin(i / 20) * 50), i + 10, 350);
+            }
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(0, canvas.height);
+            ctx.closePath();
+            ctx.fillStyle = '#1E90FF'; // Dodger blue for the waves
+            ctx.fill();
+        }
+
+        function drawShip() {
+            ctx.save();
+            ctx.translate(400, 300);
+            ctx.rotate(Math.sin(Date.now() / 1000) / 10);
+
+            // Draw ship hull
+            ctx.beginPath();
+            ctx.moveTo(-50, 0);
+            ctx.lineTo(50, 0);
+            ctx.lineTo(30, 20);
+            ctx.lineTo(-30, 20);
+            ctx.closePath();
+            ctx.fillStyle = '#8B4513'; // Saddle brown for the hull
+            ctx.fill();
+
+            // Draw ship mast
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -50);
+            ctx.strokeStyle = '#8B4513'; // Saddle brown for the mast
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Draw ship sail
+            ctx.beginPath();
+            ctx.moveTo(0, -50);
+            ctx.lineTo(20, -20);
+            ctx.lineTo(0, -20);
+            ctx.closePath();
+            ctx.fillStyle = '#FFFFFF'; // White for the sail
+            ctx.fill();
+
+            // Restore the original state
+            ctx.restore();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawWaves();
+            drawShip();
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>

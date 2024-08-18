@@ -1,0 +1,87 @@
+<!-- a Japan cityscape.  road filled with skyscrapers -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Japan Cityscape</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #e0f7fa;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cityscape" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('cityscape');
+        const ctx = canvas.getContext('2d');
+
+        // Sky
+        ctx.fillStyle = '#87CEEB';
+        ctx.fillRect(0, 0, 800, 600);
+
+        // Road
+        ctx.fillStyle = '#333';
+        ctx.fillRect(0, 500, 800, 100);
+
+        // Road lines
+        ctx.strokeStyle = '#FFF';
+        ctx.lineWidth = 5;
+        ctx.setLineDash([20, 15]);
+        ctx.beginPath();
+        ctx.moveTo(0, 550);
+        ctx.lineTo(800, 550);
+        ctx.stroke();
+
+        // Function to draw a building
+        function drawBuilding(x, y, width, height) {
+            ctx.fillStyle = '#B0B0B0';
+            ctx.fillRect(x, y, width, height);
+            ctx.strokeStyle = '#000';
+            ctx.strokeRect(x, y, width, height);
+
+            // Windows
+            const windowRows = Math.floor(height / 30);
+            const windowCols = Math.floor(width / 30);
+            
+            ctx.fillStyle = '#FFF';
+            for (let row = 0; row < windowRows; row++) {
+                for (let col = 0; col < windowCols; col++) {
+                    ctx.fillRect(
+                        x + col * 30 + 5,
+                        y + row * 30 + 5,
+                        20, 20
+                    );
+                }
+            }
+        }
+
+        // Draw multiple buildings
+        let buildings = [
+            { x: 50, y: 300, width: 100, height: 200 },
+            { x: 200, y: 250, width: 150, height: 250 },
+            { x: 400, y: 350, width: 120, height: 150 },
+            { x: 550, y: 200, width: 180, height: 300 },
+            { x: 750, y: 300, width: 80, height: 200 }
+        ];
+
+        buildings.forEach(building => {
+            drawBuilding(building.x, building.y, building.width, building.height);
+        });
+
+        // Additional touches, such as sun
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath();
+        ctx.arc(700, 100, 50, 0, Math.PI * 2, true);
+        ctx.fill();
+    </script>
+</body>
+</html>

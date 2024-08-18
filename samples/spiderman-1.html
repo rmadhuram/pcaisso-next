@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Man Drawing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #F0F0F0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="spidermanCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('spidermanCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawSpiderman() {
+            // Draw head
+            ctx.beginPath();
+            ctx.arc(400, 300, 150, 0, Math.PI * 2, true);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+
+            // Draw eyes
+            ctx.beginPath();
+            ctx.ellipse(350, 250, 40, 60, Math.PI / 6, 0, Math.PI * 2);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.ellipse(450, 250, 40, 60, -Math.PI / 6, 0, Math.PI * 2);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+
+            // Draw web pattern
+            ctx.strokeStyle = 'black';
+            for (let i = 0; i < 8; i++) {
+                ctx.beginPath();
+                ctx.moveTo(400, 300);
+                ctx.lineTo(400 + 150 * Math.cos(i * Math.PI / 4), 300 + 150 * Math.sin(i * Math.PI / 4));
+                ctx.stroke();
+            }
+
+            for (let j = 0; j <= 4; j++) {
+                ctx.beginPath();
+                ctx.arc(400, 300, 30 + j * 30, 0, Math.PI * 2, true);
+                ctx.stroke();
+            }
+        }
+
+        drawSpiderman();
+    </script>
+</body>
+</html>

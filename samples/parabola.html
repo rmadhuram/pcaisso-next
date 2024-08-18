@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Art with Parabolas and Circles</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="artCanvas" width="800" height="600"></canvas>
+    <script>
+        // Get the canvas element and its drawing context
+        const canvas = document.getElementById('artCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw parabolas
+        function drawParabola(startX, startY, endX, endY, controlX, controlY, color) {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.quadraticCurveTo(controlX, controlY, endX, endY);
+            ctx.strokeStyle = color;
+            ctx.stroke();
+        }
+
+        // Draw circles
+        function drawCircle(centerX, centerY, radius, color) {
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        // Draw multiple parabolas
+        const parabolaColors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#00FFFF'];
+        const nParabolas = 20;
+        for (let i = 0; i <= nParabolas; i++) {
+            const color = parabolaColors[i % parabolaColors.length];
+            drawParabola(100, 50 + i * 20, 700, 50 + i * 20, 400, 300, color);
+        }
+
+        // Draw concentric circles in the center
+        const circleColors = ['#FF00FF', '#FF6600', '#0066FF', '#33CC33'];
+        const numberOfCircles = 10;
+        for (let i = 0; i < numberOfCircles; i++) {
+            const radius = 20 + i * 20;
+            const color = circleColors[i % circleColors.length];
+            drawCircle(400, 300, radius, color);
+        }
+    </script>
+  </body>
+  </html>
+  

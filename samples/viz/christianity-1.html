@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Radial Tree of Christian Denominations</title>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<style>
+		body {
+			background-color: #333;
+		}
+ 
+		text {
+			font-family: 'Open Sans', sans-serif;
+			font-size: 12px;
+			fill: #fff;
+		}
+ 
+		path.link {
+			fill: none;
+			stroke: #777;
+			stroke-width: 1px;
+		}
+ 
+		circle {
+			fill: #fff;
+			stroke: #777;
+			stroke-width: 1px;
+		}
+ 
+		.node {
+			cursor: pointer;
+		}
+ 
+		.node-group {
+			filter: drop-shadow(0px 0px 2px #fff);
+		}
+ 
+		.node-group:hover {
+			filter: drop-shadow(0px 0px 8px #fff);
+		}
+	</style>
+</head>
+<body>
+	<script>
+		var data = {
+			"name": "Christianity",
+			"children": [
+				{
+					"name": "Catholic",
+					"children": [
+						{"name": "Roman Catholic"},
+						{"name": "Anglican Use"}
+					]
+				},
+				{
+					"name": "Orthodox",
+					"children": [
+						{"name": "Eastern Orthodox"},
+						{"name": "Oriental Orthodox"},
+						{"name": "Independent Orthodox"}
+					]
+				},
+				{
+					"name": "Protestant",
+					"children": [
+						{"name": "Anglican"},
+						{"name": "Lutheran"},
+						{"name": "Reformed"},
+						{"name": "Methodist"},
+						{"name": "Baptist"},
+						{"name": "Adventist"},
+						{"name": "Unitarian Universalist"}
+					]
+				},
+				{
+					"name": "Other",
+					"children": [
+						{"name": "Mormon"},
+						{"name": "Jehovah's Witness"},
+						{"name": "Quaker"},
+						{"name": "Other Christian"}
+					]
+				}
+			]
+		};
+ 
+		var width = window.innerWidth;
+		var height = window.innerHeight;
+ 
+		var svg = d3.select("body").append("svg")
+			.attr("width", width)
+			.attr("height", height);
+ 
+		var g = svg.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+ 
+		var tree = d3.tree()
+			.size([360, width / 4])
+			.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+ 
+		var root = d3.hierarchy(data);
+		tree(root);
+ 
+		var link = g.selectAll(".link")
+			.data(root.links())
+			.enter().append("path")
+			.attr("class", "link")
+			.attr("d", d3.linkRadial()
+				.angle(function(d) { return d.x / 180 * Math.PI; })
+				.radius(function(d) { return d.y; }));
+ 
+		var node = g.selectAll(".node")
+			.data(root.descendants())
+			.enter().append("g")
+			.attr("class", function(d) { return "node" + (d.children ? " node-group" : ""); })
+			.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; });
+ 
+		node.append("circle")
+			.attr("r", 4.5);
+ 
+		node.append("text")
+			.attr("dy", ".31em")
+			.attr("x", function(d) { return d.x < 180 ? 6 : -6; })
+			.style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+			.attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
+			.text(function(d) { return d.data.name; });
+ 
+	</script>
+</body>
+</html>

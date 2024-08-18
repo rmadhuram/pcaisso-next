@@ -1,13 +1,14 @@
 body {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   margin: 0;
   padding: 0;
   font-size: 12px;
   font-family: "Roboto", sans-serif;
+  overflow: hidden;
     
   .contents {
     flex-grow: 1;
+    overflow: scroll;
   }
 }
