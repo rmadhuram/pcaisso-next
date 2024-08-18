@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Clock</title>
+    <style>
+        body {
+            background-color: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        canvas {
+            background-color: wheat;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="clockCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('clockCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawClock() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const now = new Date();
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(-Math.PI / 2);
+
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 8;
+            ctx.lineCap = "round";
+
+            // Draw hour marks
+            ctx.save();
+            for (let i = 0; i < 12; i++) {
+                ctx.beginPath();
+                ctx.rotate(Math.PI / 6);
+                ctx.moveTo(radius * 0.85, 0);
+                ctx.lineTo(radius, 0);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // Draw minute marks
+            ctx.save();
+            ctx.lineWidth = 4;
+            for (let i = 0; i < 60; i++) {
+                if (i % 5 !== 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(radius * 0.92, 0);
+                    ctx.lineTo(radius, 0);
+                    ctx.stroke();
+                }
+                ctx.rotate(Math.PI / 30);
+            }
+            ctx.restore();
+
+            const sec = now.getSeconds();
+            const min = now.getMinutes();
+            const hr = now.getHours();
+
+            // Draw hour hand
+            ctx.save();
+            ctx.rotate((Math.PI / 6) * (hr % 12) + (Math.PI / 360) * min + (Math.PI / 21600) * sec);
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.moveTo(-radius * 0.2, 0);
+            ctx.lineTo(radius * 0.5, 0);
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw minute hand
+            ctx.save();
+            ctx.rotate((Math.PI / 30) * min + (Math.PI / 1800) * sec);
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.moveTo(-radius * 0.2, 0);
+            ctx.lineTo(radius * 0.75, 0);
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw second hand
+            ctx.save();
+            ctx.rotate((Math.PI / 30) * sec);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(-radius * 0.3, 0);
+            ctx.lineTo(radius * 0.85, 0);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+            ctx.restore();
+
+            ctx.restore();
+        }
+
+        function updateClock() {
+            drawClock();
+            requestAnimationFrame(updateClock);
+        }
+
+        updateClock();
+    </script>
+</body>
+</html>
