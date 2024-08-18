@@ -1,0 +1,89 @@
+<!-- draw something interesting that has middle east vibes -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Middle Eastern Vibes Canvas</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        canvas {
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600"></canvas>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Set the color palette
+    const colors = ['#D4A5A5', '#FFC857', '#E9724C', '#C5283D', '#481D24'];
+
+    // Draw the background
+    ctx.fillStyle = colors[0];
+    ctx.fillRect(0, 0, width, height);
+
+    // Function to draw an 8-point star
+    function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+        let rot = Math.PI / 2 * 3;
+        let x = cx;
+        let y = cy;
+        const step = Math.PI / spikes;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - outerRadius);
+        for (let i = 0; i < spikes; i++) {
+            x = cx + Math.cos(rot) * outerRadius;
+            y = cy + Math.sin(rot) * outerRadius;
+            ctx.lineTo(x, y);
+            rot += step;
+
+            x = cx + Math.cos(rot) * innerRadius;
+            y = cy + Math.sin(rot) * innerRadius;
+            ctx.lineTo(x, y);
+            rot += step;
+        }
+        ctx.lineTo(cx, cy - outerRadius);
+        ctx.closePath();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = '#E9724C';
+        ctx.stroke();
+        ctx.fillStyle = '#FFC857';
+        ctx.fill();
+    }
+
+    // Draw a tiled pattern of stars
+    const starRadius = 60;
+    const spacing = 140;
+    for (let y = 0; y <= height; y += spacing) {
+        for (let x = 0; x <= width; x += spacing) {
+            drawStar(x, y, 8, starRadius, starRadius / 2);
+        }
+    }
+
+    // Draw additional decorative circles
+    for (let y = starRadius; y <= height; y += spacing) {
+        for (let x = starRadius; x <= width; x += spacing) {
+            ctx.beginPath();
+            ctx.arc(x, y, starRadius / 4, 0, Math.PI * 2);
+            ctx.fillStyle = colors[3];
+            ctx.fill();
+        }
+    }
+
+</script>
+</body>
+</html>

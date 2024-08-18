@@ -1,0 +1,99 @@
+<!-- draw something interesting -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Drawing</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="800" height="600"></canvas>
+
+<script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Sky
+    ctx.fillStyle = '#87CEEB';
+    ctx.fillRect(0, 0, 800, 600);
+
+    // Sun
+    ctx.beginPath();
+    ctx.arc(700, 100, 50, 0, Math.PI * 2, true);
+    ctx.fillStyle = 'yellow';
+    ctx.fill();
+
+    // Grass
+    ctx.fillStyle = '#32CD32';
+    ctx.fillRect(0, 500, 800, 100);
+
+    // Tree trunk
+    ctx.fillStyle = '#8B4513';
+    ctx.fillRect(150, 400, 50, 100);
+
+    // Tree leaves
+    ctx.beginPath();
+    ctx.arc(175, 350, 50, 0, Math.PI * 2);
+    ctx.fillStyle = '#228B22';
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(125, 370, 50, 0, Math.PI * 2);
+    ctx.fillStyle = '#228B22';
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(225, 370, 50, 0, Math.PI * 2);
+    ctx.fillStyle = '#228B22';
+    ctx.fill();
+
+    // Pathway
+    ctx.fillStyle = '#d2b48c';
+    ctx.beginPath();
+    ctx.moveTo(400, 600);
+    ctx.lineTo(600, 600);
+    ctx.lineTo(500, 500);
+    ctx.fill();
+
+    // Flowers
+    function drawFlower(x, y) {
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + 10, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + 5, y + 10, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = 'yellow';
+        ctx.beginPath();
+        ctx.arc(x + 5, y + 5, 5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    drawFlower(100, 550);
+    drawFlower(200, 550);
+    drawFlower(300, 550);
+    drawFlower(400, 550);
+
+</script>
+
+</body>
+</html>
