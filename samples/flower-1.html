@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower with Stem Drawing</title>
+</head>
+<body>
+    <canvas id="flowerCanvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+    <script>
+        function drawFlower() {
+            var canvas = document.getElementById('flowerCanvas');
+            var ctx = canvas.getContext('2d');
+
+            // Draw the stem
+            ctx.beginPath();
+            ctx.moveTo(400, 600);
+            ctx.lineTo(400, 400);
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = 'green';
+            ctx.stroke();
+
+            // Draw the center of the flower
+            ctx.beginPath();
+            ctx.arc(400, 350, 30, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'yellow';
+            ctx.fill();
+            ctx.strokeStyle = 'orange';
+            ctx.stroke();
+
+            // Function to draw petals
+            function drawPetal(cx, cy, radius, startAngle, color) {
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, startAngle, startAngle + Math.PI, false);
+                ctx.lineTo(cx, cy);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = color;
+                ctx.stroke();
+            }
+
+            // Draw petals around the center
+            var petalColors = ['red', 'pink', 'purple', 'blue', 'orange'];
+            var petalRadius = 50;
+            for (var i = 0; i < 5; i++) {
+                var angle = i * (2 * Math.PI / 5) - Math.PI / 2;
+                var x = 400 + petalRadius * Math.cos(angle);
+                var y = 350 + petalRadius * Math.sin(angle);
+                drawPetal(x, y, petalRadius, angle, petalColors[i]);
+            }
+        }
+
+        drawFlower();
+    </script>
+</body>
+</html>

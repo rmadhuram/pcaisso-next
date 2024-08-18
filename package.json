@@ -9,16 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "eventemitter3": "^5.0.1",
+    "next": "^14.2.5",
+    "openai": "^4.53.2",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.7.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.4"
+    "react-loading-skeleton": "^3.4.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "eslint": "^8",
-    "eslint-config-next": "14.2.4"
+    "eslint-config-next": "14.2.4",
+    "sass": "^1.77.8",
+    "typescript": "^5"
   }
 }

@@ -1,0 +1,174 @@
+<!--
+
+a radial tree showing the denominations of christianity. 
+It should have minimum of 40 nodes. 
+make it self contained without loading from csv. 
+draw in dark mode.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radial Tree - Christian Denominations</title>
+    <style>
+        /* General body styling for dark mode */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        /* SVG styling */
+        svg {
+            display: block;
+            margin: auto;
+            background-color: #212121;
+        }
+
+        /* Text styling */
+        .node text {
+            font-size: 12px;
+            fill: #e0e0e0;
+        }
+
+        /* Link styling */
+        .link {
+            fill: none;
+            stroke: #888888;
+            stroke-width: 1.5px;
+        }
+
+        .node circle {
+            fill: #0066cc;
+            stroke: none;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chart"></div>
+
+<!-- Load D3.js -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+    // Define the tree data
+    const treeData = {
+        "name": "Christianity",
+        "children": [
+            {
+                "name": "Catholicism",
+                "children": [
+                    {"name": "Roman Catholic"},
+                    {"name": "Eastern Catholic"}
+                ]
+            },
+            {
+                "name": "Orthodoxy",
+                "children": [
+                    {
+                        "name": "Eastern Orthodox",
+                        "children": [
+                            {"name": "Greek Orthodox"},
+                            {"name": "Russian Orthodox"},
+                            {"name": "Serbian Orthodox"},
+                            {"name": "Bulgarian Orthodox"}
+                        ]
+                    },
+                    {
+                        "name": "Oriental Orthodox",
+                        "children": [
+                            {"name": "Coptic Orthodox"},
+                            {"name": "Armenian Apostolic"},
+                            {"name": "Ethiopian Orthodox"},
+                            {"name": "Syriac Orthodox"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Protestantism",
+                "children": [
+                    {"name": "Lutheranism"},
+                    {"name": "Anglicanism"},
+                    {"name": "Reformed"},
+                    {"name": "Baptist"},
+                    {"name": "Methodist"},
+                    {"name": "Pentecostalism"},
+                    {"name": "Adventism"}
+                ]
+            },
+            {
+                "name": "Restorationism",
+                "children": [
+                    {"name": "Latter Day Saints"},
+                    {"name": "Jehovah's Witnesses"}
+                ]
+            },
+            {
+                "name": "Nontrinitarianism",
+                "children": [
+                    {"name": "Unitarian Universalism"},
+                    {"name": "Oneness Pentecostalism"},
+                    {"name": "Jehovah's Witnesses"}
+                ]
+            },
+            {
+                "name": "Other Movements",
+                "children": [
+                    {"name": "New Apostolic Church"},
+                    {"name": "Church of the East"}
+                ]
+            }
+        ]
+    };
+
+    // Set up the SVG canvas dimensions
+    const width = 1000;
+    const height = 1000;
+    const radius = Math.min(width, height) / 2;
+
+    const svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", `translate(${width / 2},${height / 2})`);
+
+    const tree = d3.cluster()
+        .size([2 * Math.PI, radius - 100]);
+
+    const root = d3.hierarchy(treeData);
+
+    tree(root);
+
+    const link = svg.selectAll(".link")
+        .data(root.links())
+        .enter()
+        .append("path")
+        .attr("class", "link")
+        .attr("d", d3.linkRadial()
+            .angle(d => d.x)
+            .radius(d => d.y)
+        );
+
+    const node = svg.selectAll(".node")
+        .data(root.descendants())
+        .enter().append("g")
+        .attr("class", "node")
+        .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90})translate(${d.y},0)`);
+
+    node.append("circle")
+        .attr("r", 4.5);
+
+    node.append("text")
+        .attr("dy", "0.31em")
+        .attr("x", d => d.x < Math.PI ? 6 : -6)
+        .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
+        .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+        .text(d => d.data.name);
+</script>
+</body>
+</html>

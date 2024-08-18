@@ -1,0 +1,23 @@
+@import "../../../styles/variables";
+
+.navbar {
+  background-color: #435167;
+  color: white;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  h3 {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    font-weight: 100;
+    font-size: 18px;
+    padding: 5px 10px;
+    text-shadow: 1px 1px #aaa;
+
+    span {
+      color: $red-variation;
+    }
+  }
+}

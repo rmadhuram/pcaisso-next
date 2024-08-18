@@ -1,0 +1,65 @@
+@import "../../styles/variables";
+
+.results :global {
+  flex-grow: 1;
+
+  .p-tabview {
+    width: 100%;
+
+    .p-tabview-nav {
+      a {
+        font-weight: 400;
+        font-family: "Chivo Mono", monospace;
+        font-size: 14px;
+      }
+    }
+
+    .p-tabview-panels {
+      padding: 0;
+
+      .p-tabview-panel {
+        height: $default-height;
+        font-size: 11px;
+        position: relative;
+
+        .output-frame {
+          overflow: scroll;
+          width: 100%;
+          height: $default-height;
+          background: black;
+          border: none;
+        }
+
+        .display-time {
+          position: absolute;
+          bottom: 60px;
+          left: 10px;
+          opacity: 0.5;
+          background: white;
+          width: 300px;
+          color: rgb(0, 0, 0);
+          padding: 0px 10px;
+          font-size: 0.9rem;
+          border-radius: 10px;
+          text-align: center;
+        }
+
+        .code-panel {
+          overflow: scroll;
+          width: 100%;
+          height: $default-height;
+          background: white;
+          color: black;
+          margin: 0;
+
+          pre {
+            margin: 0 !important; 
+            padding-top: 10px;
+            padding-bottom: 20px;
+          }
+        }
+
+      }
+    }
+  }
+}

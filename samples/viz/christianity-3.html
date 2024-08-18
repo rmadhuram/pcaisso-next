@@ -1,0 +1,168 @@
+<!--
+
+Create a radial tree showing the denominations of Christianity. It should have a minimum of 40 nodes. Make it self-contained without loading from CSV. 
+Draw with a light yellow background.
+
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Christian Denominations Radial Tree</title>
+    <style>
+        body {
+            background-color: lightyellow;
+        }
+        .node circle {
+            fill: steelblue;
+            stroke: darkblue;
+            stroke-width: 1.5px;
+        }
+        .node text {
+            font: 12px sans-serif;
+        }
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <script>
+        const width = 960;
+        const height = 600;
+        const radius = Math.min(width, height) / 2;
+
+        const tree = d3.cluster()
+            .size([2 * Math.PI, radius - 100]);
+
+        const root = d3.hierarchy({
+            name: "Christianity",
+            children: [
+                {
+                    name: "Catholicism",
+                    children: [
+                        { name: "Roman Catholic Church" },
+                        { name: "Eastern Catholic Churches"
+                        },
+                        { name: "Old Catholic Church" }
+                    ]
+                },
+                {
+                    name: "Orthodox Christianity",
+                    children: [
+                        { name: "Eastern Orthodox Church" },
+                        { name: "Oriental Orthodox Churches" },
+                        { name: "Assyrian Church of the East" }
+                    ]
+                },
+                {
+                    name: "Protestantism",
+                    children: [
+                        {
+                            name: "Lutheranism",
+                            children: [
+                                { name: "ELCA" },
+                                { name: "LCMS" },
+                                { name: "WELS" }
+                            ]
+                        },
+                        {
+                            name: "Reformed",
+                            children: [
+                                { name: "Presbyterianism" },
+                                { name: "Congregationalism" },
+                                { name: "Dutch Reformed" }
+                            ]
+                        },
+                        {
+                            name: "Anabaptism",
+                            children: [
+                                { name: "Mennonites" },
+                                { name: "Hutterites" },
+                                { name: "Amish" }
+                            ]
+                        },
+                        {
+                            name: "Anglicanism",
+                            children: [
+                                { name: "Episcopal Church" },
+                                { name: "Church of England" }
+                            ]
+                        },
+                        {
+                            name: "Baptist",
+                            children: [
+                                { name: "Southern Baptist" },
+                                { name: "American Baptist" },
+                                { name: "National Baptist" }
+                            ]
+                        },
+                        {
+                            name: "Methodism",
+                            children: [
+                                { name: "United Methodist" },
+                                { name: "African Methodist Episcopal" },
+                                { name: "Free Methodist" }
+                            ]
+                        },
+                        {
+                            name: "Pentecostalism",
+                            children: [
+                                { name: "Assemblies of God" },
+                                { name: "Church of God" },
+                                { name: "Foursquare Gospel" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Restorationism",
+                    children: [
+                        { name: "Jehovah's Witnesses" },
+                        { name: "Church of Jesus Christ of Latter-day Saints" },
+                        { name: "Church of Christ" }
+                    ]
+                }
+            ]
+        });
+
+        const svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${width / 2},${height / 2})`);
+
+        tree(root);
+
+        const link = svg.selectAll(".link")
+            .data(root.links())
+            .enter().append("path")
+            .attr("class", "link")
+            .attr("d", d3.linkRadial()
+                          .angle(d => d.x)
+                          .radius(d => d.y));
+
+        const node = svg.selectAll(".node")
+            .data(root.descendants())
+            .enter().append("g")
+            .attr("class", "node")
+            .attr("transform", d => `
+                rotate(${d.x * 180 / Math.PI - 90})
+                translate(${d.y},0)`);
+
+        node.append("circle")
+            .attr("r", 4.5);
+
+        node.append("text")
+            .attr("dy", "0.31em")
+            .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
+            .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
+            .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+            .text(d => d.data.name);
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>House Drawing</title>
+</head>
+<body>
+  <canvas id="houseCanvas" width="400" height="400"></canvas>
+  <script>
+    var canvas = document.getElementById('houseCanvas');
+    var ctx = canvas.getContext('2d');
+
+    // Draw the sky
+    ctx.fillStyle = '#87CEEB';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the ground
+    ctx.fillStyle = '#964B00';
+    ctx.fillRect(0, canvas.height - 50, canvas.width, 50);
+
+    // Draw the house
+    ctx.fillStyle = '#F2F2F2';
+    ctx.fillRect(100, 100, 200, 150);
+
+    // Draw the roof
+    ctx.fillStyle = '#A52A2A';
+    ctx.beginPath();
+    ctx.moveTo(100, 100);
+    ctx.lineTo(300, 100);
+    ctx.lineTo(200, 50);
+    ctx.closePath();
+    ctx.fill();
+
+    // Draw the door
+    ctx.fillStyle = '#786C3B';
+    ctx.fillRect(150, 220, 50, 80);
+
+    // Draw the windows
+    ctx.fillStyle = '#ADD8E6';
+    ctx.fillRect(120, 150, 30, 30);
+    ctx.fillRect(220, 150, 30, 30);
+
+    // Add some outlines
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(100, 100, 200, 150);
+    ctx.strokeRect(150, 220, 50, 80);
+    ctx.strokeRect(120, 150, 30, 30);
+    ctx.strokeRect(220, 150, 30, 30);
+  </script>
+</body>
+</html>

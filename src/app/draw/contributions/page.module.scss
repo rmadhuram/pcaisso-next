@@ -1,0 +1,47 @@
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
+
+.display :global {
+  height: $default-height;
+  @include background;
+  padding: 10px;
+
+  .credits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+      margin-top: 150px;
+      font-size: 24px;
+      font-weight: normal;
+    }
+
+    h3 {
+      color: yellow;
+      margin-top: 30px;
+    }
+
+    ul {
+      list-style: none;
+
+      li {
+        margin-top: 10px;
+        color: #ddd;
+        display: list-item;
+        text-align: center;
+
+        a {
+          text-decoration: none;
+          color: wheat;
+        }
+      }
+    }
+  }
+
+  h4 {
+    color: #727250;
+    margin-top: 10;
+    font-size: 0.8rem;
+  }
+}

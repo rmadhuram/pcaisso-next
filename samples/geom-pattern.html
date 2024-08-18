@@ -1,0 +1,103 @@
+<!--
+intricate geometric pattern reminiscent of Moghul architecture
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mughal Pattern</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  canvas {
+    border: 1px solid #000;
+  }
+</style>
+</head>
+<body>
+  <canvas id="canvas" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    const drawHexagon = (x, y, radius) => {
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        ctx.lineTo(x + radius * Math.cos(i * Math.PI / 3),
+                   y + radius * Math.sin(i * Math.PI / 3));
+      }
+      ctx.closePath();
+      ctx.stroke();
+    };
+
+    const drawPattern = (rows, cols, size) => {
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const x = col * size * 1.5;
+          const y = row * size * Math.sqrt(3);
+          if (col % 2 === 1) {
+            drawHexagon(x, y + size * Math.sqrt(3) / 2, size);
+          } else {
+            drawHexagon(x, y, size);
+          }
+        }
+      }
+    };
+
+    const drawStar = (cx, cy, spikes, outerRadius, innerRadius) => {
+      let rot = Math.PI / 2 * 3;
+      let x = cx;
+      let y = cy;
+      let step = Math.PI / spikes;
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - outerRadius);
+      for (let i = 0; i < spikes; i++) {
+        x = cx + Math.cos(rot) * outerRadius;
+        y = cy + Math.sin(rot) * outerRadius;
+        ctx.lineTo(x, y);
+        rot += step;
+
+        x = cx + Math.cos(rot) * innerRadius;
+        y = cy + Math.sin(rot) * innerRadius;
+        ctx.lineTo(x, y);
+        rot += step;
+      }
+      ctx.lineTo(cx, cy - outerRadius);
+      ctx.closePath();
+      ctx.stroke();
+    };
+
+    const initialize = () => {
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1;
+
+      // Draw the hexagonal pattern
+      drawPattern(10, 15, 40);
+
+      // Draw the stars at each hexagon center
+      for (let row = 0; row < 10; row++) {
+        for (let col = 0; col < 15; col++) {
+          let x = col * 40 * 1.5;
+          let y = row * 40 * Math.sqrt(3);
+          if (col % 2 === 1) {
+            y += 40 * Math.sqrt(3) / 2;
+          }
+
+          drawStar(x, y, 6, 20, 10);
+        }
+      }
+    };
+
+    initialize();
+  </script>
+</body>
+</html>

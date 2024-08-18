@@ -1,0 +1,140 @@
+<!--
+Create a radial dendrogram showing the denominations of Christianity. 
+It should have a minimum of 40 nodes. Make it self-contained without loading from CSV. 
+There should be no overlaps.
+Draw with a light yellow background.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radial Dendrogram of Christianity Denominations</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f5b5; /* light yellow background */
+            font-family: sans-serif;
+        }
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+        .node text { 
+            font: 10px sans-serif; 
+        }
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+        }
+    </style>
+</head>
+<body>
+    <svg width="960" height="960"></svg>
+    <script>
+        const data = {
+            "name": "Christianity",
+            "children": [
+                {
+                    "name": "Catholicism",
+                    "children": [
+                        {"name": "Roman Catholic"},
+                        {"name": "Eastern Catholic"}
+                    ]
+                },
+                {
+                    "name": "Protestantism",
+                    "children": [
+                        {"name": "Lutheranism"},
+                        {"name": "Anglicanism"},
+                        {"name": "Reformed", "children": [
+                            {"name": "Presbyterianism"},
+                            {"name": "Congregationalism"},
+                            {"name": "Evangelicalism"}
+                        ]},
+                        {"name": "Methodism"},
+                        {"name": "Baptist"},
+                        {"name": "Pentecostalism"},
+                        {"name": "Adventism"}
+                    ]
+                },
+                {
+                    "name": "Orthodoxy",
+                    "children": [
+                        {"name": "Eastern Orthodoxy"},
+                        {"name": "Oriental Orthodoxy"},
+                        {"name": "Eastern Catholic"}
+                    ]
+                },
+                {
+                    "name": "Restorationism",
+                    "children": [
+                        {"name": "Jehovah's Witnesses"},
+                        {"name": "Latter-Day Saints"},
+                        {"name": "Church of Christ"}
+                    ]
+                },
+                {
+                    "name": "Independent",
+                    "children": [
+                        {"name": "African Initiated Churches"},
+                        {"name": "House Churches"},
+                        {"name": "Quakers"},
+                        {"name": "Universalism"}
+                    ]
+                }
+            ]
+        };
+
+        const width = 960;
+        const height = 960;
+        const radius = width / 2;
+
+        const tree = d3.tree()
+            .size([2 * Math.PI, radius - 100])
+            .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth);
+
+        const root = d3.hierarchy(data);
+
+        tree(root);
+
+        const svg = d3.select("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${width / 2},${height / 2})`);
+
+        const link = svg.append("g")
+            .selectAll("path")
+            .data(root.links())
+            .enter().append("path")
+            .attr("class", "link")
+            .attr("d", d3.linkRadial()
+                .angle(d => d.x)
+                .radius(d => d.y));
+
+        const node = svg.append("g")
+            .selectAll("g")
+            .data(root.descendants())
+            .enter().append("g")
+            .attr("class", "node")
+            .attr("transform", d => `
+                rotate(${d.x * 180 / Math.PI - 90})
+                translate(${d.y},0)
+            `);
+
+        node.append("circle")
+            .attr("r", 2.5);
+
+        node.append("text")
+            .attr("dy", "0.31em")
+            .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
+            .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
+            .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+            .text(d => d.data.name);
+    </script>
+</body>
+</html>

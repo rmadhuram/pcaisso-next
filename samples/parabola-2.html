@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Art with Parabolas and Circles</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="artCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('artCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw parabolas
+        ctx.strokeStyle = 'blue';
+        for (let x = 0; x < 800; x += 20) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.quadraticCurveTo(400, 300, x, 600);
+            ctx.stroke();
+        }
+
+        ctx.strokeStyle = 'green';
+        for (let y = 0; y < 600; y += 20) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.quadraticCurveTo(400, 300, 800, y);
+            ctx.stroke();
+        }
+
+        // Draw circles
+        function drawCircle(x, y, radius, color) {
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+        let radius = 20;
+        for (let i = 0; i < colors.length; i++) {
+            drawCircle(400, 300, radius, colors[i]);
+            radius += 20;
+        }
+    </script>
+</body>
+</html>
