@@ -5,6 +5,7 @@ import Navbar from "./components/navbar/Navbar";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import ClientSessionProvider from "./components/ClientSessionProvider"; // Import the client-side provider
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,8 +30,10 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <Navbar />
-        <div className="contents">{children}</div>
+        <ClientSessionProvider> {/* Use the client-side session provider */}
+          <Navbar />
+          <div className="contents">{children}</div>
+        </ClientSessionProvider>
       </body>
     </html>
   );

@@ -1,24 +1,47 @@
 "use client";
-import { signIn } from "next-auth/react";
+
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import styles from "./Signin.module.scss";
 
-export default function Signin() {
-  const handleSumbit = () => {
+export default function SignIn() {
+  const { data: session, status } = useSession();
+
+  const handleSignIn = () => {
     signIn("google");
   };
 
+  const handleSignOut = () => {
+    signOut();
+  };
+
+  const isUserSignedIn = session && session.user;
+
   return (
     <div className={styles["submitbtn"]}>
-      <button type="submit" onClick={handleSumbit}>
-        <Image
-          src="/googleLogo.png"
-          alt="sign in button"
-          width={15}
-          height={15}
-        />
-        <span>SignIn</span>
-      </button>
+      {isUserSignedIn ? (
+          <button onClick={handleSignOut}>
+          <Image
+            src={session?.user?.image || "/default-profile.png"}
+            alt="User's Google profile picture"
+            width={18}
+            height={18}
+            className="img"
+          />
+          <span>SignOut</span>
+          </button>
+      ) : (
+        <button onClick={handleSignIn}>
+          <Image
+            src="/googleLogo.png"
+            alt="Sign in with Google"
+            width={15}
+            height={15}
+            className="img"
+          />
+          <span>SignIn</span>
+        </button>
+      )}
     </div>
   );
 }
