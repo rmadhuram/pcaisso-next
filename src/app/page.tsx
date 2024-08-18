@@ -145,7 +145,7 @@ export default function Page() {
       </section>
       <p className="footer animated bounceInUp animate-delay-2s">
         Made with 💖 by the
-        <Link href="/contributions">students and friends</Link> of
+        <Link href="/draw/contributions">students and friends</Link> of
         <Link target="_blank" href="https://gct.ac.in/">
           GCT, Coimbatore
         </Link>
