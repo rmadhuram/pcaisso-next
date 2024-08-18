@@ -5,10 +5,8 @@ body {
   padding: 0;
   font-size: 12px;
   font-family: "Roboto", sans-serif;
-  overflow: hidden;
-    
+
   .contents {
     flex-grow: 1;
-    overflow: scroll;
   }
 }
