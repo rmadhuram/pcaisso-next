@@ -2,7 +2,6 @@ import Link from "next/link";
 import styles from "./page.module.scss";
 import { Button } from 'primereact/button';
 
-
 export default function Page() {
   return (
     <div className={styles["intro"]}>
@@ -79,7 +78,19 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="item"></div>
+        <div className="item">
+          <video width="100%" autoPlay muted loop>
+            <source src="/demos/fractal.mp4" type="video/mp4"/>
+          </video>
+          <div className="bottom-section">
+            <p>Animated fractal</p>
+            <div>
+              <Button className="submit-button" type="submit">
+                View
+              </Button>
+            </div>
+          </div>
+        </div>
       </section>
 
       <h3>🧊 3D Graphics</h3>
