@@ -6,7 +6,7 @@
   @include background;
   color: white;
   display: flex;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
   flex-direction: column;
   padding: 10px;
@@ -39,6 +39,11 @@
   h3 {
     width: 1200px;
     margin: 20px 0 0 0;
+  }
+
+  .explore-button {
+    padding: 20px;
+    font-family: "Chivo Mono", monospace;
   }
 
   p.explain {
