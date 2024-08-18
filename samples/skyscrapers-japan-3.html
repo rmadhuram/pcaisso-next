@@ -1,0 +1,102 @@
+<!--
+a Japan cityscape.  road filled with skyscrapers
+
+Have Mt. Fuji in the background, but draw it behind everything.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Cityscape with Mt. Fuji</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cityscape" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('cityscape');
+        const ctx = canvas.getContext('2d');
+
+        // Draw Mt. Fuji
+        function drawMtFuji() {
+            ctx.fillStyle = '#8A8ACB'; // Light purple-blue color
+            ctx.beginPath();
+            ctx.moveTo(400, 150); // Peak of the mountain
+            ctx.lineTo(200, 400); // Left base
+            ctx.lineTo(600, 400); // Right base
+            ctx.closePath();
+            ctx.fill();
+
+            // Snow cap on Mt. Fuji
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.moveTo(400, 150);
+            ctx.lineTo(350, 250);
+            ctx.lineTo(450, 250);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Draw Road
+        function drawRoad() {
+            ctx.fillStyle = '#606060'; // Dark grey for road
+            ctx.fillRect(0, 400, 800, 200); // Road rectangle
+            ctx.strokeStyle = '#FFFFFF'; // White for lane markings
+            ctx.setLineDash([20, 20]); // Dashed lines
+            ctx.beginPath();
+            ctx.moveTo(0, 500);
+            ctx.lineTo(800, 500);
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset to solid lines
+        }
+
+        // Draw Building
+        function drawBuilding(x, y, width, height, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, width, height);
+            // Adding windows to buildings
+            const rows = Math.floor(height / 30);
+            const cols = Math.floor(width / 30);
+            ctx.fillStyle = '#C0C0C0'; // Light grey for windows
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    ctx.fillRect(x + c * 30 + 5, y + r * 30 + 5, 20, 20);
+                }
+            }
+        }
+
+        // Draw Cityscape
+        function drawCityscape() {
+            // Background
+            ctx.fillStyle = '#87CEEB';
+            ctx.fillRect(0, 0, 800, 600);
+
+            // Mt. Fuji
+            drawMtFuji();
+
+            // Buildings
+            drawBuilding(100, 250, 100, 150, '#424242'); // Building 1
+            drawBuilding(250, 200, 100, 200, '#2E2E2E'); // Building 2
+            drawBuilding(400, 300, 150, 100, '#3A3A3A'); // Building 3
+            drawBuilding(600, 150, 120, 250, '#212121'); // Building 4
+
+            // Road
+            drawRoad();
+        }
+
+        drawCityscape();
+    </script>
+</body>
+</html>

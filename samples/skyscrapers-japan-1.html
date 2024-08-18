@@ -1,0 +1,83 @@
+<!-- a Japan cityscape.  road filled with skyscrapers -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Cityscape</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0e0e0;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cityCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('cityCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Sky
+        ctx.fillStyle = '#87CEEB';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Road
+        ctx.fillStyle = '#A9A9A9';
+        ctx.fillRect(0, 400, canvas.width, 200);
+
+        // Road lines
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 5;
+        ctx.setLineDash([15, 20]);
+        ctx.beginPath();
+        ctx.moveTo(0, 500);
+        ctx.lineTo(canvas.width, 500);
+        ctx.stroke();
+
+        function drawBuilding(x, y, width, height, color) {
+            // Skyscrapers
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, width, height);
+
+            // Windows
+            ctx.fillStyle = '#FFFFE0';
+            const windowRows = height / 20;
+            const windowCols = width / 20;
+            for (let i = 0; i < windowRows; i++) {
+                for (let j = 0; j < windowCols; j++) {
+                    const winX = x + j * 20 + 3;
+                    const winY = y + i * 20 + 3;
+                    ctx.fillRect(winX, winY, 14, 14);
+                }
+            }
+        }
+
+        // Draw multiple skyscrapers
+        drawBuilding(50, 200, 100, 200, '#696969');
+        drawBuilding(200, 100, 100, 300, '#778899');
+        drawBuilding(350, 150, 150, 250, '#2F4F4F');
+        drawBuilding(550, 180, 100, 220, '#708090');
+        drawBuilding(700, 220, 70, 180, '#778899');
+
+        // Adding some Japanese elements
+        function drawToriiGate(x, y) {
+            ctx.fillStyle = '#C21807';
+            ctx.fillRect(x, y, 120, 20); // Top horizontal bar
+            ctx.fillRect(x + 20, y + 20, 10, 80); // Left post
+            ctx.fillRect(x + 90, y + 20, 10, 80); // Right post
+            ctx.fillRect(x + 20, y + 50, 80, 10); // Middle horizontal bar
+        }
+
+        drawToriiGate(300, 300);
+
+    </script>
+</body>
+</html>

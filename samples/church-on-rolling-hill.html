@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church on a Rolling Hill</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Drawing the sky
+        ctx.fillStyle = '#87CEEB'; // Sky blue
+        ctx.fillRect(0,0, 800, 600);
+        
+        // Drawing the rolling hills
+        function drawHill(startX, startY, cp1X, cp1Y, cp2X, cp2Y, endX, endY, color) {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.bezierCurveTo(cp1X, cp1Y, cp2X, cp2Y, endX, endY);
+            ctx.lineTo(endX, 600);
+            ctx.lineTo(startX, 600);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+        
+        drawHill(0, 300, 200, 200, 400, 400, 800, 300, '#7CFC00'); // Light green hill
+        
+        drawHill(0, 400, 250, 350, 550, 450, 800, 400, '#008000'); // Darker green hill
+        
+        // Drawing the church
+        function drawChurch() {
+            // Church base
+            ctx.fillStyle = '#FFFFFF'; // White color
+            ctx.fillRect(350, 250, 100, 100);
+            
+            // Church roof
+            ctx.beginPath();
+            ctx.moveTo(350, 250);
+            ctx.lineTo(400, 200);
+            ctx.lineTo(450, 250);
+            ctx.closePath();
+            ctx.fillStyle = '#8B0000'; // Dark red color
+            ctx.fill();
+            
+            // Church door
+            ctx.fillStyle = '#654321'; // Brown color
+            ctx.fillRect(385, 300, 30, 50);
+            
+            // Church cross on top
+            ctx.fillStyle = '#FFD700'; // Gold color
+            ctx.fillRect(398, 180, 4, 20);
+            ctx.fillRect(392, 190, 16, 4);
+        }
+        
+        drawChurch();
+    </script>
+</body>
+</html>
