@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { TabView, TabPanel } from "primereact/tabview";
 import styles from "./results.module.scss";
 import CodeWithLineNumbers from "@/app/components/CodeWithLineNumbers";
