@@ -18,9 +18,10 @@ export default function SignIn() {
   const isUserSignedIn = session && session.user;
 
   return (
-    <div className={styles["submitbtn"]}>
+    <div className={styles["sign-in"]}>
       {isUserSignedIn ? (
-          <button onClick={handleSignOut}>
+        <div className="signed-in">
+          <p>{session?.user?.name}</p>
           <Image
             src={session?.user?.image || "/default-profile.png"}
             alt="User's Google profile picture"
@@ -28,8 +29,10 @@ export default function SignIn() {
             height={18}
             className="img"
           />
-          <span>SignOut</span>
-          </button>
+          <button onClick={handleSignOut}>
+            <span>Sign Out</span>
+            </button>
+        </div>
       ) : (
         <button onClick={handleSignIn}>
           <Image
@@ -39,7 +42,7 @@ export default function SignIn() {
             height={15}
             className="img"
           />
-          <span>SignIn</span>
+          <span>Sign In</span>
         </button>
       )}
     </div>
