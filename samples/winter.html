@@ -1,0 +1,159 @@
+<!-- draw a winter scene -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winter Scene</title>
+    <style>
+        body {
+            background-color: #EAF6FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="winterScene" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('winterScene');
+        const ctx = canvas.getContext('2d');
+
+        // Draw background
+        const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+        gradient.addColorStop(0, '#EAF6FF');
+        gradient.addColorStop(1, '#A7D7F9');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 800, 600);
+
+        // Draw snow-covered ground
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.moveTo(0, 500);
+        ctx.quadraticCurveTo(400, 400, 800, 500);
+        ctx.lineTo(800, 600);
+        ctx.lineTo(0, 600);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw trees
+        function drawTree(x, y, width, height) {
+            ctx.fillStyle = '#8B4513'; // Trunk color
+            ctx.fillRect(x + width / 3, y + height / 1.5, width / 3, height / 3);
+
+            ctx.beginPath();
+            ctx.moveTo(x, y + height / 1.5);
+            ctx.lineTo(x + width / 2, y);
+            ctx.lineTo(x + width, y + height / 1.5);
+            ctx.closePath();
+
+            ctx.fillStyle = '#228B22'; // Pine color
+            ctx.fill();
+        }
+
+        drawTree(100, 350, 100, 150);
+        drawTree(150, 375, 80, 120);
+        drawTree(700, 350, 100, 150);
+        drawTree(750, 375, 80, 120);
+        drawTree(400, 320, 120, 200);
+
+        // Draw snowman
+        function drawSnowman(x, y) {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(x, y - 60, 20, 0, Math.PI * 2, true); // Head
+            ctx.arc(x, y - 20, 30, 0, Math.PI * 2, true); // Body
+            ctx.arc(x, y + 30, 40, 0, Math.PI * 2, true); // Base
+            ctx.fill();
+
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(x, y - 70, 3, 0, Math.PI * 2, true); // Left eye
+            ctx.arc(x + 10, y - 70, 3, 0, Math.PI * 2, true); // Right eye
+            ctx.moveTo(x, y - 60);
+            ctx.arc(x, y - 60, 8, 0, Math.PI, false); // Smile
+            ctx.stroke();
+            
+            ctx.lineWidth = 1;
+            ctx.beginPath(); 
+            ctx.moveTo(x - 15, y - 30);
+            ctx.lineTo(x - 55, y - 10); // Left arm
+            ctx.moveTo(x + 15, y - 30);
+            ctx.lineTo(x + 55, y - 10); // Right arm
+            ctx.stroke();
+
+            ctx.fillStyle = '#FFA500';
+            ctx.beginPath();
+            ctx.moveTo(x + 5, y - 63);
+            ctx.lineTo(x + 15, y - 60);
+            ctx.lineTo(x + 5, y - 57); // Nose
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        drawSnowman(300, 450);
+        drawSnowman(600, 450);
+
+        // Draw falling snowflakes
+        const snowflakes = [];
+
+        function createSnowflakes() {
+            for (let i = 0; i < 100; i++) {
+                snowflakes.push({
+                    x: Math.random() * 800,
+                    y: Math.random() * 600,
+                    radius: Math.random() * 3 + 2,
+                    speed: Math.random() * 1 + 0.5
+                });
+            }
+        }
+
+        function drawSnowflakes() {
+            ctx.fillStyle = '#FFFFFF';
+            for (let flake of snowflakes) {
+                ctx.beginPath();
+                ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2, true);
+                ctx.fill();
+            }
+        }
+
+        function updateSnowflakes() {
+            for (let flake of snowflakes) {
+                flake.y += flake.speed;
+                if (flake.y > 600) {
+                    flake.y = 0;
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, 800, 600);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 800, 600);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fill(ctx.path);
+
+            // Redraw elements
+            drawSnowflakes();
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fill(ctx.path); // Refill snow-covered ground
+            drawTree(100, 350, 100, 150);
+            drawTree(150, 375, 80, 120);
+            drawTree(700, 350, 100, 150);
+            drawTree(750, 375, 80, 120);
+            drawTree(400, 320, 120, 200);
+            drawSnowman(300, 450);
+            drawSnowman(600, 450);
+
+            updateSnowflakes();
+            requestAnimationFrame(animate);
+        }
+
+        createSnowflakes();
+        animate();
+    </script>
+</body>
+</html>
