@@ -23,7 +23,6 @@
         position: relative;
 
         .output-frame {
-          overflow: scroll;
           width: 100%;
           height: $default-height;
           background: black;
@@ -53,12 +52,11 @@
           margin: 0;
 
           pre {
-            margin: 0 !important; 
+            margin: 0 !important;
             padding-top: 10px;
             padding-bottom: 20px;
           }
         }
-
       }
     }
   }

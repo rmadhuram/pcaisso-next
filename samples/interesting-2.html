@@ -1,0 +1,81 @@
+<!-- draw something interesting -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunset Canvas</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #87CEEB;
+        }
+        canvas {
+            border: 4px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="sunsetCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('sunsetCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let sunY = 100;
+        const sunRadius = 50;
+        const groundHeight = 100;
+        const hillHeight = 150;
+        const hillWidth = 300;
+        const sunSetSpeed = 0.5;
+
+        function drawSky() {
+            const grd = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            grd.addColorStop(0, "#87CEEB"); // Sky blue
+            grd.addColorStop(1, "#FF8C00"); // Sunset orange
+            ctx.fillStyle = grd;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawSun() {
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, sunY, sunRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#FFD700";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawGround() {
+            ctx.fillStyle = "#32CD32";
+            ctx.fillRect(0, canvas.height - groundHeight, canvas.width, groundHeight);
+        }
+
+        function drawHills() {
+            ctx.fillStyle = "#006400";
+            ctx.beginPath();
+            ctx.moveTo(100, canvas.height - groundHeight);
+            ctx.quadraticCurveTo(250, canvas.height - groundHeight - hillHeight, 400, canvas.height - groundHeight);
+            ctx.moveTo(400, canvas.height - groundHeight);
+            ctx.quadraticCurveTo(550, canvas.height - groundHeight - hillHeight, 700, canvas.height - groundHeight);
+            ctx.fill();
+        }
+
+        function updateScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawSky();
+            drawSun();
+            drawHills();
+            drawGround();
+            if (sunY < canvas.height - groundHeight - sunRadius) {
+                sunY += sunSetSpeed;
+            }
+            requestAnimationFrame(updateScene);
+        }
+
+        updateScene();
+    </script>
+</body>
+</html>
