@@ -1,8 +1,9 @@
-.submitbtn {
+.sign-in :global {
   margin-right:10px;
 
   button {
-    background: white;
+    background: #39465b;
+    color: white;
     border: none;
     width: 100px;
     height: 25px;
@@ -11,10 +12,24 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    font-size: 16px;
+    font-size: 0.8rem;
 
     &:hover {
       cursor: pointer;
+    }
+  }
+
+  .signed-in {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    p {
+      color: #ddd;
+    }
+
+    img {
+      border-radius: 9px;
     }
   }
 }

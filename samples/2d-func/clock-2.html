@@ -1,0 +1,92 @@
+<!--
+draw a functional clock. 
+Instead of numbers on the dial, have it as alphabets starting from A.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabetical Clock</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            background-color: #fff;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const clockRadius = 250;
+        const clockCenterX = canvas.width / 2;
+        const clockCenterY = canvas.height / 2;
+
+        function drawClockFace() {
+            ctx.beginPath();
+            ctx.arc(clockCenterX, clockCenterY, clockRadius, 0, 2 * Math.PI);
+            ctx.fillStyle = "#ffffff";
+            ctx.fill();
+            ctx.lineWidth = 5;
+            ctx.stroke();
+
+            const alphabet = "ABCDEFGHIJKL";
+            for (let i = 0; i < 12; i++) {
+                const angle = (i - 3) * (Math.PI * 2) / 12;
+                const x = clockCenterX + Math.cos(angle) * (clockRadius - 40);
+                const y = clockCenterY + Math.sin(angle) * (clockRadius - 40);
+
+                ctx.font = '40px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#000000';
+                ctx.fillText(alphabet[i], x, y);
+            }
+        }
+
+        function drawHand(centerX, centerY, length, angle, width) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX + Math.cos(angle) * length, centerY + Math.sin(angle) * length);
+            ctx.stroke();
+        }
+
+        function drawTime() {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const hourAngle = (hours + minutes / 60 + seconds / 3600) * (Math.PI * 2) / 12 - Math.PI / 2;
+            const minuteAngle = (minutes + seconds / 60) * (Math.PI * 2) / 60 - Math.PI / 2;
+            const secondAngle = seconds * (Math.PI * 2) / 60 - Math.PI / 2;
+
+            drawHand(clockCenterX, clockCenterY, clockRadius * 0.5, hourAngle, 6);
+            drawHand(clockCenterX, clockCenterY, clockRadius * 0.8, minuteAngle, 4);
+            drawHand(clockCenterX, clockCenterY, clockRadius * 0.9, secondAngle, 2);
+        }
+
+        function updateClock() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawClockFace();
+            drawTime();
+            requestAnimationFrame(updateClock);
+        }
+
+        updateClock();
+    </script>
+</body>
+</html>
