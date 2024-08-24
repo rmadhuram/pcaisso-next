@@ -17,7 +17,7 @@ export default function Results({diagram, text, timetaken}: {diagram: string, te
         </TabPanel>
         <TabPanel header="Code">
           <pre className="code-panel">
-            <CodeWithLineNumbers language="html" code={text} />
+            <CodeWithLineNumbers language="html" code={text}/>
           </pre>
         </TabPanel>
       </TabView>

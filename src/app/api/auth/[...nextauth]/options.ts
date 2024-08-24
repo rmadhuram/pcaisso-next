@@ -11,11 +11,11 @@ export const options: NextAuthOptions = {
   ],
 
   callbacks: {
-    async signIn({ user }) {
+    async session({ session, user, token }) {
       const connection = await connectDB();
       try {
-        const name = user.name;
-        const email = user.email;
+        const name = session.user?.name;
+        const email = session.user?.email;
 
         const [rows] = await connection.execute(
           "SELECT * FROM users WHERE email = ?",
@@ -33,11 +33,10 @@ export const options: NextAuthOptions = {
             [email]
           );
         }
-        return true;
       } catch (error) {
-        console.error("Error during sign in: ", error);
-        return false;
+        console.error(error);
       }
+      return session;
     },
   },
 };
