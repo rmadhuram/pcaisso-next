@@ -21,7 +21,7 @@ export default async function connectDB() {
       keepAliveInitialDelay: 0,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return pool;
 }

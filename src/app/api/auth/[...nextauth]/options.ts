@@ -35,7 +35,7 @@ export const options: NextAuthOptions = {
         }
         return true;
       } catch (error) {
-        console.log("Error during sign in: ", error);
+        console.error("Error during sign in: ", error);
         return false;
       }
     },
