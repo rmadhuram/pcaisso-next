@@ -14,22 +14,23 @@ export const options: NextAuthOptions = {
     async signIn({ user }) {
       const connection = await connectDB();
       try {
-        const username = user.name;
+        const name = user.name;
+        const email = user.email;
 
         const [rows] = await connection.execute(
-          "SELECT * FROM users WHERE username = ?",
-          [username]
+          "SELECT * FROM users WHERE email = ?",
+          [email]
         );
 
         if (rows.length === 0) {
           await connection.execute(
-            "INSERT INTO users (username, created_time, last_session_time) VALUES (?, Now(), NOW())",
-            [username]
+            "INSERT INTO users (email, name, created_time, last_session_time) VALUES (?, ?, Now(), NOW())",
+            [email, name]
           );
         } else {
           await connection.execute(
-            "UPDATE users SET last_session_time = NOW() WHERE username = ?",
-            [username]
+            "UPDATE users SET last_session_time = NOW() WHERE email = ?",
+            [email]
           );
         }
         return true;

@@ -3,12 +3,13 @@
 import styles from "./input-panel.module.scss";
 import React, { useState } from "react";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
-import { useRouter } from 'next/navigation';
-import { usePub } from '../../hooks/usePubSub';
+import { useRouter } from "next/navigation";
+import { usePub } from "../../hooks/usePubSub";
 import { useAsyncRoutePush } from "@/app/utils/asyn-push";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Button } from 'primereact/button';
+import { InputTextarea } from "primereact/inputtextarea";
+import { Button } from "primereact/button";
+import { Tooltip } from "primereact/tooltip";
 
 interface Category {
   name: string;
@@ -20,7 +21,11 @@ interface model {
   code: string;
 }
 
-export default function InputPanel({ handleSubmission } : { handleSubmission: any}) {
+export default function InputPanel({
+  handleSubmission,
+}: {
+  handleSubmission: any;
+}) {
   const categories = [
     { name: "2D (Canvas)", key: "2D" },
     { name: "SVG (Vector Graphics)", key: "SVG" },
@@ -45,19 +50,25 @@ export default function InputPanel({ handleSubmission } : { handleSubmission: an
   const [prompt, setPrompt] = useState("");
 
   const router = useRouter();
-  const asyncPush = useAsyncRoutePush()
+  const asyncPush = useAsyncRoutePush();
+
+  const handleModelSelection = () => {};
 
   const handleSubmit = async () => {
+    if (!selectedModel) return;
     //await asyncPush(`/home/results`)
 
-    console.log('routing done')
+    console.log("routing done");
 
     /*setTimeout(function() {
       publish('CREATE_NEW', { prompt, category: selectedCategory.key, model : selectedModel?.name })
     }, 1000)*/
 
-    handleSubmission({ prompt, category: selectedCategory.key, model : selectedModel?.name })
-    
+    handleSubmission({
+      prompt,
+      category: selectedCategory.key,
+      model: selectedModel?.name,
+    });
   };
 
   return (
@@ -123,13 +134,25 @@ export default function InputPanel({ handleSubmission } : { handleSubmission: an
           ></InputTextarea>
         </div>
         <div className="submit">
-          <Button
-            className="submit-button"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            Generate
-          </Button>
+          <div style={{ display: "inline-block", position: "relative" }}>
+            {!selectedModel && (
+              <Tooltip
+                target=".tooltip-target"
+                content="Select a model to proceed"
+                position="right"
+              />
+            )}
+            <div className="tooltip-target">
+              <Button
+                className="submit-button"
+                type="submit"
+                onClick={handleSubmit}
+                disabled={!selectedModel}
+              >
+                Generate
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
