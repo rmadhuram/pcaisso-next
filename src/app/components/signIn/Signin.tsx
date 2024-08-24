@@ -3,9 +3,10 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import styles from "./Signin.module.scss";
+import connectDB from "@/lib/db";
 
 export default function SignIn() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const handleSignIn = () => {
     signIn("google");
