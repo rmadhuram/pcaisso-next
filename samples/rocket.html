@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocket Taking Off</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000033;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="rocketCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('rocketCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw Background
+        ctx.fillStyle = '#000033';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Rocket Body
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.moveTo(400, 150);
+        ctx.lineTo(370, 300);
+        ctx.lineTo(430, 300);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(370, 300);
+        ctx.rect(370, 300, 60, 200);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw Rocket Fins
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.moveTo(370, 500);
+        ctx.lineTo(345, 550);
+        ctx.lineTo(370, 540);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(430, 500);
+        ctx.lineTo(455, 550);
+        ctx.lineTo(430, 540);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw Rocket Window
+        ctx.fillStyle = '#42aaff';
+        ctx.beginPath();
+        ctx.arc(400, 350, 15, 0, Math.PI * 2, true);
+        ctx.fill();
+
+        // Draw Flames
+        ctx.fillStyle = 'orange';
+        ctx.beginPath();
+        ctx.moveTo(370, 500);
+        ctx.lineTo(400, 570);
+        ctx.lineTo(430, 500);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = 'yellow';
+        ctx.beginPath();
+        ctx.moveTo(380, 500);
+        ctx.lineTo(400, 550);
+        ctx.lineTo(420, 500);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw Smoke
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+        for(let i = 0; i < 10; i++) {
+            const x = Math.random() * 60 + 370;
+            const y = Math.random() * 40 + 540;
+            const radius = Math.random() * 15 + 10;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2, true);
+            ctx.fill();
+        }
+
+    </script>
+</body>
+</html>
