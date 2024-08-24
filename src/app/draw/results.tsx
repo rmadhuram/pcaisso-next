@@ -5,15 +5,7 @@ import { useState } from "react";
 import copy from "clipboard-copy";
 import { Button } from "primereact/button";
 
-export default function Results({
-  diagram,
-  text,
-  timetaken,
-}: {
-  diagram: string;
-  text: string;
-  timetaken: number;
-}) {
+export default function Results({diagram, text, timetaken,} : {diagram: string; text: string; timetaken: number;}) {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyClick = async () => {
