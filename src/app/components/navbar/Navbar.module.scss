@@ -1,6 +1,6 @@
 @import "../../../styles/variables";
 
-.navbar {
+.navbar :global {
   background-color: #435167;
   color: white;
   height: 35px;
@@ -8,9 +8,31 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  font-family: "Chivo Mono", monospace;
+
+  .left-side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .menu {
+      font-size: 0.8rem;
+      list-style-type: none;
+      display: flex;
+      gap: 20px;
+
+      li {
+        cursor: pointer;
+
+        a {
+          color: white;
+          text-decoration: none;
+        }
+      }
+    }
+  }
 
   h3 {
-    font-family: "Chivo Mono", monospace;
     margin: 0;
     font-weight: 100;
     font-size: 18px;
