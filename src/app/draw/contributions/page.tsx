@@ -18,6 +18,15 @@ export default function Contributions() {
         <h4>(In the order of contributions)</h4>
         <ul>
           <li>
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/in/aleena-joseph-918072258/"
+            >
+              Aleena Joseph
+            </a>{" "}
+            (CSE &apos;26)
+          </li>
+          <li>
             <a href="https://www.linkedin.com/in/varshinianandhanehru/">
               Varshini Anandha Nehru
             </a>{" "}
@@ -38,15 +47,6 @@ export default function Contributions() {
               Suntrakanesh Subramanian
             </a>{" "}
             (EIE &apos;23)
-          </li>
-          <li>
-            <a
-              target="_blank"
-              href="https://www.linkedin.com/in/aleena-joseph-918072258/"
-            >
-              Aleena Joseph
-            </a>{" "}
-            (CSE &apos;26)
           </li>
         </ul>
       </div>

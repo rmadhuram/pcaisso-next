@@ -8,7 +8,7 @@ export default function Page() {
     <div className={styles["intro"]}>
       <div className="title">
         <h1 className="animated bounceInUp animate-delay-1s">
-          Pc<span>ai</span>sso
+        🎨 Pc<span>ai</span>sso
         </h1>
         <h2>[AI Art + Code]</h2>
       </div>
@@ -144,9 +144,7 @@ export default function Page() {
         <div className="item"></div>
       </section>
       <p className="footer animated bounceInUp animate-delay-2s">
-        Made with 💖 by the
-        <Link href="/draw/contributions">students and friends</Link> of
-        <Link target="_blank" href="https://gct.ac.in/">
+        Made with 💖 by <Link href="https://www.linkedin.com/in/rmadhuram/">Raj Madhuram</Link> & the <Link href="/draw/contributions">students and friends</Link> of <Link target="_blank" href="https://gct.ac.in/">
           GCT, Coimbatore
         </Link>
       </p>
