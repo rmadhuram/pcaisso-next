@@ -43,12 +43,19 @@
           text-align: center;
         }
 
+        Button {
+          position: fixed;
+          z-index: 9999;
+          right: 15px;
+          font-size: 10px;
+          padding: 5px;
+          margin: 10px;
+        }
+
         .code-panel {
           overflow: scroll;
           width: 100%;
-          height: $default-height;
-          background: white;
-          color: black;
+          height: 90vh;
           margin: 0;
 
           pre {
@@ -60,4 +67,14 @@
       }
     }
   }
+
+  .saveBtn {
+    position: absolute;
+    top: 42px;
+    right: 15px;
+    border-radius: 5px;
+    font-size: 10px;
+  }
+
+  
 }
