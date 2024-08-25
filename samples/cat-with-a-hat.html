@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat with a Hat</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="catCanvas" width="800" height="600"></canvas>
+    <script>
+        function drawCatWithHat() {
+            const canvas = document.getElementById('catCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Draw the cat's head
+            ctx.fillStyle = '#ffcc99';
+            ctx.beginPath();
+            ctx.ellipse(400, 300, 100, 120, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Draw the cat's eyes
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(360, 270, 20, 0, Math.PI * 2, true);  // Left eye
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(440, 270, 20, 0, Math.PI * 2, true);  // Right eye
+            ctx.fill();
+            ctx.stroke();
+
+            // Draw the cat's pupils
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(360, 270, 10, 0, Math.PI * 2, true);  // Left pupil
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(440, 270, 10, 0, Math.PI * 2, true);  // Right pupil
+            ctx.fill();
+
+            // Draw the cat's nose
+            ctx.fillStyle = '#ff6666';
+            ctx.beginPath();
+            ctx.moveTo(400, 300);
+            ctx.lineTo(390, 320);
+            ctx.lineTo(410, 320);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Draw the cat's mouth
+            ctx.strokeStyle = 'black';
+            ctx.beginPath();
+            ctx.moveTo(390, 320);
+            ctx.quadraticCurveTo(400, 330, 410, 320);
+            ctx.moveTo(400, 320);
+            ctx.quadraticCurveTo(400, 345, 380, 320);
+            ctx.moveTo(400, 320);
+            ctx.quadraticCurveTo(400, 345, 420, 320);
+            ctx.stroke();
+
+            // Draw the cat's ears
+            ctx.fillStyle = '#ffcc99';
+            ctx.beginPath();
+            ctx.moveTo(330, 180);
+            ctx.lineTo(370, 260);
+            ctx.lineTo(300, 230);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(470, 180);
+            ctx.lineTo(430, 260);
+            ctx.lineTo(500, 230);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Draw the hat
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.moveTo(330, 180);
+            ctx.lineTo(470, 180);
+            ctx.lineTo(400, 80);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.moveTo(300, 200);
+            ctx.lineTo(500, 200);
+            ctx.lineTo(500, 180);
+            ctx.lineTo(300, 180);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        drawCatWithHat();
+    </script>
+</body>
+</html>

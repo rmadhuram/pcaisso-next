@@ -24,7 +24,6 @@ export default function Page() {
           className="explore-button"
           type="submit"
           severity="success"
-          size="large"
         >
           Start Exploring!
         </Button>

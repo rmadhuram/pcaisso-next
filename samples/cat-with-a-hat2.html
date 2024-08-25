@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat with a Hat</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Draw the cat's head
+        ctx.beginPath();
+        ctx.arc(400, 300, 100, 0, Math.PI * 2, true);
+        ctx.fillStyle = '#FFD700'; // Use a golden color
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw the cat's ears
+        ctx.beginPath();
+        ctx.moveTo(350, 200);
+        ctx.lineTo(380, 270);
+        ctx.lineTo(320, 240);
+        ctx.closePath();
+        ctx.fillStyle = '#FFD700';
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(450, 200);
+        ctx.lineTo(420, 270);
+        ctx.lineTo(480, 240);
+        ctx.closePath();
+        ctx.fillStyle = '#FFD700';
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw the cat's eyes
+        ctx.beginPath();
+        ctx.arc(370, 280, 10, 0, Math.PI * 2, true);
+        ctx.moveTo(430, 280);
+        ctx.arc(430, 280, 10, 0, Math.PI * 2, true);
+        ctx.fillStyle = '#000000';
+        ctx.fill();
+
+        // Draw the cat's nose
+        ctx.beginPath();
+        ctx.moveTo(400, 310);
+        ctx.lineTo(390, 330);
+        ctx.lineTo(410, 330);
+        ctx.closePath();
+        ctx.fillStyle = '#FF4500'; // Use an orange-red color
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw the cat's mouth
+        ctx.beginPath();
+        ctx.moveTo(390, 330);
+        ctx.quadraticCurveTo(400, 350, 410, 330);
+        ctx.stroke();
+
+        // Draw the cat's whiskers
+        ctx.beginPath();
+        ctx.moveTo(360, 320);
+        ctx.lineTo(330, 320);
+        ctx.moveTo(360, 330);
+        ctx.lineTo(330, 340);
+        ctx.moveTo(360, 340);
+        ctx.lineTo(330, 360);
+
+        ctx.moveTo(440, 320);
+        ctx.lineTo(470, 320);
+        ctx.moveTo(440, 330);
+        ctx.lineTo(470, 340);
+        ctx.moveTo(440, 340);
+        ctx.lineTo(470, 360);
+        ctx.stroke();
+
+        // Draw the hat
+        ctx.fillStyle = '#8B0000'; // Use a dark red color
+        ctx.beginPath();
+        ctx.moveTo(340, 200);
+        ctx.lineTo(460, 200);
+        ctx.lineTo(450, 120);
+        ctx.lineTo(350, 120);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+    </script>
+</body>
+</html>

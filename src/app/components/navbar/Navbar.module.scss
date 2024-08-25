@@ -27,6 +27,12 @@
         a {
           color: white;
           text-decoration: none;
+
+          &:hover {
+            padding-bottom: 3px;
+            color: wheat;
+            border-bottom: 1px dotted wheat;
+          }
         }
       }
     }
