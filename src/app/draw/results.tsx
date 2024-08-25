@@ -45,10 +45,8 @@ export default function Results({
       console.log("User email not found in session");
       return;
     }
-
+    setIsSaved(true);
     try {
-      setIsSaved(true);
-
       const saveResponse = await fetch("/api/saveResults", {
         method: "POST",
         headers: {
