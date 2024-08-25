@@ -14,8 +14,8 @@ export const options: NextAuthOptions = {
     async session({ session, user, token }) {
       const connection = await connectDB();
       try {
-        const name = session.user?.name;
         const email = session.user?.email;
+        let userId = session.user?.id;
 
         const [rows] = await connection.execute(
           "SELECT * FROM users WHERE email = ?",
@@ -23,11 +23,12 @@ export const options: NextAuthOptions = {
         );
 
         if (rows.length === 0) {
-          await connection.execute(
-            "INSERT INTO users (email, name, created_time, last_session_time) VALUES (?, ?, Now(), NOW())",
-            [email, name]
+            const result = await connection.execute("INSERT INTO users (email, name, created_time, last_session_time) VALUES (?, ?, Now(), NOW())",
+            [email, session.user?.name]
           );
+          userId = result.insertId as number;
         } else {
+          userId= rows[0].id;
           await connection.execute(
             "UPDATE users SET last_session_time = NOW() WHERE email = ?",
             [email]

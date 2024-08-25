@@ -153,6 +153,9 @@ export default function HomePage() {
   const [diagram, setDiagram] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [timetaken, setTimeTaken] = useState(0);
+  const [prompt, setPrompt] = useState<string>("");
+  const [type, setType] = useState<string>("");
+  const [model, setModel] = useState<string>("");
   const [displayState, setDisplayState] = useState<string>("intro");
 
   async function onSubmit(payload: any) {
@@ -175,15 +178,24 @@ export default function HomePage() {
         }
 
         const data = await response.json();
-        //console.log("API Response:", data);
+        // console.log("API Response:", data);
 
         const diagram = data.code;
         const text = data.code;
         const timetaken = data.timeTakenInSec;
+        const prompt = payload.prompt; 
+        const type = payload.category;
+        const model = payload.model;
 
         setDiagram(diagram);
         setText(text);
         setTimeTaken(timetaken);
+        setPrompt(prompt);
+        setType(type);
+        setModel(model);
+        // console.log(
+        //   `diagram:${diagram},text:${text},timetaken:${timetaken},prompt:${prompt},type:${type},model:${model}`
+        // );
         setDisplayState("results");
       } catch (error) {
         console.error("Error fetching reply:", error);
@@ -207,6 +219,9 @@ export default function HomePage() {
                 diagram={diagram}
                 text={text}
                 timetaken={timetaken}
+                prompt={prompt}
+                type={type}
+                model={model}
               ></Results>
             )}
           </SplitterPanel>
