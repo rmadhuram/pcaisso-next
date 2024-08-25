@@ -1,4 +1,5 @@
 @import "../../../styles/variables";
+@import "../../../styles/mixins";
 
 .navbar :global {
   background-color: #435167;
@@ -8,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  font-family: "Chivo Mono", monospace;
+  @include primary-font-regular;
 
   .left-side {
     display: flex;

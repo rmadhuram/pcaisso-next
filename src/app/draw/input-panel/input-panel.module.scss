@@ -2,7 +2,7 @@
 @import "../../../styles/variables";
 
 .input-panel :global {
-  font-family: "Chivo Mono", monospace;
+  @include primary-font-regular;
   font-size: 14px;
 
   .input-container {

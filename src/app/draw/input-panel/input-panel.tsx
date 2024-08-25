@@ -87,8 +87,6 @@ export default function InputPanel({
                     key={category.key}
                     className="flex align-items-start"
                     style={{
-                      fontSize: "14px",
-                      fontFamily: "Chivo Mono, monospace",
                       marginBottom: "10px",
                     }}
                   >
