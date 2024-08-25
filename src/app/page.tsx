@@ -16,11 +16,7 @@ export default function Page() {
         LLMs can draw cool things. Come explore with us!
       </p>
       <Link href="/draw" passHref>
-        <Button
-          className="explore-button"
-          type="submit"
-          severity="success"
-        >
+        <Button className="explore-button" type="submit" severity="success">
           Start Exploring!
         </Button>
       </Link>
@@ -60,6 +56,17 @@ export default function Page() {
           src="/demos/fractal.mp4"
           description="Animated fractal"
         ></GalleryItem>
+      </section>
+
+      <h3>🧊 3D Graphics</h3>
+      <section className="gallery">
+        <GalleryItem
+          type="video"
+          src="/demos/cube.mp4"
+          description="Rotating Cube"
+        ></GalleryItem>
+        <GalleryItem type="" src="" description=""></GalleryItem>
+        <GalleryItem type="" src="" description=""></GalleryItem>
       </section>
 
       <h3>💠 Data Visualization</h3>
