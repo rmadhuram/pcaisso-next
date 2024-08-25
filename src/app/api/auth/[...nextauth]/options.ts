@@ -2,6 +2,8 @@ import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import connectDB from "@/lib/db";
 
+let userId: number;
+
 export const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -11,11 +13,10 @@ export const options: NextAuthOptions = {
   ],
 
   callbacks: {
-    async session({ session, user, token }) {
+    async session({ session }) {
       const connection = await connectDB();
       try {
         const email = session.user?.email;
-        let userId = session.user?.id;
 
         const [rows] = await connection.execute(
           "SELECT * FROM users WHERE email = ?",
@@ -23,16 +24,18 @@ export const options: NextAuthOptions = {
         );
 
         if (rows.length === 0) {
-            const result = await connection.execute("INSERT INTO users (email, name, created_time, last_session_time) VALUES (?, ?, Now(), NOW())",
-            [email, session.user?.name]
+          await connection.execute(
+            "INSERT INTO users (email, name, created_time, last_session_time) VALUES (?, ?, Now(), NOW())"
           );
-          userId = result.insertId as number;
         } else {
-          userId= rows[0].id;
+          userId = rows[0].id;
           await connection.execute(
             "UPDATE users SET last_session_time = NOW() WHERE email = ?",
             [email]
           );
+        }
+        if(session.user) {
+          session.user.id = userId as number;
         }
       } catch (error) {
         console.error(error);

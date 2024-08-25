@@ -6,6 +6,8 @@ import copy from "clipboard-copy";
 import { Button } from "primereact/button";
 import { useSession } from "next-auth/react";
 
+let userId: number;
+
 export default function Results({
   diagram,
   text,
@@ -25,6 +27,10 @@ export default function Results({
   const [isCopied, setIsCopied] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
+  if (session) {
+    userId = session.user?.id as number;
+  }
+
   const handleCopyClick = async () => {
     try {
       await copy(text);
@@ -41,22 +47,6 @@ export default function Results({
     }
 
     try {
-      const response = await fetch("/api/getUserId", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: session.user.email }),
-      });
-
-      const data = await response.json();
-      const userId = data.userId;
-
-      if (!userId) {
-        console.error("User ID not found");
-        return;
-      }
-
       setIsSaved(true);
 
       const saveResponse = await fetch("/api/saveResults", {

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
+import { useSession } from "next-auth/react";
 
 const uuid = uuidv4();
 
