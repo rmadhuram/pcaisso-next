@@ -10,11 +10,7 @@ const openai = new OpenAI({
 
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
-<<<<<<< HEAD
   const input = await req.json(); 
-=======
-  const input = await req.json(); // Parse the request body
->>>>>>> 9be17e24bc9d4b12837d517a1988f14de84b14ca
 
   if (!input || !input.prompt || !input.type || !input.model) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
