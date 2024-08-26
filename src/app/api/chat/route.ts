@@ -10,7 +10,7 @@ const openai = new OpenAI({
 
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
-  const input = await req.json(); 
+  const input = await req.json();
 
   if (!input || !input.prompt || !input.type || !input.model) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
@@ -20,16 +20,16 @@ export async function POST(req: NextRequest) {
 
   switch (input.type) {
     case "2D":
-      prompt = `Write an HTML code using canvas of size 800x600 pixels to draw this: ${input.prompt}`;
+      prompt = `Write an HTML code using canvas to draw this: ${input.prompt} and make it responsive based on the size of the screen it is rendered`;
       break;
     case "SVG":
-      prompt = `Write an HTML code with SVG to draw this: ${input.prompt}`;
+      prompt = `Write an HTML code with SVG to draw this: ${input.prompt} and make it responsive based on the size of the screen it is rendered`;
       break;
     case "3D":
-      prompt = `Write an HTML code using Three.js of size 800x600 pixels to render this: ${input.prompt}`;
+      prompt = `Write an HTML code using Three.js of size to render this: ${input.prompt} and make it responsive based on the size of the screen it is rendered`;
       break;
     case "d3":
-      prompt = `Write an HTML code using d3.js to render this: ${input.prompt}`;
+      prompt = `Write an HTML code using d3.js to render this: ${input.prompt} and make it responsive based on the size of the screen it is rendered`;
       break;
     default:
       return NextResponse.json({ error: "Invalid type" }, { status: 400 });

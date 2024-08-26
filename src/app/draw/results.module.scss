@@ -18,15 +18,16 @@
       padding: 0;
 
       .p-tabview-panel {
-        height: $default-height;
+        height: 90vh;
         font-size: 11px;
         position: relative;
 
         .output-frame {
           width: 100%;
-          height: $default-height;
+          height: 90vh;
           background: black;
           border: none;
+          overflow: hidden;
         }
 
         .display-time {
@@ -75,6 +76,4 @@
     border-radius: 5px;
     font-size: 10px;
   }
-
-  
 }
