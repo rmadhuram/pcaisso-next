@@ -5,8 +5,7 @@ import InputPanel from "./input-panel/input-panel";
 import Results from "./results";
 import Link from "next/link";
 import styles from "./page.module.scss";
-import "../../styles/animations.scss";
-import { useState } from "react";
+import { useState } from "react"; 
 
 function Intro() {
   return (

@@ -3,17 +3,19 @@ import Link from "next/link";
 import styles from "./page.module.scss";
 import { Button } from "primereact/button";
 import GalleryItem from "./components/galleryItem/GalleryItem";
+import 'animate.css';
 
 export default function Page() {
   return (
     <div className={styles["intro"]}>
       <div className="title">
-        <h1 className="animated bounceInUp animate-delay-1s">
+        <h1 className="animate__animated animate__flipInX">
           🎨 Pc<span>ai</span>sso
         </h1>
       </div>
       <p className="explain">
-        LLMs can draw cool things. Come explore with us!
+        Did you know that LLMs can draw cool things? 2D & 3D graphics,<br/>
+        small games & data visualizations! Come, explore with us!
       </p>
       <Link href="/draw" passHref>
         <Button className="explore-button" type="submit" severity="success">

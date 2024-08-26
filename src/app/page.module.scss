@@ -37,6 +37,8 @@
   }
 
   h3 {
+    @include title-font-regular;
+    font-size: 14px;
     width: 1200px;
     margin: 20px 0 0 0;
   }
