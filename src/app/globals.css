@@ -10,4 +10,9 @@ body {
   .contents {
     flex-grow: 1;
   }
+
+  .p-dropdown-items {
+    font-size: 12px;
+    padding: 0;
+  }
 }
