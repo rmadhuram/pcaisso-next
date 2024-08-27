@@ -20,7 +20,7 @@
   }
 
   h1 {
-    font-family: "Poppins", cursive;
+    @include title-font-regular;
     font-size: 48px;
     font-weight: normal;
     margin: 0;
@@ -37,6 +37,8 @@
   }
 
   h3 {
+    @include title-font-regular;
+    font-size: 14px;
     width: 1200px;
     margin: 20px 0 0 0;
   }
@@ -44,7 +46,9 @@
   .explore-button {
     visibility: visible;
     padding: 10px 20px;
-    font-family: "Chivo Mono", monospace;
+    @include primary-font-regular;
+    font-size: 1.1rem;
+    letter-spacing: 0.1rem;
   }
 
   p.explain {

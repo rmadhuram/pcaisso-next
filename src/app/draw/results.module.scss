@@ -1,4 +1,6 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
+
 
 .results :global {
   flex-grow: 1;
@@ -9,7 +11,7 @@
     .p-tabview-nav {
       a {
         font-weight: 400;
-        font-family: "Chivo Mono", monospace;
+        @include primary-font-regular;
         font-size: 14px;
       }
     }

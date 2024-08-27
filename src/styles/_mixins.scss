@@ -1,7 +1,19 @@
+@mixin primary-font-regular {
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+@mixin title-font-regular {
+  font-family: "Poppins", cursive;
+  font-size: 13px;
+  font-weight: normal;
+}
+
 @mixin background {
   background: #000;
   background-image: url("../assets/light-sketch.png");
   color: white;
-  font-family: "Chivo Mono", monospace;
-  font-weight: normal;
+  @include primary-font-regular()
 }
+
