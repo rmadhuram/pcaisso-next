@@ -10,23 +10,20 @@ import { useState } from "react";
 function Intro() {
   return (
     <div className={styles["intro"]}>
-      <h1 className="animated bounceInUp animate-delay-1s">
-        Pc<span>ai</span>sso
-      </h1>
-      <h2>AI Art + Code</h2>
-      <div className="cover-pages">
-        <div className="cover-3 cover"></div>
-        <div className="cover-1 cover"></div>
-        <div className="cover-2 cover"></div>
+      <div className="description-box">
+        <p>
+          Welcome to the Pcaisso Drawing Studio! Here, you can harness the power of LLMs to create amazing 2D and 3D graphics, animations, and even simple games. Just describe what you want to draw in the input panel, and watch as the AI brings your ideas to life!
+        </p>
+        <ul>
+          <li>🖌️ Create static 2D images</li>
+          <li>🎬 Design animated graphics</li>
+          <li>🧊 Explore 3D renderings</li>
+          <li>🕹️ Develop simple interactive games</li>
+        </ul>
+        <p>
+          Get started by typing your drawing request in the input panel on the left. Be creative and have fun!
+        </p>
       </div>
-      <p className="footer animated bounceInUp animate-delay-2s">
-        Made with 💖 by the{" "}
-        <Link href="/draw/contributions">students and friends</Link> of{" "}
-        <Link target="_blank" href="https://gct.ac.in/">
-          {" "}
-          GCT, Coimbatore
-        </Link>
-      </p>
     </div>
   );
 }

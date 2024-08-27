@@ -10,6 +10,7 @@ import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { Tooltip } from "primereact/tooltip";
+import { SelectButton } from 'primereact/selectbutton';
 
 interface Category {
   name: string;
@@ -27,10 +28,10 @@ export default function InputPanel({
   handleSubmission: any;
 }) {
   const categories = [
-    { name: "2D (Canvas)", key: "2D" },
-    { name: "SVG (Vector Graphics)", key: "SVG" },
-    { name: "3D (Three.js)", key: "3D" },
-    { name: "d3 (Data Visualization)", key: "d3" },
+    { name: "2D Canvas", key: "2D" },
+    { name: "SVG", key: "SVG" },
+    { name: "3D", key: "3D" },
+    { name: "d3", key: "d3" },
   ];
 
   const models: model[] = [
@@ -73,83 +74,53 @@ export default function InputPanel({
 
   return (
     <div className={styles["input-panel"]}>
-      <div className="input-container">
-        <p>
-          Describe what you imagine, and the system will draw it for you! This
-          is powered by OpenAI APIs (ChatGPT).
-        </p>
-        <div className="choices">
-          <div className="card flex justify-content-center">
-            <div className="flex flex-column gap-3">
-              {categories.map((category) => {
-                return (
-                  <div
-                    key={category.key}
-                    className="flex align-items-start"
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <span>
-                      <RadioButton
-                        inputId={category.key}
-                        name="category"
-                        value={category}
-                        onChange={(e: RadioButtonChangeEvent) =>
-                          setSelectedCategory(e.value)
-                        }
-                        checked={selectedCategory.key === category.key}
-                      />
-                    </span>
-                    <label htmlFor={category.key} className="ml-2">
-                      {category.name}
-                    </label>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        <div className="select-model">
-          <span>Select Model </span>
-          <Dropdown
-            value={selectedModel}
-            onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
-            options={models}
-            optionLabel="name"
-            editable
-            placeholder="Select a gpt model"
-            className="w-full md:w-14rem model-options"
-          />
-        </div>
-        <div className="input-area">
-          <p>What do you want to draw?</p>
-          <InputTextarea
-            className="text-area"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Enter a prompt"
-          ></InputTextarea>
-        </div>
-        <div className="submit">
-          <div style={{ display: "inline-block", position: "relative" }}>
-            {!selectedModel && (
-              <Tooltip
-                target=".tooltip-target"
-                content="Select a model to proceed"
-                position="right"
-              />
-            )}
-            <div className="tooltip-target">
-              <Button
-                className="submit-button"
-                type="submit"
-                onClick={handleSubmit}
-                disabled={!selectedModel}
-              >
-                Generate
-              </Button>
-            </div>
+      <div className="categories">
+        <p className="label">Select Drawing Category:</p>
+        <SelectButton 
+          value={selectedCategory} 
+          onChange={(e) => setSelectedCategory(e.value)} 
+          optionLabel="name" 
+          options={categories} 
+          className="category-select"
+        />
+      </div>
+
+      <div className="select-model">
+        <div className="label">Select Model</div>
+        <Dropdown
+          value={selectedModel}
+          onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
+          options={models}
+          optionLabel="name"
+          placeholder="Select a GPT model"
+        />
+      </div>
+      <div className="input-area">
+        <InputTextarea
+          className="text-area"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="Describe what you want to draw"
+        ></InputTextarea>
+      </div>
+      <div className="submit">
+        <div style={{ display: "inline-block", position: "relative" }}>
+          {!selectedModel && (
+            <Tooltip
+              target=".tooltip-target"
+              content="Select a model to proceed"
+              position="right"
+            />
+          )}
+          <div className="tooltip-target">
+            <Button
+              className="submit-button"
+              type="submit"
+              onClick={handleSubmit}
+              disabled={!selectedModel}
+            >
+              Generate
+            </Button>
           </div>
         </div>
       </div>
