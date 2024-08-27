@@ -15,4 +15,9 @@ body {
     font-size: 12px;
     padding: 0;
   }
+
+  .p-tabview-nav-link {
+    font-size: 12px !important;
+    padding: 10px;
+  }
 }
