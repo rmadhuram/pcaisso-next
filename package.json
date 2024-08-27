@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "clipboard-copy": "^4.0.1",
     "dotenv": "^16.4.5",
     "eventemitter3": "^5.0.1",

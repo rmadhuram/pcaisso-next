@@ -1,5 +1,5 @@
 import styles from "./page.module.scss";
-import "../../../styles/animations.scss";
+import "animate.css";
 
 export default function Contributions() {
   return (

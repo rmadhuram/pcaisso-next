@@ -1,3 +1,5 @@
+@import "../../../styles/mixins";
+
 .item :global {
   border: 1px solid #444;
   border-radius: 10px;
@@ -36,6 +38,11 @@
       color: #fff;
       flex-grow: 1;
       line-height: 1rem;
+    }
+
+    .p-button {
+      @include primary-font-regular;
+      padding: 0.5rem 1rem;
     }
   }
 }
