@@ -39,20 +39,53 @@
   color: white;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   padding: 10px;
+  position: relative;
+
+  .circle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+
+    &.circle-1 {
+      top: 40%;
+      left: 25%;
+      box-shadow: 0 0 100px 120px rgb(202, 73, 73, 0.3);
+    }
+
+    &.circle-2 {
+      top: 65%;
+      left: 75%;
+      box-shadow: 0 0 80px 120px rgb(28, 95, 66, 0.5);
+    }
+
+    &.circle-3 {
+      top: 65%;
+      left: 40%;
+      box-shadow: 0 0 80px 130px rgb(142, 39, 123, 0.3);
+    }
+
+    &.circle-4 {
+      top: 35%;
+      left: 60%;
+      box-shadow: 0 0 80px 140px rgba(160, 179, 42, 0.3);
+    }
+  }
 
   .description-box {
     width: 70%;
-    margin: 200px auto;
     border: 1px solid #29447e;
     box-shadow: 0 0 5px #8ca6e0;
     background: #1c1e227a;
     backdrop-filter: blur(3px);
     padding: 20px;
     border-radius: 10px;
-    color: #aaa;
+    color: #ddd;
     font-size: 14px;
+    z-index: 100;
 
     ul {
       padding: 0;

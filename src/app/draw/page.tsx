@@ -10,6 +10,10 @@ import { useState } from "react";
 function Intro() {
   return (
     <div className={styles["intro"]}>
+      <div className="circle circle-1"></div>
+      <div className="circle circle-2"></div>
+      <div className="circle circle-3"></div>
+      <div className="circle circle-4"></div>
       <div className="description-box">
         <p>
           Welcome to the Pcaisso Drawing Studio! Here, you can harness the power of LLMs to create amazing 2D and 3D graphics, animations, and even simple games. Just describe what you want to draw in the input panel, and watch as the AI brings your ideas to life!
