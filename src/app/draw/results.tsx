@@ -25,11 +25,11 @@ export default function Results({
 }) {
   const { data: session } = useSession();
   const [isCopied, setIsCopied] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  /*const [isSaved, setIsSaved] = useState(false);
 
   if (session) {
     userId = session.user?.id as number;
-  }
+  }*/
 
   const handleCopyClick = async () => {
     try {
@@ -40,7 +40,7 @@ export default function Results({
     }
   };
 
-  const handleSave = async () => {
+  /* const handleSave = async () => {
     if (!session?.user?.email) {
       console.log("User email not found in session");
       return;
@@ -73,17 +73,13 @@ export default function Results({
       console.error("Error:", error);
     }
   };
+  */
 
   return (
     <div className={styles["results"]}>
       <TabView>
         <TabPanel header="Output">
           <iframe className="output-frame" srcDoc={diagram} />
-          <div className="display-time">
-            <p>
-              Image generated in <b>{timetaken}</b> secs.
-            </p>
-          </div>
         </TabPanel>
         <TabPanel header="Code">
           <Button className="copyBtn" onClick={handleCopyClick}>
@@ -93,10 +89,20 @@ export default function Results({
             <CodeWithLineNumbers language="html" code={text} />
           </pre>
         </TabPanel>
+        <TabPanel header="Stats">
+          {/* <div className="display-time">
+          <p>
+            Image generated in <b>{timetaken}</b> secs.
+          </p>
+          </div> */}
+          <p>
+            Image generated in <b>{timetaken}</b> secs.
+          </p>
+        </TabPanel>
       </TabView>
-      <Button className="saveBtn" onClick={handleSave} disabled={false}>
+      {/* <Button className="saveBtn" onClick={handleSave} disabled={false}>
         {isSaved ? "Saved!" : "Save to DB"}
-      </Button>
+      </Button>  */}
     </div>
   );
 }
