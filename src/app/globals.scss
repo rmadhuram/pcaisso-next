@@ -9,6 +9,66 @@ body {
   font-family: "Roboto Mono", monospace;
   overflow: hidden;
 
+  @keyframes circ-1 {
+    0% {
+      top: 40%;
+      left: 25%;
+    }
+    50% {
+      top: 65%;
+      left: 75%;
+    }
+    100% {
+      top: 40%;
+      left: 25%;
+    }
+  }
+
+  @keyframes circ-2 {
+    0% {
+      top: 65%;
+      left: 75%;
+    }
+    50% {
+      top: 55%;
+      left: 40%;
+    }
+    100% {
+      top: 65%;
+      left: 75%;
+    }
+  }
+
+  @keyframes circ-3 {
+    0% {
+      top: 65%;
+      left: 40%;
+    }
+    50% {
+      top: 35%;
+      left: 60%;
+    }
+    100% {
+      top: 65%;
+      left: 40%;
+    }
+  }
+
+  @keyframes circ-4 {
+    0% {
+      top: 35%;
+      left: 60%;
+    }
+    50% {
+      top: 50%;
+      left: 50%;
+    }
+    100% {
+      top: 35%;
+      left: 60%;
+    }
+  }
+
   .contents {
     flex-grow: 1;
   }
