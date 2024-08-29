@@ -48,7 +48,7 @@
     position: absolute;
     width: 2px;
     height: 2px;
-    border-radius: 50%;
+    border-radius: 50px;
     animation-iteration-count: infinite;
 
     &.circle-1 {
@@ -92,7 +92,7 @@
     border: 1px solid #29447e;
     box-shadow: 0 0 5px #8ca6e0;
     background: #1c1e227a;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 10px;
     color: #ddd;
