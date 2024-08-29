@@ -1,0 +1,31 @@
+@import '../styles/_mixins.scss';
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-family: "Roboto Mono", monospace;
+  overflow: hidden;
+
+  .contents {
+    flex-grow: 1;
+  }
+
+  .p-dropdown-items {
+    font-size: 12px;
+    padding: 0;
+  }
+
+  .p-tabview-nav {
+    gap: 5px;
+
+    a {
+      @include primary-font-regular;
+      font-weight: 400;
+      font-size: 12px;
+      padding: 10px;
+    }
+  }
+}
