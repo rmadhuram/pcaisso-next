@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import Navbar from "./components/navbar/Navbar";
 import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primereact/resources/primereact.min.css";

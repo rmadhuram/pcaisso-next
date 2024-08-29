@@ -11,6 +11,8 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { Tooltip } from "primereact/tooltip";
 import { SelectButton } from 'primereact/selectbutton';
+import { TabView, TabPanel } from "primereact/tabview";
+import History from "./history/history";
 
 interface Category {
   name: string;
@@ -74,56 +76,69 @@ export default function InputPanel({
 
   return (
     <div className={styles["input-panel"]}>
-      <div className="categories">
-        <p className="label">Select Drawing Category:</p>
-        <SelectButton 
-          value={selectedCategory} 
-          onChange={(e) => setSelectedCategory(e.value)} 
-          optionLabel="name" 
-          options={categories} 
-          className="category-select"
-        />
-      </div>
+      <TabView>
+        <TabPanel header="Draw">
+          <div className="draw-panel">
+            <div className="categories">
+              <p className="label">Select Drawing Category:</p>
+              <SelectButton 
+                value={selectedCategory} 
+                onChange={(e) => setSelectedCategory(e.value)} 
+                optionLabel="name" 
+                options={categories} 
+                className="category-select"
+              />
+            </div>
 
-      <div className="select-model">
-        <div className="label">Select Model</div>
-        <Dropdown
-          value={selectedModel}
-          onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
-          options={models}
-          optionLabel="name"
-          placeholder="Select a GPT model"
-        />
-      </div>
-      <div className="input-area">
-        <InputTextarea
-          className="text-area"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Describe what you want to draw"
-        ></InputTextarea>
-      </div>
-      <div className="submit">
-        <div style={{ display: "inline-block", position: "relative" }}>
-          {!selectedModel && (
-            <Tooltip
-              target=".tooltip-target"
-              content="Select a model to proceed"
-              position="right"
-            />
-          )}
-          <div className="tooltip-target">
-            <Button
-              className="submit-button"
-              type="submit"
-              onClick={handleSubmit}
-              disabled={!selectedModel}
-            >
-              Generate
-            </Button>
+            <div className="select-model">
+              <div className="label">Select Model</div>
+              <Dropdown
+                value={selectedModel}
+                onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
+                options={models}
+                optionLabel="name"
+                placeholder="Select a GPT model"
+              />
+            </div>
+            <div className="input-area">
+              <InputTextarea
+                className="text-area"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Describe what you want to draw"
+              ></InputTextarea>
+            </div>
+            <div className="submit">
+              <div style={{ display: "inline-block", position: "relative" }}>
+                {!selectedModel && (
+                  <Tooltip
+                    target=".tooltip-target"
+                    content="Select a model to proceed"
+                    position="right"
+                  />
+                )}
+                <div className="tooltip-target">
+                  <Button
+                    className="submit-button"
+                    type="submit"
+                    onClick={handleSubmit}
+                    disabled={!selectedModel}
+                  >
+                    Generate
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+
+        </TabPanel>
+        <TabPanel header="History">
+          <div className="history-panel">
+            <History />
+          </div>
+        </TabPanel>
+      </TabView>
+
     </div>
   );
 }

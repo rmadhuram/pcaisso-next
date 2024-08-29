@@ -1,20 +1,11 @@
 @import "../../styles/variables";
 @import "../../styles/mixins";
 
-
 .results :global {
   flex-grow: 1;
 
   .p-tabview {
     width: 100%;
-
-    .p-tabview-nav {
-      a {
-        font-weight: 400;
-        @include primary-font-regular;
-        font-size: 14px;
-      }
-    }
 
     .p-tabview-panels {
       padding: 0;
