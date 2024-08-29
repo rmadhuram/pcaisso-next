@@ -25,11 +25,11 @@ export default function Results({
 }) {
   const { data: session } = useSession();
   const [isCopied, setIsCopied] = useState(false);
-  // const [isSaved, setIsSaved] = useState(false);
+  /*const [isSaved, setIsSaved] = useState(false);
 
-  // if (session) {
-  //   userId = session.user?.id as number;
-  // }
+  if (session) {
+    userId = session.user?.id as number;
+  }*/
 
   const handleCopyClick = async () => {
     try {
@@ -40,39 +40,40 @@ export default function Results({
     }
   };
 
-  // const handleSave = async () => {
-  //   if (!session?.user?.email) {
-  //     console.log("User email not found in session");
-  //     return;
-  //   }
-  //   setIsSaved(true);
-  //   try {
-  //     const saveResponse = await fetch("/api/saveResults", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         userId,
-  //         type,
-  //         description: prompt,
-  //         prompt,
-  //         model,
-  //         output: diagram,
-  //         thumbnailUrl: prompt,
-  //         timeTaken: timetaken,
-  //       }),
-  //     });
+  /* const handleSave = async () => {
+    if (!session?.user?.email) {
+      console.log("User email not found in session");
+      return;
+    }
+    setIsSaved(true);
+    try {
+      const saveResponse = await fetch("/api/saveResults", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          type,
+          description: prompt,
+          prompt,
+          model,
+          output: diagram,
+          thumbnailUrl: prompt,
+          timeTaken: timetaken,
+        }),
+      });
 
-  //     if (saveResponse.ok) {
-  //       console.log("Result saved successfully");
-  //     } else {
-  //       console.error("Failed to save result");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
+      if (saveResponse.ok) {
+        console.log("Result saved successfully");
+      } else {
+        console.error("Failed to save result");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  */
 
   return (
     <div className={styles["results"]}>
@@ -89,16 +90,19 @@ export default function Results({
           </pre>
         </TabPanel>
         <TabPanel header="Stats">
-          {/* <div className="display-time"> */}
+          {/* <div className="display-time">
           <p>
             Image generated in <b>{timetaken}</b> secs.
           </p>
-          {/* </div> */}
+          </div> */}
+          <p>
+            Image generated in <b>{timetaken}</b> secs.
+          </p>
         </TabPanel>
       </TabView>
       {/* <Button className="saveBtn" onClick={handleSave} disabled={false}>
         {isSaved ? "Saved!" : "Save to DB"}
-      </Button> */}
+      </Button>  */}
     </div>
   );
 }
