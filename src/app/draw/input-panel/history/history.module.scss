@@ -1,0 +1,41 @@
+@import "../../../../styles/mixins";
+
+.history :global {
+  display: flex;
+  flex-direction: column;
+  @include primary-font-regular;
+
+  .history-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px dotted #686868;
+    padding: 5px;
+    cursor: pointer;  
+
+    &:hover {
+      background-color: #333;
+    }
+
+    .top-section {
+      display: flex;
+      justify-content: space-between;
+      @include title-font-regular;
+      font-size: 10px;
+      color: #888;
+
+      .liked {
+        color: #ff0000;
+      }
+    }
+
+    .prompt {
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* number of lines to show */
+              line-clamp: 2; 
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
