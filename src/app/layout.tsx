@@ -28,7 +28,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Poppins&family=Roboto:wght@400;700&display=swap"
           rel="stylesheet"
         />
-        <script src="https://kit.fontawesome.com/829cabfe65.js"></script>
+        <script src="https://kit.fontawesome.com/829cabfe65.js" async></script>
       </head>
       <body className={inter.className}>
         <ClientSessionProvider> {/* Use the client-side session provider */}
