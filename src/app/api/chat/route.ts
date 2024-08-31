@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import { DrawResult } from "../../../models/draw-result";
+import { options } from "../auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+import { addResult } from "@/persistence/result";
 
 dotenv.config();
 
@@ -12,6 +15,9 @@ const openai = new OpenAI({
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
   const input = await req.json();
+  const session = await getServerSession(options);
+
+  console.log('Session is: ' , session);
 
   if (!input || !input.prompt || !input.type || !input.model) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
@@ -69,6 +75,9 @@ export async function POST(req: NextRequest) {
         total_tokens: 0,
       }
     };
+
+    // Add the output to the database
+    await addResult(session?.user?.id || 0, input.type, input.prompt, input.model, output);
 
     return NextResponse.json(output, { status: 200 });
   } catch (error) {
