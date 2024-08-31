@@ -1,8 +1,12 @@
 import mysql from "mysql2/promise";
 
-let pool: any;
+let pool: mysql.Pool;
 
-export default async function connectDB() {
+export default async function getConnection(): Promise<mysql.Pool> {
+  if (pool) {
+    return pool;
+  }
+
   try {
     pool = mysql.createPool({
       host: process.env.MYSQL_HOST,
@@ -20,8 +24,9 @@ export default async function connectDB() {
       enableKeepAlive: true,
       keepAliveInitialDelay: 0,
     });
+    return pool;
   } catch (error) {
     console.error(error);
+    throw error;
   }
-  return pool;
 }

@@ -1,6 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import connectDB from "@/lib/db";
+import getConnection from "@/lib/db";
+import { addOrUpdateUser } from "@/persistence/user";
 
 let userId: number;
 
@@ -14,29 +15,15 @@ export const options: NextAuthOptions = {
 
   callbacks: {
     async session({ session }) {
-      const connection = await connectDB();
+      const connection = await getConnection();
       try {
-        const email = session.user?.email;
-
-        const [rows] = await connection.execute(
-          "SELECT * FROM users WHERE email = ?",
-          [email]
-        );
-
-        if (rows.length === 0) {
-          await connection.execute(
-            "INSERT INTO users (email, name, created_time, last_session_time) VALUES (?, ?, Now(), NOW())"
-          );
-        } else {
-          userId = rows[0].id;
-          await connection.execute(
-            "UPDATE users SET last_session_time = NOW() WHERE email = ?",
-            [email]
-          );
+        if (!session.user) {
+          throw new Error("User object is missing");
         }
-        if(session.user) {
-          session.user.id = userId as number;
-        }
+        
+        const userId = await addOrUpdateUser(session.user?.email || '', session.user?.name || '');
+        session.user.id = userId as number;
+                
       } catch (error) {
         console.error(error);
       }
