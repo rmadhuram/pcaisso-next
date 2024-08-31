@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.7",
     "animate.css": "^4.1.1",
     "clipboard-copy": "^4.0.1",
     "dotenv": "^16.4.5",

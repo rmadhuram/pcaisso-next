@@ -62,6 +62,7 @@ export async function POST(req: NextRequest) {
       code: response.substring(startIndex, endIndex).trim(),
       text: response,
       timeTakenInSec: (endTime - startTime) / 1000,
+      usage: completion.usage
     };
 
     return NextResponse.json(output, { status: 200 });

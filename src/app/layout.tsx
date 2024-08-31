@@ -6,6 +6,7 @@ import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import ClientSessionProvider from "./components/ClientSessionProvider"; // Import the client-side provider
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
           <div className="contents">{children}</div>
         </ClientSessionProvider>
       </body>
+      <GoogleAnalytics gaId="G-8J216NX51C" />
     </html>
   );
 }
