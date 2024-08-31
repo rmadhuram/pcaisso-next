@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/db";
+import getConnection from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: NextRequest) {
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
   const uuid = uuidv4();
 
-  const connection = await connectDB();
+  const connection = await getConnection();
 
   try {
     await connection.execute(
