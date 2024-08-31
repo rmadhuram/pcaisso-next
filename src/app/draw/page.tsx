@@ -3,9 +3,9 @@ import { Splitter, SplitterPanel } from "primereact/splitter";
 import NoSsr from "../components/NoSSR";
 import InputPanel from "./input-panel/input-panel";
 import Results from "./results";
-import Link from "next/link";
 import styles from "./page.module.scss";
 import { useState } from "react"; 
+import { DrawResult } from "@/models/draw-result";
 
 function Intro() {
   return (
@@ -150,13 +150,8 @@ function Loading() {
 }
 
 export default function HomePage() {
-  const [diagram, setDiagram] = useState<string>("");
-  const [text, setText] = useState<string>("");
-  const [timetaken, setTimeTaken] = useState(0);
-  const [prompt, setPrompt] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [model, setModel] = useState<string>("");
   const [displayState, setDisplayState] = useState<string>("intro");
+  const [result, setResult] = useState<DrawResult>();
 
   async function onSubmit(payload: any) {
     const fetchData = async () => {
@@ -177,25 +172,8 @@ export default function HomePage() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json();
-        // console.log("API Response:", data);
-
-        const diagram = data.code;
-        const text = data.code;
-        const timetaken = data.timeTakenInSec;
-        const prompt = payload.prompt; 
-        const type = payload.category;
-        const model = payload.model;
-
-        setDiagram(diagram);
-        setText(text);
-        setTimeTaken(timetaken);
-        setPrompt(prompt);
-        setType(type);
-        setModel(model);
-        // console.log(
-        //   `diagram:${diagram},text:${text},timetaken:${timetaken},prompt:${prompt},type:${type},model:${model}`
-        // );
+        const data:DrawResult = await response.json();
+        setResult(data);
         setDisplayState("results");
       } catch (error) {
         console.error("Error fetching reply:", error);
@@ -216,12 +194,7 @@ export default function HomePage() {
             {displayState == "loading" && <Loading></Loading>}
             {displayState == "results" && (
               <Results
-                diagram={diagram}
-                text={text}
-                timetaken={timetaken}
-                prompt={prompt}
-                type={type}
-                model={model}
+                result={result}
               ></Results>
             )}
           </SplitterPanel>

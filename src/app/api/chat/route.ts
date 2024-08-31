@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import dotenv from "dotenv";
+import { DrawResult } from "../../../models/draw-result";
 
 dotenv.config();
 
@@ -58,10 +59,15 @@ export async function POST(req: NextRequest) {
         : response.length;
 
     const endTime = Date.now();
-    const output = {
+    const output: DrawResult = {
       code: response.substring(startIndex, endIndex).trim(),
       text: response,
       timeTakenInSec: (endTime - startTime) / 1000,
+      usage: completion.usage || {
+        prompt_tokens: 0,
+        completion_tokens: 0,
+        total_tokens: 0,
+      }
     };
 
     return NextResponse.json(output, { status: 200 });
