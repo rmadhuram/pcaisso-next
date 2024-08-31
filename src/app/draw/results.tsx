@@ -5,23 +5,14 @@ import { useState } from "react";
 import copy from "clipboard-copy";
 import { Button } from "primereact/button";
 import { useSession } from "next-auth/react";
+import { DrawResult } from "../../models/draw-result";
 
 let userId: number;
 
 export default function Results({
-  diagram,
-  text,
-  timetaken,
-  prompt,
-  type,
-  model,
+  result
 }: {
-  diagram: string;
-  text: string;
-  timetaken: number;
-  prompt: string;
-  type: string;
-  model: string;
+  result: DrawResult | undefined;
 }) {
   const { data: session } = useSession();
   const [isCopied, setIsCopied] = useState(false);
@@ -33,7 +24,7 @@ export default function Results({
 
   const handleCopyClick = async () => {
     try {
-      await copy(text);
+      await copy(result?.code || "");
       setIsCopied(true);
     } catch (error) {
       console.error("Failed to copy text to clipboard", error);
@@ -79,25 +70,27 @@ export default function Results({
     <div className={styles["results"]}>
       <TabView>
         <TabPanel header="Output">
-          <iframe className="output-frame" srcDoc={diagram} />
+          <iframe className="output-frame" srcDoc={result?.code || ""} />
         </TabPanel>
         <TabPanel header="Code">
           <Button className="copyBtn" onClick={handleCopyClick}>
             {isCopied ? "Copied!" : "Copy to Clipboard"}
           </Button>
           <pre className="code-panel">
-            <CodeWithLineNumbers language="html" code={text} />
+            <CodeWithLineNumbers language="html" code={result?.code || ""} />
           </pre>
         </TabPanel>
         <TabPanel header="Stats">
-          {/* <div className="display-time">
-          <p>
-            Image generated in <b>{timetaken}</b> secs.
-          </p>
-          </div> */}
-          <p>
-            Image generated in <b>{timetaken}</b> secs.
-          </p>
+          <div className="stats-container">
+            <div className="stats-item label">Created At</div>
+            <div className="stats-item value">10:34 AM, 12th June 2024</div>
+            <div className="stats-item label">Time taken</div>
+            <div className="stats-item value">{result?.timeTakenInSec} secs</div>
+            <div className="stats-item label">Prompt Tokens</div>
+            <div className="stats-item value">{result?.usage.prompt_tokens}</div>
+            <div className="stats-item label">Completion Tokens</div>
+            <div className="stats-item value">{result?.usage.completion_tokens}</div>
+          </div>
         </TabPanel>
       </TabView>
       {/* <Button className="saveBtn" onClick={handleSave} disabled={false}>
