@@ -13,6 +13,7 @@ import { Tooltip } from "primereact/tooltip";
 import { SelectButton } from 'primereact/selectbutton';
 import { TabView, TabPanel } from "primereact/tabview";
 import History from "./history/history";
+import { useSession } from "next-auth/react";
 
 interface Category {
   name: string;
@@ -29,6 +30,7 @@ export default function InputPanel({
 }: {
   handleSubmission: any;
 }) {
+  const { data: session } = useSession();
   const categories = [
     { name: "2D Canvas", key: "2D" },
     { name: "SVG", key: "SVG" },
@@ -122,13 +124,14 @@ export default function InputPanel({
                     className="submit-button"
                     type="submit"
                     onClick={handleSubmit}
-                    disabled={!selectedModel}
+                    disabled={!selectedModel || !session}
                   >
                     Generate
                   </Button>
                 </div>
               </div>
             </div>
+            {!session && <p className="sign-in-message"><i className="fa-solid fa-triangle-exclamation"></i> Please sign in to generate!</p>}
           </div>
 
         </TabPanel>
