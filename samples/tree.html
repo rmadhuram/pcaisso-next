@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Tree Drawing</title>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="treeCanvas"></canvas>
+
+  <script>
+    function drawTree(ctx, startX, startY, len, angle, branchWidth, color1, color2) {
+      ctx.beginPath();
+      ctx.save();
+      ctx.strokeStyle = color1;
+      ctx.fillStyle = color2;
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = 'rgba(0,0,0,0.8)';
+      ctx.lineWidth = branchWidth;
+      ctx.translate(startX, startY);
+      ctx.rotate(angle * Math.PI / 180);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -len);
+      ctx.stroke();
+
+      if (len < 10) {
+        // Draw leaves
+        ctx.beginPath();
+        ctx.arc(0, -len, 10, 0, Math.PI / 2);
+        ctx.fill();
+        ctx.restore();
+        return;
+      }
+
+      drawTree(ctx, 0, -len, len * 0.7, angle - 15, branchWidth * 0.7, color1, color2);
+      drawTree(ctx, 0, -len, len * 0.7, angle + 15, branchWidth * 0.7, color1, color2);
+
+      ctx.restore();
+    }
+
+    function resizeCanvas() {
+      const canvas = document.getElementById('treeCanvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw trunk
+      drawTree(ctx, canvas.width / 2, canvas.height, canvas.height / 3, 0, canvas.width / 50, 'brown', 'green');
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('load', resizeCanvas);
+  </script>
+</body>
+
+</html>
