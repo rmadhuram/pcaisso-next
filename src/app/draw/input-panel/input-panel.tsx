@@ -124,7 +124,7 @@ export default function InputPanel({
                     className="submit-button"
                     type="submit"
                     onClick={handleSubmit}
-                    disabled={!selectedModel || !session}
+                    disabled={!selectedModel || !session || prompt.length < 3}
                   >
                     Generate
                   </Button>
