@@ -2,9 +2,7 @@
 
 import styles from "./input-panel.module.scss";
 import React, { useState } from "react";
-import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 import { useRouter } from "next/navigation";
-import { usePub } from "../../hooks/usePubSub";
 import { useAsyncRoutePush } from "@/app/utils/asyn-push";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -45,7 +43,6 @@ export default function InputPanel({
     { name: "gpt-4o", code: "gpt4o" },
     { name: "gpt-4o-mini", code: "gpt4omini" },
   ];
-  const publish = usePub();
 
   const [selectedCategory, setSelectedCategory] = useState<Category>(
     categories[0]
@@ -61,13 +58,6 @@ export default function InputPanel({
 
   const handleSubmit = async () => {
     if (!selectedModel) return;
-    //await asyncPush(`/home/results`)
-
-    console.log("routing done");
-
-    /*setTimeout(function() {
-      publish('CREATE_NEW', { prompt, category: selectedCategory.key, model : selectedModel?.name })
-    }, 1000)*/
 
     handleSubmission({
       prompt,
