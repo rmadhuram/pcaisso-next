@@ -32,6 +32,9 @@ export default function HomePage() {
 
         const dataReceived = await response.json();
         console.log("data received :", dataReceived);
+        console.log(dataReceived.uuid);
+        console.log(dataReceived.description);
+
         setData(dataReceived);
       } catch (error) {
         console.error("Fetch error:", error);
