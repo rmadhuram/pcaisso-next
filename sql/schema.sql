@@ -5,8 +5,10 @@ CREATE TABLE `users` (
   `name` varchar(128) DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT NULL,
   `last_session_time` timestamp NULL DEFAULT NULL,
+  `role` enum('user','admin') DEFAULT 'user',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 -- results table
 CREATE TABLE `results` (
@@ -21,9 +23,11 @@ CREATE TABLE `results` (
   `thumbnail_url` varchar(1024) DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT NULL,
   `time_taken` double DEFAULT NULL,
+  `prompt_tokens` int(11) DEFAULT NULL,
+  `completion_tokens` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_userId` (`user_id`),
   CONSTRAINT `fk_userId` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

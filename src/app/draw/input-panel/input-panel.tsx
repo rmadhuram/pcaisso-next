@@ -2,15 +2,13 @@
 
 import styles from "./input-panel.module.scss";
 import React, { useState } from "react";
-import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 import { useRouter } from "next/navigation";
 import { usePub } from "../../hooks/usePubSub";
 import { useAsyncRoutePush } from "@/app/utils/asyn-push";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
-import { Tooltip } from "primereact/tooltip";
-import { SelectButton } from 'primereact/selectbutton';
+import { SelectButton } from "primereact/selectbutton";
 import { TabView, TabPanel } from "primereact/tabview";
 import History from "./history/history";
 import { useSession } from "next-auth/react";
@@ -51,7 +49,7 @@ export default function InputPanel({
     categories[0]
   );
 
-  const [selectedModel, setSelectedModel] = useState<model | null>(null);
+  const [selectedModel, setSelectedModel] = useState<model>(models[3]);
   const [prompt, setPrompt] = useState("");
 
   const router = useRouter();
@@ -83,11 +81,11 @@ export default function InputPanel({
           <div className="draw-panel">
             <div className="categories">
               <p className="label">Select Drawing Category:</p>
-              <SelectButton 
-                value={selectedCategory} 
-                onChange={(e) => setSelectedCategory(e.value)} 
-                optionLabel="name" 
-                options={categories} 
+              <SelectButton
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.value)}
+                optionLabel="name"
+                options={categories}
                 className="category-select"
               />
             </div>
@@ -111,29 +109,22 @@ export default function InputPanel({
               ></InputTextarea>
             </div>
             <div className="submit">
-              <div style={{ display: "inline-block", position: "relative" }}>
-                {!selectedModel && (
-                  <Tooltip
-                    target=".tooltip-target"
-                    content="Select a model to proceed"
-                    position="right"
-                  />
-                )}
-                <div className="tooltip-target">
-                  <Button
-                    className="submit-button"
-                    type="submit"
-                    onClick={handleSubmit}
-                    disabled={!selectedModel || !session || prompt.length < 3}
-                  >
-                    Generate
-                  </Button>
-                </div>
-              </div>
+              <Button
+                className="submit-button"
+                type="submit"
+                onClick={handleSubmit}
+                disabled={!selectedModel || !session || prompt.length < 3}
+              >
+                Generate
+              </Button>
             </div>
-            {!session && <p className="sign-in-message"><i className="fa-solid fa-triangle-exclamation"></i> Please sign in to generate!</p>}
+            {!session && (
+              <p className="sign-in-message">
+                <i className="fa-solid fa-triangle-exclamation"></i> Please sign
+                in to generate!
+              </p>
+            )}
           </div>
-
         </TabPanel>
         <TabPanel header="History">
           <div className="history-panel">
@@ -141,7 +132,6 @@ export default function InputPanel({
           </div>
         </TabPanel>
       </TabView>
-
     </div>
   );
 }
