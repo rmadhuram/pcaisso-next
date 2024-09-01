@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(options);
 
   console.log('Session is: ' , session);
+  // TODO: Check if user id is present in session
 
   if (!input || !input.prompt || !input.type || !input.model) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
