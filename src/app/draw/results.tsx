@@ -10,10 +10,8 @@ import { ResultDto } from "@/persistence/result.dto";
 
 export default function Results({
   result,
-  initialData,
 }: {
   result: DrawResult | undefined;
-  initialData?: any;
 }) {
   const { data: session } = useSession();
   const [isCopied, setIsCopied] = useState(false);
@@ -69,77 +67,37 @@ export default function Results({
 
   return (
     <div className={styles["results"]}>
-      {initialData ? (
-        <TabView>
-          <TabPanel header="Output">
-            <iframe
-              className="output-frame"
-              srcDoc={initialData?.data.output || ""}
-            />
-          </TabPanel>
-          <TabPanel header="Code">
-            <Button className="copyBtn" onClick={handleCopyClick}>
-              {isCopied ? "Copied!" : "Copy to Clipboard"}
-            </Button>
-            <pre className="code-panel">
-              <CodeWithLineNumbers
-                language="html"
-                code={initialData?.data.output || ""}
-              />
-            </pre>
-          </TabPanel>
-          <TabPanel header="Stats">
-            <div className="stats-container">
-              <div className="stats-item label">Created At</div>
-              <div className="stats-item value">10:34 AM, 12th June 2024</div>
-              <div className="stats-item label">Time taken</div>
-              <div className="stats-item value">
-                {initialData?.data.time_taken} secs
-              </div>
-              <div className="stats-item label">Prompt Tokens</div>
-              <div className="stats-item value">
-                {initialData?.data.prompt_tokens}
-              </div>
-              <div className="stats-item label">Completion Tokens</div>
-              <div className="stats-item value">
-                {initialData?.data.completion_tokens}
-              </div>
+      <TabView>
+        <TabPanel header="Output">
+          <iframe className="output-frame" srcDoc={result?.code || ""} />
+        </TabPanel>
+        <TabPanel header="Code">
+          <Button className="copyBtn" onClick={handleCopyClick}>
+            {isCopied ? "Copied!" : "Copy to Clipboard"}
+          </Button>
+          <pre className="code-panel">
+            <CodeWithLineNumbers language="html" code={result?.code || ""} />
+          </pre>
+        </TabPanel>
+        <TabPanel header="Stats">
+          <div className="stats-container">
+            <div className="stats-item label">Created At</div>
+            <div className="stats-item value">10:34 AM, 12th June 2024</div>
+            <div className="stats-item label">Time taken</div>
+            <div className="stats-item value">
+              {result?.timeTakenInSec} secs
             </div>
-          </TabPanel>
-        </TabView>
-      ) : (
-        <TabView>
-          <TabPanel header="Output">
-            <iframe className="output-frame" srcDoc={result?.code || ""} />
-          </TabPanel>
-          <TabPanel header="Code">
-            <Button className="copyBtn" onClick={handleCopyClick}>
-              {isCopied ? "Copied!" : "Copy to Clipboard"}
-            </Button>
-            <pre className="code-panel">
-              <CodeWithLineNumbers language="html" code={result?.code || ""} />
-            </pre>
-          </TabPanel>
-          <TabPanel header="Stats">
-            <div className="stats-container">
-              <div className="stats-item label">Created At</div>
-              <div className="stats-item value">10:34 AM, 12th June 2024</div>
-              <div className="stats-item label">Time taken</div>
-              <div className="stats-item value">
-                {result?.timeTakenInSec} secs
-              </div>
-              <div className="stats-item label">Prompt Tokens</div>
-              <div className="stats-item value">
-                {result?.usage.prompt_tokens}
-              </div>
-              <div className="stats-item label">Completion Tokens</div>
-              <div className="stats-item value">
-                {result?.usage.completion_tokens}
-              </div>
+            <div className="stats-item label">Prompt Tokens</div>
+            <div className="stats-item value">
+              {result?.usage.prompt_tokens}
             </div>
-          </TabPanel>
-        </TabView>
-      )}
+            <div className="stats-item label">Completion Tokens</div>
+            <div className="stats-item value">
+              {result?.usage.completion_tokens}
+            </div>
+          </div>
+        </TabPanel>
+      </TabView>
     </div>
   );
 }

@@ -160,14 +160,18 @@ export default function HomePage() {
   const uuid = params.slug?.[0];
   console.log("UUID:", uuid);
 
-  const [data, setData] = useState<ResultDto | null>(null);
+  const [loadedData, setLoadedData] = useState<ResultDto | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const [displayState, setDisplayState] = useState<string>("intro");
   const [result, setResult] = useState<DrawResult>();
 
   useEffect(() => {
-    if (!uuid) return;
+    if (uuid === "new") {
+      setLoading(false);
+      setLoadedData(null);
+      return;
+    }
 
     const fetchData = async () => {
       try {
@@ -186,7 +190,21 @@ export default function HomePage() {
         }
 
         const dataReceived = await response.json();
-        setData(dataReceived);
+        console.log("data received:", dataReceived);
+        setLoadedData(dataReceived);
+
+        let result: DrawResult = {
+          code: dataReceived.output,
+          text: '',
+          timeTakenInSec: dataReceived.time_taken,
+          usage: {
+            prompt_tokens: dataReceived.prompt_tokens,
+            completion_tokens: dataReceived.completion_tokens,
+            total_tokens: 0,  // TODO: not needed.
+          }
+        }
+        setResult(result)
+        setDisplayState("results");
       } catch (error) {
         console.error("Fetch error:", error);
       } finally {
@@ -230,10 +248,6 @@ export default function HomePage() {
     return <p>Loading...</p>;
   }
 
-  if (!data) {
-    return <p>No data found</p>;
-  }
-
   return (
     <NoSsr>
       <div className={styles.splitter}>
@@ -241,14 +255,14 @@ export default function HomePage() {
           <SplitterPanel className="panel" size={25}>
             <InputPanel
               handleSubmission={onSubmit}
-              initialData={data}
+              initialData={loadedData}
             ></InputPanel>
           </SplitterPanel>
           <SplitterPanel className="panel" size={75}>
             {displayState == "intro" && <Intro></Intro>}
             {displayState == "loading" && <Loading></Loading>}
             {displayState == "results" && (
-              <Results result={result} initialData={data}></Results>
+              <Results result={result} initialData={loadedData}></Results>
             )}
           </SplitterPanel>
         </Splitter>

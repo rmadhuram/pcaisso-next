@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const data = await getResults(uuid as string);
-    return NextResponse.json({ data }, { status: 200 });
+    return NextResponse.json(data , { status: 200 });
   } catch (error) {
     console.error("Error fetching results:", error);
     return NextResponse.json(

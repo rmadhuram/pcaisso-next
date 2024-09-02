@@ -59,10 +59,10 @@ export default function InputPanel({
   const handleModelSelection = () => {};
 
   useEffect(() => {
-    console.log("initial data:", initialData.data);
-    console.log("prompt:", initialData?.data.prompt);
+
     if (initialData) {
-      setPrompt(initialData?.data.prompt);
+      console.log("initial data:", initialData);
+      setPrompt(initialData.prompt);
 
       const matchedCategory = categories.find(
         (category) => category.key === initialData.type
