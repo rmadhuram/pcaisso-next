@@ -2,8 +2,6 @@
 
 import styles from "./input-panel.module.scss";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAsyncRoutePush } from "@/app/utils/asyn-push";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
@@ -11,7 +9,6 @@ import { SelectButton } from "primereact/selectbutton";
 import { TabView, TabPanel } from "primereact/tabview";
 import History from "./history/history";
 import { useSession } from "next-auth/react";
-import { ResultDto } from "@/persistence/result.dto";
 
 interface Category {
   name: string;
@@ -53,13 +50,7 @@ export default function InputPanel({
   const [selectedModel, setSelectedModel] = useState<model>(models[3]);
   const [prompt, setPrompt] = useState("");
 
-  const router = useRouter();
-  const asyncPush = useAsyncRoutePush();
-
-  const handleModelSelection = () => {};
-
   useEffect(() => {
-
     if (initialData) {
       console.log("initial data:", initialData);
       setPrompt(initialData.prompt);
@@ -78,14 +69,6 @@ export default function InputPanel({
         setSelectedModel(matchedModel);
       }
     }
-    console.log(
-      "model: ",
-      selectedModel,
-      "\ncategory: ",
-      selectedCategory,
-      "\nprompt:",
-      prompt
-    );
   }, [initialData]);
 
   const handleSubmit = async () => {

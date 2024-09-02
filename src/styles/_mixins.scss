@@ -14,6 +14,5 @@
   background: #000;
   background-image: url("../assets/light-sketch.png");
   color: white;
-  @include primary-font-regular()
+  @include primary-font-regular();
 }
-

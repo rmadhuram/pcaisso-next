@@ -3,23 +3,28 @@ import Signin from "../signIn/Signin";
 import Link from "next/link";
 
 export default function Navbar() {
-
- return (
+  return (
     <div className={styles["navbar"]}>
       <div className="left-side">
         <h3>
           Pc<span>ai</span>sso
         </h3>
         <ul className="menu">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/draw">Explore</Link></li>
-          <li><Link href="/faq">FAQ</Link></li>
-          <li><Link href="/about">About</Link></li>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href="/draw">Explore</Link>
+          </li>
+          <li>
+            <Link href="/faq">FAQ</Link>
+          </li>
+          <li>
+            <Link href="/about">About</Link>
+          </li>
         </ul>
       </div>
-      <Signin/>
+      <Signin />
     </div>
   );
 }
-
-
