@@ -19,7 +19,7 @@ export default function FAQ() {
           <AccordionTab header="How can I generate better results?">
               <p className="m-0">
                 To enhance the quality of your outputs, try using more specific and detailed prompts. 
-                It’s also beneficial to have an understanding of basic drawing primitives and frameworks. 
+                It is also beneficial to have an understanding of basic drawing primitives and frameworks. 
                 For 2D art, familiarize yourself with HTML Canvas and SVG; for 3D, explore tools like Three.js and D3.js. 
                 This knowledge will help you craft prompts that guide the LLM more effectively.
               </p>
