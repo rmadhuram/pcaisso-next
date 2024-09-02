@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./input-panel.module.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAsyncRoutePush } from "@/app/utils/asyn-push";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
@@ -11,6 +11,7 @@ import { SelectButton } from "primereact/selectbutton";
 import { TabView, TabPanel } from "primereact/tabview";
 import History from "./history/history";
 import { useSession } from "next-auth/react";
+import { ResultDto } from "@/persistence/result.dto";
 
 interface Category {
   name: string;
@@ -24,8 +25,10 @@ interface model {
 
 export default function InputPanel({
   handleSubmission,
+  initialData,
 }: {
   handleSubmission: any;
+  initialData?: any;
 }) {
   const { data: session } = useSession();
   const categories = [
@@ -54,6 +57,36 @@ export default function InputPanel({
   const asyncPush = useAsyncRoutePush();
 
   const handleModelSelection = () => {};
+
+  useEffect(() => {
+    console.log("initial data:", initialData.data);
+    console.log("prompt:", initialData?.data.prompt);
+    if (initialData) {
+      setPrompt(initialData?.data.prompt);
+
+      const matchedCategory = categories.find(
+        (category) => category.key === initialData.type
+      );
+      if (matchedCategory) {
+        setSelectedCategory(matchedCategory);
+      }
+
+      const matchedModel = models.find(
+        (model) => model.code === initialData.model
+      );
+      if (matchedModel) {
+        setSelectedModel(matchedModel);
+      }
+    }
+    console.log(
+      "model: ",
+      selectedModel,
+      "\ncategory: ",
+      selectedCategory,
+      "\nprompt:",
+      prompt
+    );
+  }, [initialData]);
 
   const handleSubmit = async () => {
     if (!selectedModel) return;
@@ -104,7 +137,7 @@ export default function InputPanel({
                 className="submit-button"
                 type="submit"
                 onClick={handleSubmit}
-                disabled={!selectedModel || !session || prompt.length < 3}
+                disabled={!selectedModel || !session}
               >
                 Generate
               </Button>
