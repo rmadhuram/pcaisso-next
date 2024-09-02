@@ -5,12 +5,16 @@ import { useState } from "react";
 import copy from "clipboard-copy";
 import { Button } from "primereact/button";
 import { DrawResult } from "../../models/draw-result";
+import dayjs from "dayjs";
 
 export default function Results({
   result,
 }: {
   result: DrawResult | undefined;
 }) {
+  const now = dayjs();
+  const formattedDate = now.format("hh:mm A, DD MMMM YYYY");
+
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyClick = async () => {
@@ -39,7 +43,7 @@ export default function Results({
         <TabPanel header="Stats">
           <div className="stats-container">
             <div className="stats-item label">Created At</div>
-            <div className="stats-item value">10:34 AM, 12th June 2024</div>
+            <div className="stats-item value">{formattedDate}</div>
             <div className="stats-item label">Time taken</div>
             <div className="stats-item value">
               {result?.timeTakenInSec} secs

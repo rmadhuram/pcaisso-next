@@ -9,7 +9,6 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 -- results table
 CREATE TABLE `results` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -28,6 +27,4 @@ CREATE TABLE `results` (
   PRIMARY KEY (`id`),
   KEY `fk_userId` (`user_id`),
   CONSTRAINT `fk_userId` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
