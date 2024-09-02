@@ -1,16 +1,15 @@
 import { TabView, TabPanel } from "primereact/tabview";
 import styles from "./results.module.scss";
 import CodeWithLineNumbers from "@/app/components/CodeWithLineNumbers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import copy from "clipboard-copy";
 import { Button } from "primereact/button";
 import { useSession } from "next-auth/react";
 import { DrawResult } from "../../models/draw-result";
-
-let userId: number;
+import { ResultDto } from "@/persistence/result.dto";
 
 export default function Results({
-  result
+  result,
 }: {
   result: DrawResult | undefined;
 }) {
@@ -85,17 +84,20 @@ export default function Results({
             <div className="stats-item label">Created At</div>
             <div className="stats-item value">10:34 AM, 12th June 2024</div>
             <div className="stats-item label">Time taken</div>
-            <div className="stats-item value">{result?.timeTakenInSec} secs</div>
+            <div className="stats-item value">
+              {result?.timeTakenInSec} secs
+            </div>
             <div className="stats-item label">Prompt Tokens</div>
-            <div className="stats-item value">{result?.usage.prompt_tokens}</div>
+            <div className="stats-item value">
+              {result?.usage.prompt_tokens}
+            </div>
             <div className="stats-item label">Completion Tokens</div>
-            <div className="stats-item value">{result?.usage.completion_tokens}</div>
+            <div className="stats-item value">
+              {result?.usage.completion_tokens}
+            </div>
           </div>
         </TabPanel>
       </TabView>
-      {/* <Button className="saveBtn" onClick={handleSave} disabled={false}>
-        {isSaved ? "Saved!" : "Save to DB"}
-      </Button>  */}
     </div>
   );
 }

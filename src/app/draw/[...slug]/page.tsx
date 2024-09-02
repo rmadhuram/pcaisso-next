@@ -1,10 +1,12 @@
 "use client";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { ResultDto } from "@/persistence/result.dto";
+import Results from "../results";
+import InputPanel from "../input-panel/input-panel";
 import { Splitter, SplitterPanel } from "primereact/splitter";
-import NoSsr from "../components/NoSSR";
-import InputPanel from "./input-panel/input-panel";
-import Results from "./results";
-import styles from "./page.module.scss";
-import { useState } from "react"; 
+import NoSsr from "../../components/NoSSR";
+import styles from "../page.module.scss";
 import { DrawResult } from "@/models/draw-result";
 
 function Intro() {
@@ -16,7 +18,10 @@ function Intro() {
       <div className="circle circle-4"></div>
       <div className="description-box">
         <p>
-          Welcome to the Pcaisso Drawing Studio! Here, you can harness the power of LLMs to create amazing 2D and 3D graphics, animations, and even simple games. Just describe what you want to draw in the input panel, and watch as the AI brings your ideas to life!
+          Welcome to the Pcaisso Drawing Studio! Here, you can harness the power
+          of LLMs to create amazing 2D and 3D graphics, animations, and even
+          simple games. Just describe what you want to draw in the input panel,
+          and watch as the AI brings your ideas to life!
         </p>
         <ul>
           <li>🖌️ Create static 2D images</li>
@@ -25,7 +30,8 @@ function Intro() {
           <li>🕹️ Develop simple interactive games</li>
         </ul>
         <p>
-          Get started by typing your drawing request in the input panel on the left. Be creative and have fun!
+          Get started by typing your drawing request in the input panel on the
+          left. Be creative and have fun!
         </p>
       </div>
     </div>
@@ -150,8 +156,64 @@ function Loading() {
 }
 
 export default function HomePage() {
+  const params = useParams();
+  const uuid = params.slug?.[0];
+  console.log("UUID:", uuid);
+
+  const [loadedData, setLoadedData] = useState<ResultDto | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
   const [displayState, setDisplayState] = useState<string>("intro");
   const [result, setResult] = useState<DrawResult>();
+
+  useEffect(() => {
+    if (uuid === "new") {
+      setLoading(false);
+      setLoadedData(null);
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/getResults", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            uuid,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const dataReceived = await response.json();
+        console.log("data received:", dataReceived);
+        setLoadedData(dataReceived);
+
+        let result: DrawResult = {
+          code: dataReceived.output,
+          text: "",
+          timeTakenInSec: dataReceived.time_taken,
+          usage: {
+            prompt_tokens: dataReceived.prompt_tokens,
+            completion_tokens: dataReceived.completion_tokens,
+            total_tokens: 0, // TODO: not needed.
+          },
+        };
+        setResult(result);
+        setDisplayState("results");
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [uuid]);
 
   async function onSubmit(payload: any) {
     const fetchData = async () => {
@@ -172,7 +234,7 @@ export default function HomePage() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data:DrawResult = await response.json();
+        const data: DrawResult = await response.json();
         setResult(data);
         setDisplayState("results");
       } catch (error) {
@@ -182,21 +244,24 @@ export default function HomePage() {
     fetchData();
   }
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <NoSsr>
       <div className={styles.splitter}>
         <Splitter layout="horizontal">
           <SplitterPanel className="panel" size={25}>
-            <InputPanel handleSubmission={onSubmit}></InputPanel>
+            <InputPanel
+              handleSubmission={onSubmit}
+              initialData={loadedData}
+            ></InputPanel>
           </SplitterPanel>
           <SplitterPanel className="panel" size={75}>
             {displayState == "intro" && <Intro></Intro>}
             {displayState == "loading" && <Loading></Loading>}
-            {displayState == "results" && (
-              <Results
-                result={result}
-              ></Results>
-            )}
+            {displayState == "results" && <Results result={result}></Results>}
           </SplitterPanel>
         </Splitter>
       </div>

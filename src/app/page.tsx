@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./page.module.scss";
 import { Button } from "primereact/button";
 import GalleryItem from "./components/galleryItem/GalleryItem";
-import 'animate.css';
+import "animate.css";
 
 export default function Page() {
   return (
@@ -14,10 +14,10 @@ export default function Page() {
         </h1>
       </div>
       <p className="explain">
-        Did you know that LLMs can draw cool things? 2D & 3D graphics,<br/>
-        small games & data visualizations! Come, explore with us!
+        Did you know that LLMs can draw cool things? 2D & 3D graphics, small
+        games & data visualizations! Come, explore with us!
       </p>
-      <Link href="/draw" passHref>
+      <Link href="/draw/new" passHref>
         <Button className="explore-button" type="submit" severity="success">
           Start Exploring!
         </Button>

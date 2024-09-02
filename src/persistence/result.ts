@@ -10,20 +10,25 @@ import { ResultDto } from "./result.dto";
 
 /**
  * Add a result to the database
- * @param userId 
- * @param type 
- * @param prompt 
- * @param model 
- * @param drawResult 
- * @returns 
+ * @param userId
+ * @param type
+ * @param prompt
+ * @param model
+ * @param drawResult
+ * @returns
  */
-export async function addResult(userId: number, type:string, prompt: string, model: string, 
-  drawResult: DrawResult) {
+export async function addResult(
+  userId: number,
+  type: string,
+  prompt: string,
+  model: string,
+  drawResult: DrawResult
+) {
   try {
     const connection = await getConnection();
     const uuid = uuidv4();
 
-    const [result] = await connection.execute(
+    const [result] = (await connection.execute(
       "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
       [
         uuid,
@@ -33,12 +38,12 @@ export async function addResult(userId: number, type:string, prompt: string, mod
         prompt,
         model,
         drawResult.code,
-        '',
+        "",
         drawResult.timeTakenInSec,
         drawResult.usage.prompt_tokens,
         drawResult.usage.completion_tokens,
       ]
-    ) as [ResultSetHeader, FieldPacket[]];
+    )) as [ResultSetHeader, FieldPacket[]];
     return result.insertId;
   } catch (error) {
     console.error(error);
@@ -47,19 +52,20 @@ export async function addResult(userId: number, type:string, prompt: string, mod
 }
 
 /**
- * Get results from the database given a uuid
- * @param userId 
- * @returns 
+ * Get results from the database given a UUID
+ * @param uuid - The UUID of the result
+ * @returns
  */
 export async function getResults(uuid: string): Promise<ResultDto> {
   try {
     const connection = await getConnection();
-    const [results] = await connection.execute(
+
+    const [results] = (await connection.execute(
       "SELECT * FROM results WHERE uuid = ?",
       [uuid]
-    ) as [ResultDto[], FieldPacket[]];
+    )) as [ResultDto[], FieldPacket[]];
     return results[0];
-  } catch (error) { 
+  } catch (error) {
     console.error(error);
     throw error;
   }
