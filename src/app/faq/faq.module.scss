@@ -22,12 +22,21 @@
       font-weight: bold;
       margin: 0;
       font-size: 24px;
-      color: #ccc;
+      color: #cccccc;
       margin-top: 20px;
     }
 
     .p-accordion {
       @include primary-font-regular;
+      width: 100%;
+
+      .p-accordion-header :hover {
+        background-color: #2e3f57;
+      }
+
+      .p-accordion-header-text {
+        color: #c9c952;
+      }
     }
 
   }
