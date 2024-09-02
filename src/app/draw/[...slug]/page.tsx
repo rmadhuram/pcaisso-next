@@ -195,15 +195,15 @@ export default function HomePage() {
 
         let result: DrawResult = {
           code: dataReceived.output,
-          text: '',
+          text: "",
           timeTakenInSec: dataReceived.time_taken,
           usage: {
             prompt_tokens: dataReceived.prompt_tokens,
             completion_tokens: dataReceived.completion_tokens,
-            total_tokens: 0,  // TODO: not needed.
-          }
-        }
-        setResult(result)
+            total_tokens: 0, // TODO: not needed.
+          },
+        };
+        setResult(result);
         setDisplayState("results");
       } catch (error) {
         console.error("Fetch error:", error);
@@ -261,9 +261,7 @@ export default function HomePage() {
           <SplitterPanel className="panel" size={75}>
             {displayState == "intro" && <Intro></Intro>}
             {displayState == "loading" && <Loading></Loading>}
-            {displayState == "results" && (
-              <Results result={result} initialData={loadedData}></Results>
-            )}
+            {displayState == "results" && <Results result={result}></Results>}
           </SplitterPanel>
         </Splitter>
       </div>
