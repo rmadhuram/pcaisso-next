@@ -158,7 +158,6 @@ function Loading() {
 export default function HomePage() {
   const params = useParams();
   const uuid = params.slug?.[0];
-  console.log("UUID:", uuid);
 
   const [loadedData, setLoadedData] = useState<ResultDto | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
