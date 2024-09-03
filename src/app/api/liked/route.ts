@@ -1,20 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import getConnection from "@/lib/db";
+import { updateLike } from "@/persistence/result";
 
 export async function POST(req: NextRequest) {
-  const { code, liked } = await req.json();
-
-  const connection = await getConnection();
+  const { output, liked } = await req.json();
 
   try {
-    await connection.execute("UPDATE results SET liked=? where output =?", [
-      liked,
-      code,
-    ]);
-    return NextResponse.json(
-      { message: "Like updated successfully" },
-      { status: 200 }
-    );
+    const data = await updateLike(output as string, liked as number);
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Error updating like:", error);
     return NextResponse.json(

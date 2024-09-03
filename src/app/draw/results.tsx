@@ -6,13 +6,16 @@ import copy from "clipboard-copy";
 import { Button } from "primereact/button";
 import { DrawResult } from "../../models/draw-result";
 import dayjs from "dayjs";
+import LikeButton from "../components/likeButton/LikeButton";
 
 export default function Results({
   result,
+  created_time,
 }: {
   result: DrawResult | undefined;
+  created_time: any;
 }) {
-  const now = dayjs();
+  const now = dayjs(created_time);
   const formattedDate = now.format("hh:mm A, DD MMMM YYYY");
 
   const [isCopied, setIsCopied] = useState(false);
@@ -32,23 +35,24 @@ export default function Results({
     setLiked(likedStatus);
 
     const code = result?.code;
-
-    try {
-      const response = await fetch("/api/liked", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          code,
-          liked,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+    if (code) {
+      try {
+        const response = await fetch("/api/liked", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            code,
+            liked: likedStatus,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
       }
-    } catch (error) {
-      console.error("Fetch error:", error);
     }
   };
 
@@ -86,11 +90,7 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="like-btn" onClick={updateData}>
-        {liked ? (
-          <i className="fa-solid fa-heart liked"></i>
-        ) : (
-          <i className="fa-regular fa-heart"></i>
-        )}
+        <LikeButton liked={liked}></LikeButton>
       </div>
     </div>
   );

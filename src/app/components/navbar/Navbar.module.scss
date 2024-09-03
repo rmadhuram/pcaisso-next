@@ -31,8 +31,12 @@
 
           &:hover {
             padding-bottom: 3px;
-            color: wheat !important;
+            color: wheat;
             border-bottom: 1px dotted wheat;
+          }
+
+          &.selected {
+            color: wheat;
           }
         }
       }

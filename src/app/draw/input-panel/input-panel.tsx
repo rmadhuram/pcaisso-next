@@ -52,7 +52,6 @@ export default function InputPanel({
 
   useEffect(() => {
     if (initialData) {
-      console.log("initial data:", initialData);
       setPrompt(initialData.prompt);
 
       const matchedCategory = categories.find(
