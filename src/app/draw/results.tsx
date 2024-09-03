@@ -16,6 +16,7 @@ export default function Results({
   const formattedDate = now.format("hh:mm A, DD MMMM YYYY");
 
   const [isCopied, setIsCopied] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   const handleCopyClick = async () => {
     try {
@@ -23,6 +24,31 @@ export default function Results({
       setIsCopied(true);
     } catch (error) {
       console.error("Failed to copy text to clipboard", error);
+    }
+  };
+
+  const updateData = async () => {
+    const likedStatus = !liked;
+    setLiked(likedStatus);
+
+    const code = result?.code;
+
+    try {
+      const response = await fetch("/api/liked", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          code,
+          liked,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
     }
   };
 
@@ -59,6 +85,13 @@ export default function Results({
           </div>
         </TabPanel>
       </TabView>
+      <div className="like-btn" onClick={updateData}>
+        {liked ? (
+          <i className="fa-solid fa-heart liked"></i>
+        ) : (
+          <i className="fa-regular fa-heart"></i>
+        )}
+      </div>
     </div>
   );
 }
