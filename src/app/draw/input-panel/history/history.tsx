@@ -4,9 +4,11 @@ import { useSession } from "next-auth/react";
 import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
 import { ResultDto } from "@/persistence/result.dto";
 
 dayjs.extend(relativeTime);
+dayjs.extend(utc);
 
 function HistoryItem({
   ago,
@@ -56,7 +58,6 @@ export default function History() {
           }
 
           const dataReceived = await response.json();
-          console.log("data received: ", dataReceived);
           setLoadedData(dataReceived);
         } catch (error) {
           console.error("Error fetching reply:", error);
@@ -74,7 +75,7 @@ export default function History() {
         currentItems.map((item: any, index: any) => (
           <HistoryItem
             key={first + index}
-            ago={dayjs(item.created_time).fromNow()}
+            ago={dayjs.utc(item.created_time).local().fromNow()}
             prompt={item.prompt}
             liked={item.liked}
           />

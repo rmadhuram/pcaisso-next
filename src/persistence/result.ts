@@ -92,20 +92,20 @@ export async function getPrompts(userId: any): Promise<ResultDto[]> {
 }
 
 /**
- * Set liked ? 1 : 0 given the output and the value of liked
- * @param output, liked
+ * Set liked ? 1 : 0 given the id and the value of liked
+ * @param id, liked
  * @returns
  */
 export async function updateLike(
-  output: string,
-  liked: number
+  id: number,
+  liked: boolean
 ): Promise<ResultSetHeader> {
   try {
     const connection = await getConnection();
 
     const [response] = (await connection.execute(
-      "UPDATE results SET liked=? where output =?",
-      [liked, output]
+      "UPDATE results SET liked=? where id =?",
+      [liked, id]
     )) as [ResultSetHeader, FieldPacket[]];
     return response;
   } catch (error) {

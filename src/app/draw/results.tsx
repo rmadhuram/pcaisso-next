@@ -31,19 +31,21 @@ export default function Results({
   };
 
   const updateData = async () => {
+
     const likedStatus = !liked;
     setLiked(likedStatus);
 
-    const code = result?.code;
-    if (code) {
+    const id = result?.id as number;
+    console.log(id);
+    if (id) {
       try {
         const response = await fetch("/api/liked", {
-          method: "POST",
+          method: "GET",
           headers: {
             "content-type": "application/json",
           },
           body: JSON.stringify({
-            code,
+            id,
             liked: likedStatus,
           }),
         });

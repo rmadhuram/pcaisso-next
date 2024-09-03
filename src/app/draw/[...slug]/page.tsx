@@ -192,6 +192,7 @@ export default function HomePage() {
         setLoadedData(dataReceived);
 
         let result: DrawResult = {
+          id: dataReceived.id,
           code: dataReceived.output,
           text: "",
           timeTakenInSec: dataReceived.time_taken,
@@ -217,7 +218,6 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         setDisplayState("loading");
-        console.log("fetch");
         const response = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

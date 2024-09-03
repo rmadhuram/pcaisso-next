@@ -1,4 +1,5 @@
 export interface DrawResult {
+  id: number | null;
   code: string;
   text: string;
   timeTakenInSec: number;
