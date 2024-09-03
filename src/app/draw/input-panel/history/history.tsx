@@ -81,7 +81,11 @@ export default function History() {
           />
         ))
       ) : (
-        <Skeleton className="mb-2" height="50px"></Skeleton>
+        <>
+          <Skeleton className="mb-2" height="50px"></Skeleton>
+          <Skeleton className="mb-2" height="50px"></Skeleton>
+        </>
+
       )}
 
       {currentItems.length > 0 && (
