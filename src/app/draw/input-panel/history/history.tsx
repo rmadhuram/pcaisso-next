@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./history.module.scss";
-import { ResultDto } from "@/persistence/result.dto";
 import { useSession } from "next-auth/react";
+import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
 
 function HistoryItem({
   key,
@@ -33,8 +33,15 @@ function HistoryItem({
 
 export default function History() {
   const { data: session } = useSession();
-  const [loadedData, setLoadedData] = useState<any>(null);
+  const [loadedData, setLoadedData] = useState<any>([]);
   const userId = session?.user?.id as number;
+
+  const [first, setFirst] = useState<number>(0);
+  const rowsPerPage = 10;
+
+  const onPageChange = (event: PaginatorPageChangeEvent) => {
+    setFirst(event.first);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,12 +70,24 @@ export default function History() {
     fetchData();
   }, [userId]);
 
+  const currentItems = loadedData.slice(first, first + rowsPerPage);
+
   return (
     <div className={styles.history}>
-      {loadedData ? (
-        loadedData.map((item: any, index: any) => (
+      <div className="card">
+        <Paginator
+          first={first}
+          rows={10}
+          totalRecords={loadedData.length}
+          onPageChange={onPageChange}
+          template={{ layout: "PrevPageLink CurrentPageReport NextPageLink" }}
+        />
+      </div>
+
+      {currentItems.length > 0 ? (
+        currentItems.map((item: any, index: any) => (
           <HistoryItem
-            key={index}
+            key={first + index}
             ago={item.ago}
             prompt={item.prompt}
             liked={item.liked}
