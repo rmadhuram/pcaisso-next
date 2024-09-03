@@ -70,3 +70,46 @@ export async function getResults(uuid: string): Promise<ResultDto> {
     throw error;
   }
 }
+
+/**
+ * Get prompts from the database given a userId
+ * @param userId - The userId of the user
+ * @returns
+ */
+export async function getPrompts(userId: any): Promise<ResultDto[]> {
+  try {
+    const connection = await getConnection();
+
+    const [prompts] = (await connection.execute(
+      "SELECT created_time, prompt, liked FROM results WHERE user_id = ? ORDER BY created_time DESC",
+      [userId]
+    )) as [ResultDto[], FieldPacket[]];
+    return prompts;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+/**
+ * Set liked ? 1 : 0 given the output and the value of liked
+ * @param output, liked
+ * @returns
+ */
+export async function updateLike(
+  output: string,
+  liked: number
+): Promise<ResultSetHeader> {
+  try {
+    const connection = await getConnection();
+
+    const [response] = (await connection.execute(
+      "UPDATE results SET liked=? where output =?",
+      [liked, output]
+    )) as [ResultSetHeader, FieldPacket[]];
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

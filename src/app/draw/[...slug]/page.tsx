@@ -158,7 +158,6 @@ function Loading() {
 export default function HomePage() {
   const params = useParams();
   const uuid = params.slug?.[0];
-  console.log("UUID:", uuid);
 
   const [loadedData, setLoadedData] = useState<ResultDto | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -190,7 +189,6 @@ export default function HomePage() {
         }
 
         const dataReceived = await response.json();
-        console.log("data received:", dataReceived);
         setLoadedData(dataReceived);
 
         let result: DrawResult = {
@@ -261,7 +259,12 @@ export default function HomePage() {
           <SplitterPanel className="panel" size={75}>
             {displayState == "intro" && <Intro></Intro>}
             {displayState == "loading" && <Loading></Loading>}
-            {displayState == "results" && <Results result={result}></Results>}
+            {displayState == "results" && (
+              <Results
+                result={result}
+                created_time={loadedData?.created_time}
+              ></Results>
+            )}
           </SplitterPanel>
         </Splitter>
       </div>

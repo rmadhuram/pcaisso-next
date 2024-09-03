@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
   const input = await req.json();
   const session = await getServerSession(options);
 
-  console.log('Session is: ' , session);
   // TODO: Check if user id is present in session
 
   if (!input || !input.prompt || !input.type || !input.model) {

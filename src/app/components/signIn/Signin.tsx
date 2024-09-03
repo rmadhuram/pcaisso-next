@@ -31,7 +31,7 @@ export default function SignIn() {
           />
           <button onClick={handleSignOut}>
             <span>Sign Out</span>
-            </button>
+          </button>
         </div>
       ) : (
         <button onClick={handleSignIn}>

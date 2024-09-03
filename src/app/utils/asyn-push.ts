@@ -1,49 +1,49 @@
-'use client'
-import { useRouter } from 'next/navigation'
-import { useEffect, useTransition } from 'react'
+"use client";
+import { useRouter } from "next/navigation";
+import { useEffect, useTransition } from "react";
 
 // Define the type for the observer callback function
-type ObserverCallback = () => void
+type ObserverCallback = () => void;
 
 const createRouteObserver = () => {
-  let observer: ObserverCallback | null = null
+  let observer: ObserverCallback | null = null;
 
   const setObserver = (callback: ObserverCallback) => {
-    observer = callback
-  }
+    observer = callback;
+  };
 
   const notify = () => {
     if (observer) {
-      observer()
+      observer();
     }
-  }
+  };
 
-  return { setObserver, notify }
-}
+  return { setObserver, notify };
+};
 
-const routeObserver = createRouteObserver()
+const routeObserver = createRouteObserver();
 
 export const useAsyncRoutePush = () => {
-  const [isPending, startTransition] = useTransition()
-  const router = useRouter()
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const asynPush = async (path: string) => {
     return new Promise<void>((resolve) => {
       startTransition(() => {
-        router.push(path)
-      })
+        router.push(path);
+      });
 
       routeObserver.setObserver(() => {
-        resolve()
-      })
-    })
-  }
+        resolve();
+      });
+    });
+  };
 
   useEffect(() => {
     if (!isPending) {
-      routeObserver.notify()
+      routeObserver.notify();
     }
-  }, [isPending])
+  }, [isPending]);
 
-  return asynPush
-}
+  return asynPush;
+};

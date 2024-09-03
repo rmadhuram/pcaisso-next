@@ -11,4 +11,5 @@ export interface ResultDto {
   time_taken: number;
   prompt_tokens: number | null;
   completion_tokens: number | null;
+  liked: boolean;
 }
