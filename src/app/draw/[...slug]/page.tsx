@@ -243,7 +243,12 @@ export default function HomePage() {
   }
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className={styles["loading"]}>
+        <h3 className="generating">Loading AI Art + Code...</h3>
+        <div className="spinner"></div>
+      </div>
+    );
   }
 
   return (

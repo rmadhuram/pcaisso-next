@@ -5,6 +5,7 @@ import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { ResultDto } from "@/persistence/result.dto";
+import { Skeleton } from 'primereact/skeleton';
 
 dayjs.extend(relativeTime);
 
@@ -80,9 +81,10 @@ export default function History() {
           />
         ))
       ) : (
-        <p>Loading...</p>
+        <Skeleton className="mb-2" height="50px"></Skeleton>
       )}
-      <div className="card">
+
+      {currentItems.length > 0 && (
         <Paginator
           first={first}
           rows={10}
@@ -90,7 +92,7 @@ export default function History() {
           onPageChange={onPageChange}
           template={{ layout: "PrevPageLink CurrentPageReport NextPageLink" }}
         />
-      </div>
+      )}
     </div>
   );
 }
