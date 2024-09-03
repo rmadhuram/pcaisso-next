@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const [datas] = await connection.execute(
-      "SELECT created_time, prompt, liked FROM results WHERE user_id = ?",
+      "SELECT created_time, prompt, liked FROM results WHERE user_id = ? ORDER BY created_time DESC",
       [userId]
     );
     return NextResponse.json(datas, { status: 200 });
