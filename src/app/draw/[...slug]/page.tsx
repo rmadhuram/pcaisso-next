@@ -189,7 +189,7 @@ export default function HomePage() {
         setLoadedData(dataReceived);
 
         let result: DrawResult = {
-          id: dataReceived.id,
+          // id: dataReceived.id,
           code: dataReceived.output,
           text: "",
           timeTakenInSec: dataReceived.time_taken,

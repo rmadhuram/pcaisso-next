@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
 
     const endTime = Date.now();
     const output: DrawResult = {
-      id: 90,
+      // id: 90,
       code: response.substring(startIndex, endIndex).trim(),
       text: response,
       timeTakenInSec: (endTime - startTime) / 1000,
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
     // Add the output to the database
     // TODO: Setting userId to 0 will violate the foreign key constraint in the database.
     await addResult(
-      output.id,
+      // output.id,
       session?.user?.id || 0,
       input.type,
       input.prompt,

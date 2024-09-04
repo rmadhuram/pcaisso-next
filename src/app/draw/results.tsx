@@ -30,32 +30,32 @@ export default function Results({
     }
   };
 
-  const updateData = async () => {
-    const likedStatus = !liked;
-    setLiked(likedStatus);
+  // const updateData = async () => {
+  //   const likedStatus = !liked;
+  //   setLiked(likedStatus);
 
-    const id = result?.id as number;
-    console.log(id);
-    if (id) {
-      try {
-        const response = await fetch("/api/liked", {
-          method: " POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({
-            id,
-            liked: likedStatus,
-          }),
-        });
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
-      }
-    }
-  };
+  //   const id = result?.id as number;
+  //   console.log(id);
+  //   if (id) {
+  //     try {
+  //       const response = await fetch("/api/liked", {
+  //         method: " POST",
+  //         headers: {
+  //           "content-type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           id,
+  //           liked: likedStatus,
+  //         }),
+  //       });
+  //       if (!response.ok) {
+  //         throw new Error(`Error: ${response.status}`);
+  //       }
+  //     } catch (error) {
+  //       console.error("Fetch error:", error);
+  //     }
+  //   }
+  // };
 
   return (
     <div className={styles["results"]}>
@@ -90,7 +90,7 @@ export default function Results({
           </div>
         </TabPanel>
       </TabView>
-      <div className="like-btn" onClick={updateData}>
+      <div className="like-btn" >
         <LikeButton liked={liked}></LikeButton>
       </div>
     </div>
