@@ -4,11 +4,14 @@ import { useSession } from "next-auth/react";
 import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
 
+dayjs.extend(utc);
 dayjs.extend(relativeTime);
+dayjs.extend(timezone);
 
 function HistoryItem({
   ago,
@@ -70,11 +73,7 @@ export default function History() {
   const currentItems = loadedData.slice(first, first + rowsPerPage);
 
   function formattedAgo(created_time: any) {
-    const createdTime = dayjs(created_time);
-    const formattedTime = dayjs(createdTime.format("hh:mm A, DD MMMM YYYY"));
-    const timeDifference = formattedTime.fromNow();
-    console.log(timeDifference);
-    return timeDifference;
+    return dayjs(created_time).fromNow();
   }
 
   return (
