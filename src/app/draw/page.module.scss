@@ -9,6 +9,7 @@
 
 .loading :global {
   height: $default-height;
+  width: 100%;
   @include background;
   display: flex;
   flex-direction: column;

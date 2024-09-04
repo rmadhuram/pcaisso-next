@@ -19,7 +19,6 @@ export default function Results({
   const formattedDate = now.format("hh:mm A, DD MMMM YYYY");
 
   const [isCopied, setIsCopied] = useState(false);
-  const [liked, setLiked] = useState(false);
 
   const handleCopyClick = async () => {
     try {
@@ -30,12 +29,9 @@ export default function Results({
     }
   };
 
-  const updateData = async () => {
-    const likedStatus = !liked;
-    setLiked(likedStatus);
+  const updateData = async (likedStatus: boolean) => {
 
     const id = result?.id as number;
-
     if (id) {
       try {
         console.log(id);
@@ -92,7 +88,7 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="like-btn">
-        <LikeButton liked={liked} onClick={updateData}></LikeButton>
+        <LikeButton liked={Boolean(+(result?.liked || 0))} callback={updateData} />
       </div>
     </div>
   );

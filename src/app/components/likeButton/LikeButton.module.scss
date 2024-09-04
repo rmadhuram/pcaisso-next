@@ -1,3 +1,7 @@
-.like-btn {
+.like-btn :global {
   cursor: pointer;
+
+  .liked {
+    color: red;
+  }
 }

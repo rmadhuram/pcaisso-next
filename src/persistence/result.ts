@@ -24,7 +24,7 @@ export async function addResult(
   prompt: string,
   model: string,
   drawResult: DrawResult
-) {
+): Promise<[number, string]> {
   try {
     const connection = await getConnection();
     const uuid = uuidv4();
@@ -45,7 +45,7 @@ export async function addResult(
         drawResult.usage.completion_tokens,
       ]
     )) as [ResultSetHeader, FieldPacket[]];
-    return result.insertId;
+    return [result.insertId, uuid];
   } catch (error) {
     console.error(error);
     throw error;

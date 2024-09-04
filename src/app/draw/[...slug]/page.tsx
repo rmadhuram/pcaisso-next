@@ -189,7 +189,9 @@ export default function HomePage() {
         setLoadedData(dataReceived);
 
         let result: DrawResult = {
-          // id: dataReceived.id,
+          id: dataReceived.id,
+          uuid: dataReceived.uuid,
+          liked: Boolean(+(dataReceived.liked || 0)),
           code: dataReceived.output,
           text: "",
           timeTakenInSec: dataReceived.time_taken,
@@ -232,6 +234,8 @@ export default function HomePage() {
         const data: DrawResult = await response.json();
         setResult(data);
         setDisplayState("results");
+        window.history.pushState(null, "", `/draw/${data.uuid}`);
+
       } catch (error) {
         console.error("Error fetching reply:", error);
       }

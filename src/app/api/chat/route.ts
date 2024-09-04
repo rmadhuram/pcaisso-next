@@ -66,6 +66,9 @@ export async function POST(req: NextRequest) {
 
     const endTime = Date.now();
     const output: DrawResult = {
+      id: 0,
+      uuid: "",
+      liked: false,
       code: response.substring(startIndex, endIndex).trim(),
       text: response,
       timeTakenInSec: (endTime - startTime) / 1000,
@@ -78,7 +81,7 @@ export async function POST(req: NextRequest) {
 
     // Add the output to the database
     // TODO: Setting userId to 0 will violate the foreign key constraint in the database.
-    const id = await addResult(
+    const [id, uuid] = await addResult(
       session?.user?.id || 0,
       input.type,
       input.prompt,
@@ -87,6 +90,7 @@ export async function POST(req: NextRequest) {
     );
 
     output.id = id;
+    output.uuid = uuid;
 
     return NextResponse.json(output, { status: 200 });
   } catch (error) {
