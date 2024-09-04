@@ -76,10 +76,8 @@ export default function Results({
           <div className="stats-container">
             <div className="stats-item label">Created At</div>
             <div className="stats-item value">{formattedDate}</div>
-            <div className="stats-item label">Time taken</div>
-            <div className="stats-item value">
-              {result?.timeTakenInSec} secs
-            </div>
+            <div className="stats-item label">Time taken in secs</div>
+            <div className="stats-item value">{result?.timeTakenInSec}</div>
             <div className="stats-item label">Prompt Tokens</div>
             <div className="stats-item value">
               {result?.usage.prompt_tokens}
