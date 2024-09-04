@@ -31,7 +31,6 @@ export default function Results({
   };
 
   const updateData = async () => {
-
     const likedStatus = !liked;
     setLiked(likedStatus);
 

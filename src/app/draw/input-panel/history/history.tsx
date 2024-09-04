@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import { ResultDto } from "@/persistence/result.dto";
-import { Skeleton } from 'primereact/skeleton';
+import { Skeleton } from "primereact/skeleton";
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -86,7 +86,6 @@ export default function History() {
           <Skeleton className="mb-2" height="50px"></Skeleton>
           <Skeleton className="mb-2" height="50px"></Skeleton>
         </>
-
       )}
 
       {currentItems.length > 0 && (

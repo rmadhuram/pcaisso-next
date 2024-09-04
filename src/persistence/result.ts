@@ -18,6 +18,7 @@ import { ResultDto } from "./result.dto";
  * @returns
  */
 export async function addResult(
+  id: number,
   userId: number,
   type: string,
   prompt: string,
@@ -29,8 +30,9 @@ export async function addResult(
     const uuid = uuidv4();
 
     const [result] = (await connection.execute(
-      "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
+      "INSERT INTO results (id, uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
       [
+        id,
         uuid,
         userId,
         type,
