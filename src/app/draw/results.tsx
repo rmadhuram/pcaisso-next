@@ -39,7 +39,7 @@ export default function Results({
     if (id) {
       try {
         const response = await fetch("/api/liked", {
-          method: "GET",
+          method: " POST",
           headers: {
             "content-type": "application/json",
           },
@@ -94,5 +94,5 @@ export default function Results({
         <LikeButton liked={liked}></LikeButton>
       </div>
     </div>
-  );  
+  );
 }

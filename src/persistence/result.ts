@@ -61,12 +61,10 @@ export async function addResult(
 export async function getResults(uuid: string): Promise<ResultDto> {
   try {
     const connection = await getConnection();
-
     const [results] = (await connection.execute(
       "SELECT * FROM results WHERE uuid = ?",
       [uuid]
     )) as [ResultDto[], FieldPacket[]];
-    console.log(results[0], typeof results[0]);
     return results[0];
   } catch (error) {
     console.error(error);
