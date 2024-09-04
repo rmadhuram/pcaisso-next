@@ -4,7 +4,6 @@ import styles from "./page.module.scss";
 import { Button } from "primereact/button";
 import GalleryItem from "./components/galleryItem/GalleryItem";
 import "animate.css";
-
 export default function Page() {
   return (
     <div className={styles["intro"]}>

@@ -174,14 +174,11 @@ export default function HomePage() {
 
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/getResults", {
-          method: "POST",
+        const response = await fetch(`/api/getResults/${uuid}`, {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            uuid,
-          }),
         });
 
         if (!response.ok) {

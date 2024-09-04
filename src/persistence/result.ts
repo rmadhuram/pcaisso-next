@@ -66,6 +66,7 @@ export async function getResults(uuid: string): Promise<ResultDto> {
       "SELECT * FROM results WHERE uuid = ?",
       [uuid]
     )) as [ResultDto[], FieldPacket[]];
+    console.log(results[0], typeof results[0]);
     return results[0];
   } catch (error) {
     console.error(error);
