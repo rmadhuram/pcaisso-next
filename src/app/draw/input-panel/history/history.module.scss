@@ -5,6 +5,10 @@
   flex-direction: column;
   @include primary-font-regular;
 
+  .mb-2 {
+    margin-bottom: 10px;
+  }
+
   .history-item {
     display: flex;
     flex-direction: column;
@@ -37,5 +41,10 @@
       text-overflow: ellipsis;
       overflow: hidden;
     }
+  }
+
+  .p-paginator {
+    margin-top: 10px;
+    padding: 0;
   }
 }
