@@ -61,7 +61,7 @@ export async function getResults(uuid: string): Promise<ResultDto> {
   try {
     const connection = await getConnection();
     const [results] = (await connection.execute(
-      "SELECT * FROM results WHERE uuid = ?",
+      "SELECT id, uuid, user_id, type, description, prompt, model, output, IFNULL(created_time,'N/A') AS created_time, IFNULL(time_taken,'N/A') as time_taken, IFNULL(prompt_tokens,'N/A') as prompt_tokens, IFNULL(completion_tokens, 'N/A') as completion_tokens, IFNULL(liked,'N/A') as liked  FROM results WHERE uuid = ?",
       [uuid]
     )) as [ResultDto[], FieldPacket[]];
     return results[0];
