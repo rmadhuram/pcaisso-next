@@ -27,7 +27,7 @@
 
     .top-section {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-evenly;
       @include title-font-regular;
       font-size: 10px;
       color: #888;
