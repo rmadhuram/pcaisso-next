@@ -8,6 +8,7 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
+import Link from "next/link";
 
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
@@ -80,12 +81,14 @@ export default function History() {
     <div className={styles.history}>
       {currentItems.length > 0 ? (
         currentItems.map((item: any, index: any) => (
-          <HistoryItem
-            key={first + index}
-            ago={formattedAgo(item.created_time)}
-            prompt={item.prompt}
-            liked={item.liked}
-          />
+          <Link href={`/draw/${item.uuid}`}>
+            <HistoryItem
+              key={first + index}
+              ago={formattedAgo(item.created_time)}
+              prompt={item.prompt}
+              liked={item.liked}
+            />
+          </Link>
         ))
       ) : (
         <>

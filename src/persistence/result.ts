@@ -81,7 +81,7 @@ export async function getPrompts(userId: any): Promise<ResultDto[]> {
     const connection = await getConnection();
 
     const [prompts] = (await connection.execute(
-      "SELECT created_time, prompt, liked FROM results WHERE user_id = ? ORDER BY created_time DESC",
+      "SELECT uuid, created_time, prompt, liked FROM results WHERE user_id = ? ORDER BY created_time DESC",
       [userId]
     )) as [ResultDto[], FieldPacket[]];
     return prompts;
