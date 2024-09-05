@@ -127,6 +127,16 @@ export default function History() {
     return timeDifference;
   }
 
+  if (!session) {
+    return (
+      <div className={styles.history}>
+        <p className="sign-in-message">
+          <i className="fa-solid fa-triangle-exclamation"></i> Please sign in to view the history!
+        </p>
+      </div>
+    );
+  }
+  
   return (
     <div className={styles.history}>
       {currentItems.length > 0 ? (
