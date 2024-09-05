@@ -131,12 +131,13 @@ export default function History() {
     return (
       <div className={styles.history}>
         <p className="sign-in-message">
-          <i className="fa-solid fa-triangle-exclamation"></i> Please sign in to view the history!
+          <i className="fa-solid fa-triangle-exclamation"></i>Your prompt
+          history will be shown when you're logged in
         </p>
       </div>
     );
   }
-  
+
   return (
     <div className={styles.history}>
       {currentItems.length > 0 ? (
