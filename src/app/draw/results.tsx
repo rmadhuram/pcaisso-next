@@ -35,7 +35,6 @@ export default function Results({
     const id = result?.id as number;
     if (id) {
       try {
-        console.log(id);
         const response = await fetch("/api/liked", {
           method: "POST",
           headers: {
