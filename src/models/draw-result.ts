@@ -1,4 +1,7 @@
 export interface DrawResult {
+  id?: number;
+  uuid: string;
+  liked: boolean;
   code: string;
   text: string;
   timeTakenInSec: number;

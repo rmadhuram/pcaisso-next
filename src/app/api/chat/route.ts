@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
   const input = await req.json();
   const session = await getServerSession(options);
 
-  console.log('Session is: ' , session);
   // TODO: Check if user id is present in session
 
   if (!input || !input.prompt || !input.type || !input.model) {
@@ -67,6 +66,9 @@ export async function POST(req: NextRequest) {
 
     const endTime = Date.now();
     const output: DrawResult = {
+      id: 0,
+      uuid: "",
+      liked: false,
       code: response.substring(startIndex, endIndex).trim(),
       text: response,
       timeTakenInSec: (endTime - startTime) / 1000,
@@ -74,12 +76,21 @@ export async function POST(req: NextRequest) {
         prompt_tokens: 0,
         completion_tokens: 0,
         total_tokens: 0,
-      }
+      },
     };
 
     // Add the output to the database
     // TODO: Setting userId to 0 will violate the foreign key constraint in the database.
-    await addResult(session?.user?.id || 0, input.type, input.prompt, input.model, output);
+    const [id, uuid] = await addResult(
+      session?.user?.id || 0,
+      input.type,
+      input.prompt,
+      input.model,
+      output
+    );
+
+    output.id = id;
+    output.uuid = uuid;
 
     return NextResponse.json(output, { status: 200 });
   } catch (error) {

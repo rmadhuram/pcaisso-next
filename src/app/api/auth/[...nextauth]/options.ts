@@ -3,8 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import getConnection from "@/lib/db";
 import { addOrUpdateUser } from "@/persistence/user";
 
-let userId: number;
-
 export const options: NextAuthOptions = {
   providers: [
     GoogleProvider({

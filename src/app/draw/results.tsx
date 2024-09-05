@@ -1,25 +1,21 @@
 import { TabView, TabPanel } from "primereact/tabview";
 import styles from "./results.module.scss";
 import CodeWithLineNumbers from "@/app/components/CodeWithLineNumbers";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import copy from "clipboard-copy";
 import { Button } from "primereact/button";
-import { useSession } from "next-auth/react";
 import { DrawResult } from "../../models/draw-result";
-import { ResultDto } from "@/persistence/result.dto";
+import dayjs from "dayjs";
+import LikeButton from "../components/likeButton/LikeButton";
 
 export default function Results({
   result,
+  created_time,
 }: {
   result: DrawResult | undefined;
+  created_time: any;
 }) {
-  const { data: session } = useSession();
   const [isCopied, setIsCopied] = useState(false);
-  /*const [isSaved, setIsSaved] = useState(false);
-
-  if (session) {
-    userId = session.user?.id as number;
-  }*/
 
   const handleCopyClick = async () => {
     try {
@@ -30,40 +26,29 @@ export default function Results({
     }
   };
 
-  /* const handleSave = async () => {
-    if (!session?.user?.email) {
-      console.log("User email not found in session");
-      return;
-    }
-    setIsSaved(true);
-    try {
-      const saveResponse = await fetch("/api/saveResults", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          type,
-          description: prompt,
-          prompt,
-          model,
-          output: diagram,
-          thumbnailUrl: prompt,
-          timeTaken: timetaken,
-        }),
-      });
-
-      if (saveResponse.ok) {
-        console.log("Result saved successfully");
-      } else {
-        console.error("Failed to save result");
+  const updateData = async (likedStatus: boolean) => {
+    const id = result?.id as number;
+    if (id) {
+      try {
+        console.log(id);
+        const response = await fetch("/api/liked", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            liked: likedStatus,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
   };
-  */
 
   return (
     <div className={styles["results"]}>
@@ -82,11 +67,15 @@ export default function Results({
         <TabPanel header="Stats">
           <div className="stats-container">
             <div className="stats-item label">Created At</div>
-            <div className="stats-item value">10:34 AM, 12th June 2024</div>
-            <div className="stats-item label">Time taken</div>
             <div className="stats-item value">
-              {result?.timeTakenInSec} secs
+              {dayjs
+                .utc(created_time)
+                .local()
+                .tz("Asia/Kolkata")
+                .format("hh: mm A, DD MM YYYY")}
             </div>
+            <div className="stats-item label">Time taken in secs</div>
+            <div className="stats-item value">{result?.timeTakenInSec}</div>
             <div className="stats-item label">Prompt Tokens</div>
             <div className="stats-item value">
               {result?.usage.prompt_tokens}
@@ -98,6 +87,12 @@ export default function Results({
           </div>
         </TabPanel>
       </TabView>
+      <div className="like-btn">
+        <LikeButton
+          liked={Boolean(+(result?.liked || 0))}
+          callback={updateData}
+        />
+      </div>
     </div>
   );
 }

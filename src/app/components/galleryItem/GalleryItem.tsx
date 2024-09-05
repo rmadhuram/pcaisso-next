@@ -1,11 +1,13 @@
 import styles from "./GalleryItem.module.scss";
 import { Button } from "primereact/button";
-
+import Link from "next/link";
 export default function GalleryItem({
+  uuid,
   type,
   src,
   description,
 }: {
+  uuid: string;
   type: string;
   src: string;
   description: string;
@@ -22,9 +24,11 @@ export default function GalleryItem({
       <div className="bottom-section">
         <p>{description}</p>
         <div>
-          <Button className="submit-button" type="submit">
-            View
-          </Button>
+          <Link href={`/draw/${uuid}`}>
+            <Button className="submit-button" type="submit">
+              View
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

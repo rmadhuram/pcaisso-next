@@ -2,6 +2,7 @@
 @import "../../styles/mixins";
 
 .results :global {
+  display: flex;
   flex-grow: 1;
 
   .p-tabview {
@@ -76,11 +77,10 @@
     }
   }
 
-  .saveBtn {
-    position: absolute;
-    top: 42px;
-    right: 15px;
-    border-radius: 5px;
-    font-size: 10px;
+  .like-btn {
+    position: fixed;
+    z-index: 9999;
+    top: 41px;
+    right: 10px;
   }
 }

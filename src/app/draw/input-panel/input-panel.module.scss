@@ -17,62 +17,63 @@
     @include primary-font-regular;
     height: calc(100vh - 70px);
     padding: 10px;
-  
+
     display: flex;
     flex-direction: column;
     gap: 10px;
-  
+
     background-color: #1c1e22;
     color: #ccc;
-  
+
     .label {
       color: #aaa;
     }
-  
+
     p {
       margin-top: 10px;
     }
-  
+
     .p-button {
       padding: 10px 20px;
       font-size: 12px;
     }
-  
-    .p-button-label, .p-dropdown-item, .p-dropdown .p-dropdown-label {
+
+    .p-button-label,
+    .p-dropdown-item,
+    .p-dropdown .p-dropdown-label {
       @include primary-font-regular;
       font-size: 12px;
       font-weight: 400;
     }
-  
+
     .select-model {
       display: flex;
       align-items: center;
       gap: 10px;
-  
+
       .p-dropdown {
         flex-grow: 1;
       }
-  
     }
-    
+
     .input-area {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
       gap: 5px;
-  
+
       p {
         font-size: 14px;
         margin-top: 0;
         margin-left: 0px;
         margin-bottom: 0px;
       }
-  
+
       .card {
         .model-options {
           background: #eee;
-  
+
           .p-dropdown-label {
             padding: 5px;
             border-radius: 5px;
@@ -81,7 +82,7 @@
           }
         }
       }
-  
+
       .text-area {
         width: 100%;
         height: 150px;
@@ -106,5 +107,4 @@
     padding: 10px;
     border-radius: 5px;
   }
-  
 }
