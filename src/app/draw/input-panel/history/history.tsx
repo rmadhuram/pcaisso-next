@@ -85,9 +85,8 @@ export default function History() {
     <div className={styles.history}>
       {currentItems.length > 0 ? (
         currentItems.map((item: any, index: any) => (
-          <Link href={`/draw/${item.uuid}`}>
+          <Link href={`/draw/${item.uuid}`} key={first + index}>
             <HistoryItem
-              key={first + index}
               ago={formattedAgo(item.created_time)}
               prompt={item.prompt}
               liked={item.liked}
