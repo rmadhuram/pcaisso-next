@@ -31,7 +31,7 @@ export default function Results({
     }
   };
 
-  const updateData = async (likedStatus: boolean) => {
+  const updateLike = async (likedStatus: boolean) => {
     const id = result?.id as number;
     if (id) {
       try {
@@ -89,7 +89,7 @@ export default function Results({
         {session && (
           <LikeButton
             liked={Boolean(+(result?.liked || 0))}
-            callback={updateData}
+            callback={updateLike}
           />
         )}
       </div>

@@ -9,28 +9,73 @@ import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
 import Link from "next/link";
+import DeleteButton from "@/app/components/deleteButton/deleteButton";
 
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
 dayjs.extend(timezone);
 
 function HistoryItem({
+  id,
   ago,
   prompt,
   liked,
+  deleted,
+  user_id,
+  owner_id,
 }: {
+  id: number;
   ago: string;
   prompt: string;
   liked: boolean;
+  deleted: boolean;
+  user_id: number;
+  owner_id: number;
 }) {
+  const updateDeleted = async (id: number, deletedStatus: boolean) => {
+    const idReceived = id;
+    if (idReceived) {
+      try {
+        const response = await fetch("/api/deleted", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            deleted: deletedStatus,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    }
+  };
+
+  const { data: session } = useSession();
+  const userId = session?.user?.id as number;
+
   return (
     <div className="history-item">
       <div className="top-section">
         <div className="ago">{ago}</div>
-        {liked ? (
-          <i className="fa-solid fa-heart liked"></i>
-        ) : (
-          <i className="fa-regular fa-heart"></i>
+        {user_id === owner_id && (
+          <>
+            {liked ? (
+              <i className="fa-solid fa-heart liked"></i>
+            ) : (
+              <i className="fa-regular fa-heart"></i>
+            )}
+            <div className="delete-btn">
+              <DeleteButton
+                deleted={deleted}
+                callback={() => updateDeleted(id, deleted)}
+              />
+            </div>
+          </>
         )}
       </div>
       <div className="bottom-section">
@@ -88,9 +133,13 @@ export default function History() {
         currentItems.map((item: any, index: any) => (
           <Link href={`/draw/${item.uuid}`} key={first + index}>
             <HistoryItem
+              id={item.id}
               ago={formattedAgo(item.created_time)}
               prompt={item.prompt}
               liked={item.liked}
+              deleted={item.status === "ACTIVE" ? true : false}
+              user_id={userId}
+              owner_id={item.user_id}
             />
           </Link>
         ))
