@@ -73,8 +73,12 @@ export default function History() {
 
   const currentItems = loadedData.slice(first, first + rowsPerPage);
 
-  function formattedAgo(created_time: any) {
-    return dayjs(created_time).fromNow();
+  function formattedAgo(created_time: string) {
+    const createdTimeUTC = dayjs.utc(created_time);
+    const createdTimeIST = createdTimeUTC.add(5, "hour").add(30, "minute");
+    const nowIST = dayjs().tz("Asia/Kolkata");
+    const timeDifference = createdTimeIST.from(nowIST);
+    return timeDifference;
   }
 
   return (

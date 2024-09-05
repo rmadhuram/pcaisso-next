@@ -15,9 +15,6 @@ export default function Results({
   result: DrawResult | undefined;
   created_time: any;
 }) {
-  const now = dayjs(created_time);
-  const formattedDate = now.format("hh:mm A, DD MMMM YYYY");
-
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyClick = async () => {
@@ -30,7 +27,6 @@ export default function Results({
   };
 
   const updateData = async (likedStatus: boolean) => {
-
     const id = result?.id as number;
     if (id) {
       try {
@@ -71,7 +67,13 @@ export default function Results({
         <TabPanel header="Stats">
           <div className="stats-container">
             <div className="stats-item label">Created At</div>
-            <div className="stats-item value">{formattedDate}</div>
+            <div className="stats-item value">
+              {dayjs
+                .utc(created_time)
+                .local()
+                .tz("Asia/Kolkata")
+                .format("hh: mm A, DD MM YYYY")}
+            </div>
             <div className="stats-item label">Time taken in secs</div>
             <div className="stats-item value">{result?.timeTakenInSec}</div>
             <div className="stats-item label">Prompt Tokens</div>
@@ -86,7 +88,10 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="like-btn">
-        <LikeButton liked={Boolean(+(result?.liked || 0))} callback={updateData} />
+        <LikeButton
+          liked={Boolean(+(result?.liked || 0))}
+          callback={updateData}
+        />
       </div>
     </div>
   );
