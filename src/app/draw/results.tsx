@@ -18,6 +18,9 @@ export default function Results({
 }) {
   const [isCopied, setIsCopied] = useState(false);
   const { data: session } = useSession();
+  const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const createdTimeLocal = dayjs.utc(created_time).tz(browserTimeZone);
+  const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
 
   const handleCopyClick = async () => {
     try {
@@ -69,13 +72,7 @@ export default function Results({
         <TabPanel header="Stats">
           <div className="stats-container">
             <div className="stats-item label">Created At</div>
-            <div className="stats-item value">
-              {dayjs
-                .utc(created_time)
-                .local()
-                .tz("Asia/Kolkata")
-                .format("hh: mm A, DD MM YYYY")}
-            </div>
+            <div className="stats-item value">{formattedCreatedTime}</div>
             <div className="stats-item label">Time taken in secs</div>
             <div className="stats-item value">{result?.timeTakenInSec}</div>
             <div className="stats-item label">Prompt Tokens</div>

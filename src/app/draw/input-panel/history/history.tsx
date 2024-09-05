@@ -9,6 +9,7 @@ import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
 import Link from "next/link";
+import { before } from "node:test";
 
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
@@ -74,10 +75,11 @@ export default function History() {
   const currentItems = loadedData.slice(first, first + rowsPerPage);
 
   function formattedAgo(created_time: string) {
+    const browserOffset = new Date().getTimezoneOffset();
     const createdTimeUTC = dayjs.utc(created_time);
-    const createdTimeIST = createdTimeUTC.add(5, "hour").add(30, "minute");
-    const nowIST = dayjs().tz("Asia/Kolkata");
-    const timeDifference = createdTimeIST.from(nowIST);
+    const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
+    const now = dayjs();
+    const timeDifference = createdTimeAdjusted.from(now);
     return timeDifference;
   }
 
