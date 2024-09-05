@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 import { DrawResult } from "../../models/draw-result";
 import dayjs from "dayjs";
 import LikeButton from "../components/likeButton/LikeButton";
+import { useSession } from "next-auth/react";
 
 export default function Results({
   result,
@@ -16,6 +17,7 @@ export default function Results({
   created_time: any;
 }) {
   const [isCopied, setIsCopied] = useState(false);
+  const { data: session } = useSession();
 
   const handleCopyClick = async () => {
     try {
@@ -88,10 +90,12 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="like-btn">
-        <LikeButton
-          liked={Boolean(+(result?.liked || 0))}
-          callback={updateData}
-        />
+        {session && (
+          <LikeButton
+            liked={Boolean(+(result?.liked || 0))}
+            callback={updateData}
+          />
+        )}
       </div>
     </div>
   );
