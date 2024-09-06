@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
-import { Button } from "primereact/button";
 import styles from "./history.module.scss";
 import { useSession } from "next-auth/react";
 import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
@@ -66,8 +65,8 @@ function HistoryItem({
   const accept = () => {
     toast.current?.show({
       severity: "info",
-      summary: "Confirmed",
-      detail: "You have accepted",
+      summary: "Deleted",
+      detail: "Successfully Deleted",
       life: 3000,
     });
 
@@ -75,14 +74,7 @@ function HistoryItem({
     updateDeleted(id, !deletedState);
   };
 
-  const reject = () => {
-    toast.current?.show({
-      severity: "warn",
-      summary: "Rejected",
-      detail: "You have rejected",
-      life: 3000,
-    });
-  };
+  const reject = () => {};
 
   const confirmDelete = () => {
     confirmDialog({
@@ -122,12 +114,11 @@ function HistoryItem({
         )}
         <Toast ref={toast} />
         <ConfirmDialog />
-        </div>
-        <div className="bottom-section">
-          <div className="prompt">{prompt}</div>
-        </div>
       </div>
-    
+      <div className="bottom-section">
+        <div className="prompt">{prompt}</div>
+      </div>
+    </div>
   );
 }
 
@@ -177,7 +168,7 @@ export default function History() {
       <div className={styles.history}>
         <p className="sign-in-message">
           <i className="fa-solid fa-triangle-exclamation"></i>Your prompt
-          history will be shown when you're logged in
+          history will be shown when you&apos;re logged in
         </p>
       </div>
     );
