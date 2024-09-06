@@ -9,9 +9,9 @@ export async function POST(req: NextRequest) {
     console.log(data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error updating like:", error);
+    console.error("Error updating status of delete:", error);
     return NextResponse.json(
-      { error: "Failed to update the like" },
+      { error: "Failed to update the status of delete" },
       { status: 500 }
     );
   }
