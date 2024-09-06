@@ -1,4 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { Toast } from "primereact/toast";
+import { Button } from "primereact/button";
 import styles from "./history.module.scss";
 import { useSession } from "next-auth/react";
 import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
@@ -9,7 +12,6 @@ import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
 import Link from "next/link";
-import DeleteButton from "@/app/components/deleteButton/deleteButton";
 
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
@@ -58,6 +60,42 @@ function HistoryItem({
   const { data: session } = useSession();
   const userId = session?.user?.id as number;
 
+  const [deletedState, setDeletedState] = useState(deleted ?? false);
+  const toast = useRef<Toast>(null);
+
+  const accept = () => {
+    toast.current?.show({
+      severity: "info",
+      summary: "Confirmed",
+      detail: "You have accepted",
+      life: 3000,
+    });
+
+    setDeletedState(!deletedState);
+    updateDeleted(id, !deletedState);
+  };
+
+  const reject = () => {
+    toast.current?.show({
+      severity: "warn",
+      summary: "Rejected",
+      detail: "You have rejected",
+      life: 3000,
+    });
+  };
+
+  const confirmDelete = () => {
+    confirmDialog({
+      message: "Do you want to delete this record?",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      defaultFocus: "reject",
+      acceptClassName: "p-button-danger",
+      accept,
+      reject,
+    });
+  };
+
   return (
     <div className="history-item">
       <div className="top-section">
@@ -70,18 +108,26 @@ function HistoryItem({
               <i className="fa-regular fa-heart"></i>
             )}
             <div className="delete-btn">
-              <DeleteButton
-                deleted={deleted}
-                callback={() => updateDeleted(id, deleted)}
-              />
+              <Link href="/draw/new" onClick={() => updateDeleted(id, deleted)}>
+                <div className={styles["delete-btn"]} onClick={confirmDelete}>
+                  {deletedState ? (
+                    <i className="fa-solid fa-trash-can"></i>
+                  ) : (
+                    <p>DELETED</p>
+                  )}
+                </div>
+              </Link>
             </div>
           </>
         )}
+        <Toast ref={toast} />
+        <ConfirmDialog />
+        </div>
+        <div className="bottom-section">
+          <div className="prompt">{prompt}</div>
+        </div>
       </div>
-      <div className="bottom-section">
-        <div className="prompt">{prompt}</div>
-      </div>
-    </div>
+    
   );
 }
 
@@ -89,7 +135,6 @@ export default function History() {
   const { data: session } = useSession();
   const [loadedData, setLoadedData] = useState<ResultDto[]>([]);
   const userId = session?.user?.id as number;
-
   const [first, setFirst] = useState<number>(0);
   const rowsPerPage = 10;
 

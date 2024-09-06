@@ -121,14 +121,14 @@ export async function updateLike(
  */
 export async function updateDelete(
   id: number,
-  deleted: string
+  deleted: boolean
 ): Promise<ResultSetHeader> {
   try {
     const connection = await getConnection();
 
     const [response] = (await connection.execute(
       "UPDATE results SET status=? where id =?",
-      [deleted === "ACTIVE" ? "ACTIVE" : "DELETED", id]
+      [deleted === true ? "DELETED" : "ACTIVE", id]
     )) as [ResultSetHeader, FieldPacket[]];
     return response;
   } catch (error) {
