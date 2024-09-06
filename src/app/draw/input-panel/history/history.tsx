@@ -11,6 +11,7 @@ import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
@@ -33,9 +34,15 @@ function HistoryItem({
   user_id: number;
   owner_id: number;
 }) {
+  const router = useRouter();
+  const [deletedState, setDeletedState] = useState(deleted ?? false);
+  const toast = useRef<Toast>(null);
+
+  const { data: session } = useSession();
+  const userId = session?.user?.id as number;
+
   const updateDeleted = async (id: number, deletedStatus: boolean) => {
-    const idReceived = id;
-    if (idReceived) {
+    if (id) {
       try {
         const response = await fetch("/api/deleted", {
           method: "POST",
@@ -56,13 +63,9 @@ function HistoryItem({
     }
   };
 
-  const { data: session } = useSession();
-  const userId = session?.user?.id as number;
-
-  const [deletedState, setDeletedState] = useState(deleted ?? false);
-  const toast = useRef<Toast>(null);
-
-  const accept = () => {
+  const accept = async () => {
+    setDeletedState(true);
+    await updateDeleted(id, true);
     toast.current?.show({
       severity: "info",
       summary: "Deleted",
@@ -70,8 +73,7 @@ function HistoryItem({
       life: 3000,
     });
 
-    setDeletedState(!deletedState);
-    updateDeleted(id, !deletedState);
+    router.push(`/draw/new`);
   };
 
   const reject = () => {};
@@ -99,16 +101,12 @@ function HistoryItem({
             ) : (
               <i className="fa-regular fa-heart"></i>
             )}
-            <div className="delete-btn">
-              <Link href="/draw/new" onClick={() => updateDeleted(id, deleted)}>
-                <div className={styles["delete-btn"]} onClick={confirmDelete}>
-                  {deletedState ? (
-                    <i className="fa-solid fa-trash-can"></i>
-                  ) : (
-                    <p>DELETED</p>
-                  )}
-                </div>
-              </Link>
+            <div className="delete-btn" onClick={confirmDelete}>
+              {deletedState ? (
+                <i className="fa-solid fa-trash-can"></i>
+              ) : (
+                <p>DELETED</p>
+              )}
             </div>
           </>
         )}
