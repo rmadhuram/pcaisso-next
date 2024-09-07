@@ -110,4 +110,48 @@
       cursor: pointer;
     }
   }
+
+  @media (min-width: 1420px) {
+    .contents {
+      width: 1400px;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .contents {
+      width: 90%;
+    }
+  }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    p.explain {
+      width: 90%;
+      font-size: 12px;
+      line-height: 1rem;
+    }
+
+    .title {
+      h1 {
+        font-size: 24px;
+      }
+    }
+
+    .explore-link {
+      display: none;
+    }
+
+    .contents {
+      width: 90%;
+
+      .right-side {
+        display: none;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: auto;
+      }
+    }
+  }
+
 }

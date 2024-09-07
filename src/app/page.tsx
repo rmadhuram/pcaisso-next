@@ -13,10 +13,10 @@ export default function Page() {
         </h1>
       </div>
       <p className="explain">
-        Did you know that LLMs can draw cool things? 2D & 3D graphics, small
-        games & data visualizations! Come, explore with us!
+        Did you know that LLMs can draw cool things? 2D & 3D graphics, 
+        simple games & data visualizations! Come, explore with us!
       </p>
-      <Link href="/draw/new" passHref>
+      <Link href="/draw/new" className="explore-link" passHref>
         <Button className="explore-button" type="submit" severity="success">
           Start Exploring!
         </Button>
