@@ -165,7 +165,7 @@ export default function History() {
     return (
       <div className={styles.history}>
         <p className="sign-in-message">
-          <i className="fa-solid fa-triangle-exclamation"></i>Your prompt
+          <i className="fa-solid fa-triangle-exclamation"></i> Your prompt
           history will be shown when you&apos;re logged in
         </p>
       </div>
