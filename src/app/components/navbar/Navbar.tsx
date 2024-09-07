@@ -3,9 +3,12 @@ import styles from "./Navbar.module.scss";
 import Signin from "../signIn/Signin";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const params = useParams();
+  const slug = params?.slug;
 
   return (
     <div className={styles["navbar"]}>
@@ -21,8 +24,8 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/draw/new"
-              className={pathname === "/draw/new" ? "selected" : ""}
+              href={slug ? `/draw/${slug}` : "/draw/new"}
+              className={slug && pathname === `/draw/${slug}` ? "selected" : ""}
             >
               Explore
             </Link>
