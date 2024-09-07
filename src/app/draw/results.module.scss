@@ -77,10 +77,23 @@
     }
   }
 
-  .like-btn {
-    position: fixed;
-    z-index: 9999;
-    top: 41px;
-    right: 10px;
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    .like-btn {
+      position: fixed;
+      z-index: 9999;
+      top: 41px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    .delete-btn {
+      position: fixed;
+      z-index: 9999;
+      top: 41px;
+      right: 35px;
+      cursor: pointer;
+    }
   }
 }

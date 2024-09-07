@@ -18,10 +18,13 @@ export const options: NextAuthOptions = {
         if (!session.user) {
           throw new Error("User object is missing");
         }
-        
-        const userId = await addOrUpdateUser(session.user?.email || '', session.user?.name || '');
+
+        const userId = await addOrUpdateUser(
+          session.user?.email || "",
+          session.user?.name || "",
+          session.user?.image || ""
+        );
         session.user.id = userId as number;
-                
       } catch (error) {
         console.error(error);
       }

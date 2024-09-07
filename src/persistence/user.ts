@@ -11,7 +11,7 @@ import { FieldPacket, ResultSetHeader } from "mysql2";
  * @param name 
  * @returns the user id
  */
-export async function addOrUpdateUser(email: string, name: string): Promise<number> {
+export async function addOrUpdateUser(email: string, name: string, image: string): Promise<number> {
   try {
     const connection = await getConnection();
     const [rows] = await connection.execute(
@@ -23,8 +23,8 @@ export async function addOrUpdateUser(email: string, name: string): Promise<numb
     if (rows.length === 0) {
       // Add user to the database
       const [addUserResult] = await connection.execute(
-        "INSERT INTO users (email, name, created_time, last_session_time) VALUES (?, ?, Now(), NOW())",
-        [email, name]
+        "INSERT INTO users (email, name, image_url, created_time, last_session_time) VALUES (?, ?, ?, Now(), NOW())",
+        [email, name, image]
       ) as [ResultSetHeader, FieldPacket[]];
       userId = addUserResult.insertId;
 

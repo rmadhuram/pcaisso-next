@@ -69,6 +69,7 @@ export async function POST(req: NextRequest) {
       id: 0,
       uuid: "",
       liked: false,
+      status: "ACTIVE",
       code: response.substring(startIndex, endIndex).trim(),
       text: response,
       timeTakenInSec: (endTime - startTime) / 1000,

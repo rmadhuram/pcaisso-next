@@ -30,18 +30,18 @@ function HistoryItem({
   ago: string;
   prompt: string;
   liked: boolean;
-  deleted: boolean;
+  deleted: string;
   user_id: number;
   owner_id: number;
 }) {
   const router = useRouter();
-  const [deletedState, setDeletedState] = useState(deleted ?? false);
+  const [deletedState, setDeletedState] = useState(deleted);
   const toast = useRef<Toast>(null);
 
   const { data: session } = useSession();
   const userId = session?.user?.id as number;
 
-  const updateDeleted = async (id: number, deletedStatus: boolean) => {
+  const updateDeleted = async (id: number, deletedStatus: string) => {
     if (id) {
       try {
         const response = await fetch("/api/deleted", {
@@ -63,16 +63,25 @@ function HistoryItem({
     }
   };
 
+  useEffect(() => {
+    if (deletedState) {
+      console.log(deletedState);
+      updateDeleted(id, deletedState as string);
+    }
+  }, [deletedState]);
+
   const accept = async () => {
-    setDeletedState(true);
-    await updateDeleted(id, true);
+    console.log(deletedState);
+    setDeletedState(deletedState === "ACTIVE" ? "DELETED" : "ACTIVE");
+    console.log(deletedState);
     toast.current?.show({
       severity: "info",
       summary: "Deleted",
       detail: "Successfully Deleted",
       life: 3000,
     });
-
+    console.log(deletedState);
+    // await updateDeleted(id, deletedState as string);
     router.push(`/draw/new`);
   };
 
@@ -93,7 +102,6 @@ function HistoryItem({
   return (
     <div className="history-item">
       <div className="top-section">
-        <div className="ago">{ago}</div>
         {user_id === owner_id && (
           <>
             {liked ? (
@@ -112,6 +120,7 @@ function HistoryItem({
         )}
         <Toast ref={toast} />
         <ConfirmDialog />
+        <div className="ago">{ago}</div>
       </div>
       <div className="bottom-section">
         <div className="prompt">{prompt}</div>
@@ -182,7 +191,8 @@ export default function History() {
               ago={formattedAgo(item.created_time)}
               prompt={item.prompt}
               liked={item.liked}
-              deleted={item.status === "ACTIVE" ? true : false}
+              // deleted={item.status === "ACTIVE" ? "ACTIVE" : "DELETED"}
+              deleted={item.status}
               user_id={userId}
               owner_id={item.user_id}
             />

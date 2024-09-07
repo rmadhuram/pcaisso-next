@@ -89,6 +89,7 @@ export default function HomePage() {
           id: dataReceived.id,
           uuid: dataReceived.uuid,
           liked: Boolean(+(dataReceived.liked || 0)),
+          status: dataReceived.status,
           code: dataReceived.output,
           text: "",
           timeTakenInSec: dataReceived.time_taken,
