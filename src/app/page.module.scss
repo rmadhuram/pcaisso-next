@@ -19,6 +19,27 @@
     align-items: center;
   }
 
+  .contents {
+    margin-top: 20px;
+    width: 1200px;
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+
+    .left-side {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .right-side {
+      min-width: 300px;
+      width: 300px;
+      height: 600px;
+    }
+  }
+
   h1 {
     @include title-font-regular;
     font-size: 48px;
@@ -39,16 +60,14 @@
   h3 {
     @include title-font-regular;
     font-size: 14px;
-    width: 1200px;
-    margin: 20px 0 0 0;
+    margin: 0 0 5px 0;
   }
 
   .explore-button {
     visibility: visible;
     padding: 10px 20px;
     @include primary-font-regular;
-    font-size: 1.1rem;
-    letter-spacing: 0.1rem;
+    font-size: 14px;
   }
 
   p.explain {
@@ -56,41 +75,28 @@
     line-height: 1.5rem;
     margin-top: 0;
     color: #aaa;
-    width: 960px;
+    width: 600px;
     text-align: center;
   }
 
   .gallery {
-    width: 1200px;
     display: grid;
-    grid-template-columns: 32% 33% 32%;
+    grid-template-columns: 32% 31% 32%;
     column-gap: 20px;
     row-gap: 20px;
   }
 
-  .cover-pages {
+  .recent-likes {
     display: flex;
-    justify-content: center;
-    gap: 50px;
+    flex-direction: column;
+    gap: 10px;
 
-    .cover {
-      width: 160px;
-      height: 160px;
-      border-radius: 100px;
-      border: 2px dotted #ccc;
-      background-size: contain;
-    }
-
-    .cover-1 {
-      background-image: url(../assets/cover1.jpg);
-    }
-
-    .cover-2 {
-      background-image: url(../assets/cover2-1.png);
-    }
-
-    .cover-3 {
-      background-image: url(../assets/cover3.png);
+    .like-item {
+      border: 1px solid #666;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: #222;
+      height: 75px;
     }
   }
 
@@ -104,4 +110,48 @@
       cursor: pointer;
     }
   }
+
+  @media (min-width: 1420px) {
+    .contents {
+      width: 1400px;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .contents {
+      width: 90%;
+    }
+  }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    p.explain {
+      width: 90%;
+      font-size: 12px;
+      line-height: 1rem;
+    }
+
+    .title {
+      h1 {
+        font-size: 24px;
+      }
+    }
+
+    .explore-link {
+      display: none;
+    }
+
+    .contents {
+      width: 90%;
+
+      .right-side {
+        display: none;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: auto;
+      }
+    }
+  }
+
 }
