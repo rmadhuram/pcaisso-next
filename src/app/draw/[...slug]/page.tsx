@@ -87,6 +87,7 @@ export default function HomePage() {
 
         let result: DrawResult = {
           id: dataReceived.id,
+          user_id: dataReceived.user_id,
           uuid: dataReceived.uuid,
           liked: Boolean(+(dataReceived.liked || 0)),
           status: dataReceived.status,

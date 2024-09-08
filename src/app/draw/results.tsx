@@ -27,6 +27,8 @@ export default function Results({
   const [deletedState, setDeletedState] = useState(result?.status);
   const toast = useRef<Toast>(null);
   const id = result?.id as number;
+  const owner_id = result?.user_id;
+  const session_id = session?.user?.id;
 
   const router = useRouter();
 
@@ -83,24 +85,20 @@ export default function Results({
     }
   };
 
-  useEffect(() => {
-    if (deletedState) {
-      updateDeleted(id, deletedState as string);
-    }
-  }, [deletedState]);
+  const handleDelete = async () => {
+    const newDeletedState = deletedState === "ACTIVE" ? "DELETED" : "ACTIVE";
+    setDeletedState(newDeletedState);
 
-  const accept = async () => {
-    setDeletedState(result?.status === "ACTIVE" ? "DELETED" : "ACTIVE");
     toast.current?.show({
       severity: "info",
       summary: "Deleted",
       detail: "Successfully Deleted",
       life: 3000,
     });
+
+    await updateDeleted(id, newDeletedState);
     router.push(`/draw/new`);
   };
-
-  const reject = () => {};
 
   const confirmDelete = () => {
     confirmDialog({
@@ -109,8 +107,8 @@ export default function Results({
       icon: "pi pi-info-circle",
       defaultFocus: "reject",
       acceptClassName: "p-button-danger",
-      accept,
-      reject,
+      accept: handleDelete,
+      reject: () => {},
     });
   };
 
@@ -146,7 +144,7 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="buttons">
-        {session && (
+        {session && session_id === owner_id && (
           <>
             <div className="like-btn">
               <LikeButton

@@ -46,8 +46,6 @@ export default function Page() {
     }
   }, [userId]);
 
-  console.log("before return", recentLikedOnes);
-
   return (
     <div className={styles["intro"]}>
       <div className="title">
@@ -59,9 +57,7 @@ export default function Page() {
         Did you know that LLMs can draw cool things? 2D & 3D graphics, simple
         games & data visualizations! Come, explore with us!
       </p>
-      <p className="explain">
-        The following demos were created using Pcaisso! 
-      </p>
+      <p className="explain">The following demos were created using Pcaisso!</p>
       <p className="explain mobile-only">
         Pcaisso is best experienced on a desktop/laptop. You will not be able to
         generate images on mobile devices.
@@ -150,7 +146,9 @@ export default function Page() {
           </div>
         </div>
         <div className="right-side">
-          <h3><i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent Likes</h3>
+          <h3>
+            <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent Likes
+          </h3>
           <section className="recent-likes">
             {recentLikedOnes.length > 0 ? (
               recentLikedOnes.map((item: RecentlyLikedItemModel) => (
