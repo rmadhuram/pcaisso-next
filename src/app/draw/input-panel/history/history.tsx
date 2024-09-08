@@ -10,7 +10,6 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 dayjs.extend(utc);
@@ -63,29 +62,44 @@ function HistoryItem({
     }
   };
 
-  useEffect(() => {
-    if (deletedState) {
-      console.log(deletedState);
-      updateDeleted(id, deletedState as string);
-    }
-  }, [deletedState]);
+  // useEffect(() => {
+  //   if (deletedState) {
+  //     console.log(deletedState);
+  //     updateDeleted(id, deletedState as string);
+  //   }
+  // }, [deletedState]);
 
-  const accept = async () => {
-    console.log(deletedState);
-    setDeletedState(deletedState === "ACTIVE" ? "DELETED" : "ACTIVE");
-    console.log(deletedState);
+  const handleDelete = async () => {
+    const newDeletedState = deletedState === "ACTIVE" ? "DELETED" : "ACTIVE";
+    setDeletedState(newDeletedState);
+
     toast.current?.show({
       severity: "info",
       summary: "Deleted",
       detail: "Successfully Deleted",
       life: 3000,
     });
-    console.log(deletedState);
-    // await updateDeleted(id, deletedState as string);
+
+    await updateDeleted(id, newDeletedState);
     router.push(`/draw/new`);
   };
 
-  const reject = () => {};
+  // const accept = async () => {
+  //   console.log(deletedState);
+  //   setDeletedState(deletedState === "ACTIVE" ? "DELETED" : "ACTIVE");
+  //   console.log(deletedState);
+  //   toast.current?.show({
+  //     severity: "info",
+  //     summary: "Deleted",
+  //     detail: "Successfully Deleted",
+  //     life: 3000,
+  //   });
+  //   console.log(deletedState);
+  //   // await updateDeleted(id, deletedState as string);
+  //   router.push(`/draw/new`);
+  // };
+
+  // const reject = () => {};
 
   const confirmDelete = () => {
     confirmDialog({
@@ -94,8 +108,8 @@ function HistoryItem({
       icon: "pi pi-info-circle",
       defaultFocus: "reject",
       acceptClassName: "p-button-danger",
-      accept,
-      reject,
+      accept: handleDelete,
+      reject: () => {},
     });
   };
 
@@ -109,7 +123,13 @@ function HistoryItem({
             ) : (
               <i className="fa-regular fa-heart"></i>
             )}
-            <div className="delete-btn" onClick={confirmDelete}>
+            <div
+              className="delete-btn"
+              onClick={(event) => {
+                event.stopPropagation();
+                confirmDelete();
+              }}
+            >
               {deletedState ? (
                 <i className="fa-solid fa-trash-can"></i>
               ) : (
@@ -135,6 +155,7 @@ export default function History() {
   const userId = session?.user?.id as number;
   const [first, setFirst] = useState<number>(0);
   const rowsPerPage = 10;
+  const router = useRouter();
 
   const onPageChange = (event: PaginatorPageChangeEvent) => {
     setFirst(event.first);
@@ -185,18 +206,20 @@ export default function History() {
     <div className={styles.history}>
       {currentItems.length > 0 ? (
         currentItems.map((item: any, index: any) => (
-          <Link href={`/draw/${item.uuid}`} key={first + index}>
+          <div
+            key={first + index}
+            onClick={() => router.push(`/draw/${item.uuid}`)}
+          >
             <HistoryItem
               id={item.id}
               ago={formattedAgo(item.created_time)}
               prompt={item.prompt}
               liked={item.liked}
-              // deleted={item.status === "ACTIVE" ? "ACTIVE" : "DELETED"}
               deleted={item.status}
               user_id={userId}
               owner_id={item.user_id}
             />
-          </Link>
+          </div>
         ))
       ) : (
         <>
