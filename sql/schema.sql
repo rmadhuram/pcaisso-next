@@ -2,7 +2,7 @@
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) DEFAULT NULL,
-  `name` varchar(128) DEFAULT NULL,
+  `user_name` varchar(128) DEFAULT NULL,
   `image_url` varchar(150) DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT NULL,
   `last_session_time` timestamp NULL DEFAULT NULL,
