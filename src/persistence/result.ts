@@ -103,8 +103,26 @@ export async function updateLike(
     const connection = await getConnection();
 
     const [response] = (await connection.execute(
-      "UPDATE results SET liked=? where id =?",
+      "UPDATE results SET liked=?, liked_time=NOW() where id =?",
       [liked, id]
+    )) as [ResultSetHeader, FieldPacket[]];
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+/**
+ * Retrieve the last five likes
+ * @returns
+ */
+export async function fetchRecentLikes(): Promise<ResultSetHeader> {
+  try {
+    const connection = await getConnection();
+
+    const [response] = (await connection.execute(
+      "SELECT uuid, prompt FROM results WHERE id IS NOT NULL ORDER BY liked_time DESC LIMIT 5"
     )) as [ResultSetHeader, FieldPacket[]];
     return response;
   } catch (error) {

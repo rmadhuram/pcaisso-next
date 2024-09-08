@@ -84,24 +84,19 @@ export default function Results({
   };
 
   useEffect(() => {
-    if(deletedState) {
-      console.log(deletedState);
+    if (deletedState) {
       updateDeleted(id, deletedState as string);
     }
-  },[deletedState]);
+  }, [deletedState]);
 
   const accept = async () => {
-    console.log(result?.status);
     setDeletedState(result?.status === "ACTIVE" ? "DELETED" : "ACTIVE");
-    console.log(deletedState);
     toast.current?.show({
       severity: "info",
       summary: "Deleted",
       detail: "Successfully Deleted",
       life: 3000,
     });
-    console.log(deletedState);
-    // await updateDeleted(id, deletedState as string);
     router.push(`/draw/new`);
   };
 

@@ -62,13 +62,6 @@ function HistoryItem({
     }
   };
 
-  // useEffect(() => {
-  //   if (deletedState) {
-  //     console.log(deletedState);
-  //     updateDeleted(id, deletedState as string);
-  //   }
-  // }, [deletedState]);
-
   const handleDelete = async () => {
     const newDeletedState = deletedState === "ACTIVE" ? "DELETED" : "ACTIVE";
     setDeletedState(newDeletedState);
@@ -83,23 +76,6 @@ function HistoryItem({
     await updateDeleted(id, newDeletedState);
     router.push(`/draw/new`);
   };
-
-  // const accept = async () => {
-  //   console.log(deletedState);
-  //   setDeletedState(deletedState === "ACTIVE" ? "DELETED" : "ACTIVE");
-  //   console.log(deletedState);
-  //   toast.current?.show({
-  //     severity: "info",
-  //     summary: "Deleted",
-  //     detail: "Successfully Deleted",
-  //     life: 3000,
-  //   });
-  //   console.log(deletedState);
-  //   // await updateDeleted(id, deletedState as string);
-  //   router.push(`/draw/new`);
-  // };
-
-  // const reject = () => {};
 
   const confirmDelete = () => {
     confirmDialog({

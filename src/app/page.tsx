@@ -4,7 +4,44 @@ import styles from "./page.module.scss";
 import { Button } from "primereact/button";
 import GalleryItem from "./components/galleryItem/GalleryItem";
 import "animate.css";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { Skeleton } from "primereact/skeleton";
+import { useRouter } from "next/navigation";
+
 export default function Page() {
+  const { data: session } = useSession();
+  const [recentLikedOnes, setRecentLikedOnes] = useState([]);
+  const router = useRouter();
+
+  const userId = session?.user?.id;
+
+  useEffect(() => {
+    if (userId) {
+      const updateRecentLikes = async () => {
+        try {
+          const response = await fetch("/api/liked", {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+          }
+
+          const dataReceived = await response.json();
+          console.log(dataReceived);
+
+          setRecentLikedOnes(dataReceived);
+        } catch (error) {
+          console.error("Error updating the recent likes");
+        }
+      };
+      updateRecentLikes();
+    }
+  }, [userId]);
+
   return (
     <div className={styles["intro"]}>
       <div className="title">
@@ -13,14 +50,13 @@ export default function Page() {
         </h1>
       </div>
       <p className="explain">
-        Did you know that LLMs can draw cool things? 2D & 3D graphics, 
-        simple games & data visualizations! Come, explore with us!
+        Did you know that LLMs can draw cool things? 2D & 3D graphics, simple
+        games & data visualizations! Come, explore with us!
       </p>
-      <p className="explain">
-        The following demos are created using Pcaisso! 
-      </p>
+      <p className="explain">The following demos are created using Pcaisso!</p>
       <p className="explain mobile-only">
-        Pcaisso is best experienced on a desktop/laptop. You will not be able to generate images on mobile devices.
+        Pcaisso is best experienced on a desktop/laptop. You will not be able to
+        generate images on mobile devices.
       </p>
       <Link href="/draw/new" className="explore-link" passHref>
         <Button className="explore-button" type="submit" severity="success">
@@ -108,12 +144,18 @@ export default function Page() {
         <div className="right-side">
           <h3>Recent Likes</h3>
           <section className="recent-likes">
-            <div className="like-item">
-            </div>
-            <div className="like-item">
-            </div>
-            <div className="like-item">
-            </div>
+            { recentLikedOnes.length > 0 ? (
+              recentLikedOnes.map((item: any, index: any) => (
+                <div onClick={() => router.push(`/draw/${item.uuid}`)}>
+                <div className="like-item">{item.prompt}</div>
+                </div>
+              ))
+            ) : (
+              <>
+                <Skeleton className="mb-2" height="50px"></Skeleton>
+                <Skeleton className="mb-2" height="50px"></Skeleton>
+              </>
+            )}
           </section>
         </div>
       </div>
