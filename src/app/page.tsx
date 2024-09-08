@@ -17,7 +17,7 @@ export default function Page() {
         simple games & data visualizations! Come, explore with us!
       </p>
       <p className="explain">
-        The following demos are created using Pcaisso! 
+        The following demos were created using Pcaisso! 
       </p>
       <p className="explain mobile-only">
         Pcaisso is best experienced on a desktop/laptop. You will not be able to generate images on mobile devices.
