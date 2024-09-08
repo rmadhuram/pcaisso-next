@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { Toast } from "primereact/toast";
 import styles from "./history.module.scss";
 import { useSession } from "next-auth/react";
 import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
@@ -9,29 +11,107 @@ import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
 dayjs.extend(timezone);
 
 function HistoryItem({
+  id,
   ago,
   prompt,
   liked,
+  deleted,
+  user_id,
+  owner_id,
 }: {
+  id: number;
   ago: string;
   prompt: string;
   liked: boolean;
+  deleted: boolean;
+  user_id: number;
+  owner_id: number;
 }) {
+  const router = useRouter();
+  const [deletedState, setDeletedState] = useState(deleted ?? false);
+  const toast = useRef<Toast>(null);
+
+  const { data: session } = useSession();
+  const userId = session?.user?.id as number;
+
+  const updateDeleted = async (id: number, deletedStatus: boolean) => {
+    if (id) {
+      try {
+        const response = await fetch("/api/deleted", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            deleted: deletedStatus,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    }
+  };
+
+  const accept = async () => {
+    setDeletedState(true);
+    await updateDeleted(id, true);
+    toast.current?.show({
+      severity: "info",
+      summary: "Deleted",
+      detail: "Successfully Deleted",
+      life: 3000,
+    });
+
+    router.push(`/draw/new`);
+  };
+
+  const reject = () => {};
+
+  const confirmDelete = () => {
+    confirmDialog({
+      message: "Do you want to delete this record?",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      defaultFocus: "reject",
+      acceptClassName: "p-button-danger",
+      accept,
+      reject,
+    });
+  };
+
   return (
     <div className="history-item">
       <div className="top-section">
         <div className="ago">{ago}</div>
-        {liked ? (
-          <i className="fa-solid fa-heart liked"></i>
-        ) : (
-          <i className="fa-regular fa-heart"></i>
+        {user_id === owner_id && (
+          <>
+            {liked ? (
+              <i className="fa-solid fa-heart liked"></i>
+            ) : (
+              <i className="fa-regular fa-heart"></i>
+            )}
+            <div className="delete-btn" onClick={confirmDelete}>
+              {deletedState ? (
+                <i className="fa-solid fa-trash-can"></i>
+              ) : (
+                <p>DELETED</p>
+              )}
+            </div>
+          </>
         )}
+        <Toast ref={toast} />
+        <ConfirmDialog />
       </div>
       <div className="bottom-section">
         <div className="prompt">{prompt}</div>
@@ -44,7 +124,6 @@ export default function History() {
   const { data: session } = useSession();
   const [loadedData, setLoadedData] = useState<ResultDto[]>([]);
   const userId = session?.user?.id as number;
-
   const [first, setFirst] = useState<number>(0);
   const rowsPerPage = 10;
 
@@ -74,11 +153,23 @@ export default function History() {
   const currentItems = loadedData.slice(first, first + rowsPerPage);
 
   function formattedAgo(created_time: string) {
+    const browserOffset = new Date().getTimezoneOffset();
     const createdTimeUTC = dayjs.utc(created_time);
-    const createdTimeIST = createdTimeUTC.add(5, "hour").add(30, "minute");
-    const nowIST = dayjs().tz("Asia/Kolkata");
-    const timeDifference = createdTimeIST.from(nowIST);
+    const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
+    const now = dayjs();
+    const timeDifference = createdTimeAdjusted.from(now);
     return timeDifference;
+  }
+
+  if (!session) {
+    return (
+      <div className={styles.history}>
+        <p className="sign-in-message">
+          <i className="fa-solid fa-triangle-exclamation"></i>Your prompt
+          history will be shown when you&apos;re logged in
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -87,9 +178,13 @@ export default function History() {
         currentItems.map((item: any, index: any) => (
           <Link href={`/draw/${item.uuid}`} key={first + index}>
             <HistoryItem
+              id={item.id}
               ago={formattedAgo(item.created_time)}
               prompt={item.prompt}
               liked={item.liked}
+              deleted={item.status === "ACTIVE" ? true : false}
+              user_id={userId}
+              owner_id={item.user_id}
             />
           </Link>
         ))

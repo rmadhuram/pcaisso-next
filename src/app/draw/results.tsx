@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 import { DrawResult } from "../../models/draw-result";
 import dayjs from "dayjs";
 import LikeButton from "../components/likeButton/LikeButton";
+import { useSession } from "next-auth/react";
 
 export default function Results({
   result,
@@ -16,6 +17,10 @@ export default function Results({
   created_time: any;
 }) {
   const [isCopied, setIsCopied] = useState(false);
+  const { data: session } = useSession();
+  const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const createdTimeLocal = dayjs.utc(created_time).tz(browserTimeZone);
+  const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
 
   const handleCopyClick = async () => {
     try {
@@ -26,11 +31,10 @@ export default function Results({
     }
   };
 
-  const updateData = async (likedStatus: boolean) => {
+  const updateLike = async (likedStatus: boolean) => {
     const id = result?.id as number;
     if (id) {
       try {
-        console.log(id);
         const response = await fetch("/api/liked", {
           method: "POST",
           headers: {
@@ -67,13 +71,7 @@ export default function Results({
         <TabPanel header="Stats">
           <div className="stats-container">
             <div className="stats-item label">Created At</div>
-            <div className="stats-item value">
-              {dayjs
-                .utc(created_time)
-                .local()
-                .tz("Asia/Kolkata")
-                .format("hh: mm A, DD MM YYYY")}
-            </div>
+            <div className="stats-item value">{formattedCreatedTime}</div>
             <div className="stats-item label">Time taken in secs</div>
             <div className="stats-item value">{result?.timeTakenInSec}</div>
             <div className="stats-item label">Prompt Tokens</div>
@@ -88,10 +86,12 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="like-btn">
-        <LikeButton
-          liked={Boolean(+(result?.liked || 0))}
-          callback={updateData}
-        />
+        {session && (
+          <LikeButton
+            liked={Boolean(+(result?.liked || 0))}
+            callback={updateLike}
+          />
+        )}
       </div>
     </div>
   );

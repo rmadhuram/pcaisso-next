@@ -41,6 +41,12 @@
         }
       }
     }
+
+    @media (min-width: 320px) and (max-width: 480px) {
+      .menu {
+        display: none;
+      }
+    }
   }
 
   h3 {
@@ -53,5 +59,11 @@
     span {
       color: $red-variation;
     }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .navbar{
+    display: none;
   }
 }

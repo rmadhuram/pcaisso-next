@@ -12,4 +12,5 @@ export interface ResultDto {
   prompt_tokens: number | null;
   completion_tokens: number | null;
   liked: boolean;
+  status: string;
 }

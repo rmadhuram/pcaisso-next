@@ -18,7 +18,6 @@ import { ResultDto } from "./result.dto";
  * @returns
  */
 export async function addResult(
-  // id: number,
   userId: number,
   type: string,
   prompt: string,
@@ -61,7 +60,7 @@ export async function getResults(uuid: string): Promise<ResultDto> {
   try {
     const connection = await getConnection();
     const [results] = (await connection.execute(
-      "SELECT id, uuid, user_id, type, description, prompt, model, output, IFNULL(created_time,'N/A') AS created_time, IFNULL(time_taken,'N/A') as time_taken, IFNULL(prompt_tokens,'N/A') as prompt_tokens, IFNULL(completion_tokens, 'N/A') as completion_tokens, IFNULL(liked,'N/A') as liked  FROM results WHERE uuid = ?",
+      "SELECT id, uuid, user_id, type, description, prompt, model, output, IFNULL(created_time,'N/A') AS created_time, IFNULL(time_taken,'N/A') as time_taken, IFNULL(prompt_tokens,'N/A') as prompt_tokens, IFNULL(completion_tokens, 'N/A') as completion_tokens, IFNULL(liked,'N/A') as liked, IFNULL(status,'N/A') as status  FROM results WHERE uuid = ?",
       [uuid]
     )) as [ResultDto[], FieldPacket[]];
     return results[0];
@@ -79,10 +78,9 @@ export async function getResults(uuid: string): Promise<ResultDto> {
 export async function getPrompts(userId: any): Promise<ResultDto[]> {
   try {
     const connection = await getConnection();
-
     const [prompts] = (await connection.execute(
-      "SELECT uuid, created_time, prompt, liked FROM results WHERE user_id = ? ORDER BY created_time DESC",
-      [userId]
+      "SELECT id, user_id, uuid, created_time, prompt, liked, status FROM results WHERE user_id = ? AND status = ? ORDER BY created_time DESC",
+      [userId, "ACTIVE"]
     )) as [ResultDto[], FieldPacket[]];
     return prompts;
   } catch (error) {
@@ -93,7 +91,8 @@ export async function getPrompts(userId: any): Promise<ResultDto[]> {
 
 /**
  * Set liked ? 1 : 0 given the id and the value of liked
- * @param id, liked
+ * @param id
+ * @param liked
  * @returns
  */
 export async function updateLike(
@@ -106,6 +105,30 @@ export async function updateLike(
     const [response] = (await connection.execute(
       "UPDATE results SET liked=? where id =?",
       [liked, id]
+    )) as [ResultSetHeader, FieldPacket[]];
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+/**
+ * Set status given the id and the value of deleted
+ * @param id
+ * @param deleted
+ * @returns
+ */
+export async function updateDelete(
+  id: number,
+  deleted: boolean
+): Promise<ResultSetHeader> {
+  try {
+    const connection = await getConnection();
+
+    const [response] = (await connection.execute(
+      "UPDATE results SET status=? where id =?",
+      [deleted === true ? "DELETED" : "ACTIVE", id]
     )) as [ResultSetHeader, FieldPacket[]];
     return response;
   } catch (error) {

@@ -10,7 +10,13 @@ export default function LikeButton({
 }) {
   const [likedState, setLikedState] = useState(liked ?? false);
   return (
-    <div className={styles["like-btn"]} onClick={() => {setLikedState(!likedState); callback(!likedState)}}>
+    <div
+      className={styles["like-btn"]}
+      onClick={() => {
+        setLikedState(!likedState);
+        callback(!likedState);
+      }}
+    >
       {likedState ? (
         <i className="fa-solid fa-heart liked"></i>
       ) : (
