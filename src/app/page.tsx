@@ -16,6 +16,12 @@ export default function Page() {
         Did you know that LLMs can draw cool things? 2D & 3D graphics, 
         simple games & data visualizations! Come, explore with us!
       </p>
+      <p className="explain">
+        The following demos are created using Pcaisso! 
+      </p>
+      <p className="explain mobile-only">
+        Pcaisso is best experienced on a desktop/laptop. You will not be able to generate images on mobile devices.
+      </p>
       <Link href="/draw/new" className="explore-link" passHref>
         <Button className="explore-button" type="submit" severity="success">
           Start Exploring!
