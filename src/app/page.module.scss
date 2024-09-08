@@ -77,6 +77,10 @@
     color: #aaa;
     width: 600px;
     text-align: center;
+
+    &.mobile-only {
+      display: none;
+    }
   }
 
   .gallery {
@@ -128,6 +132,11 @@
       width: 90%;
       font-size: 12px;
       line-height: 1rem;
+
+      &.mobile-only {
+        display: block;
+        color: yellow;
+      }
     }
 
     .title {
