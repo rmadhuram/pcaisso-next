@@ -26,9 +26,10 @@ CREATE TABLE `results` (
   `prompt_tokens` int(11) DEFAULT NULL,
   `completion_tokens` int(11) DEFAULT NULL,
   `liked` tinyint(1) DEFAULT NULL,
+  `liked_time` timestamp NULL DEFAULT NULL,
   `status` enum('ACTIVE','DELETED') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_userId` (`user_id`),
   CONSTRAINT `fk_userId` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
