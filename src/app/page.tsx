@@ -15,7 +15,7 @@ function getDummyRecentlyLikedItems(): RecentlyLikedItemModel[] {
       user_name: "Raj Madhuram",
       type: "2D",
       description: "A Japan cityscape. Road filled with skyscrapers",
-      prompt: "A Japan cityscape. Road filled with skyscrapers",
+      prompt: "A Japan cityscape. Road filled with skyscrapers. This is a test prompt to see how it looks in the UI",
       thumbnail_url: "https://lh3.googleusercontent.com/a/ACg8ocIjr4QcmJblWzWHTNXOA7IbLdGhEQ2iHhHLJ3DShkTkZmcqEA=s96-c",
       liked_time: "2024-02-20T05:30:00.000Z"
     },
@@ -45,7 +45,7 @@ export default function Page() {
         simple games & data visualizations! Come, explore with us!
       </p>
       <p className="explain">
-        The following demos were created using Pcaisso! 
+        The following creations were made using Pcaisso! 
       </p>
       <p className="explain mobile-only">
         Pcaisso is best experienced on a desktop/laptop. You will not be able to generate images on mobile devices.
@@ -58,7 +58,7 @@ export default function Page() {
       <div className="contents">
         <div className="left-side">
           <div className="gallery-section">
-            <h3>🌸 2D Canvas</h3>
+            <h3>🌸&nbsp;&nbsp;2D Canvas</h3>
             <section className="gallery">
               <GalleryItem
                 uuid="2b50c478-608f-4a09-a345-d842c502c882"
@@ -82,7 +82,7 @@ export default function Page() {
           </div>
 
           <div className="gallery-section">
-            <h3>🌸 2D Canvas - Dynamic Graphics</h3>
+            <h3>🌟&nbsp;&nbsp;2D Canvas - Dynamic Graphics</h3>
             <section className="gallery">
               <GalleryItem
                 uuid="9870ce6d-a014-4596-a87d-698ed0fe9c02"
@@ -106,7 +106,7 @@ export default function Page() {
           </div>
 
           <div className="gallery-section">
-            <h3>🧊 3D Graphics</h3>
+            <h3>🧊&nbsp;&nbsp;3D Graphics</h3>
             <section className="gallery">
               <GalleryItem
                 uuid="5521edce-c817-4bed-b6a3-8d5d0dfaaa66"
@@ -120,7 +120,7 @@ export default function Page() {
           </div>
 
           <div className="gallery-section">
-            <h3>💠 Data Visualization</h3>
+            <h3>💠&nbsp;&nbsp;Data Visualization</h3>
             <section className="gallery">
               <GalleryItem
                 uuid="b4316bac-c113-4daa-89ed-74bf62227106"
@@ -134,7 +134,7 @@ export default function Page() {
           </div>
         </div>
         <div className="right-side">
-          <h3>Recent Likes</h3>
+          <h3><i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent Likes</h3>
           <section className="recent-likes">
             {getDummyRecentlyLikedItems().map((item: RecentlyLikedItemModel) => (   
                 <RecentlyLikedItem key={item.uuid} recent={item} />

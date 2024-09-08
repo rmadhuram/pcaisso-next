@@ -90,6 +90,12 @@
     row-gap: 20px;
   }
 
+  .right-side {
+    .liked {
+      color: $red-variation;
+    }
+  }
+
   .recent-likes {
     display: flex;
     flex-direction: column;

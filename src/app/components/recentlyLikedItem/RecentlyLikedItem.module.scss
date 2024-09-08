@@ -1,19 +1,39 @@
+@import "@/styles/mixins.scss";
+
 .recently-liked-item :global {
   border: 1px solid #666;
   border-radius: 10px;
   padding: 10px;
   background-color: #222;
-  height: 75px;
-  color: #ccc;
+  height: 85px;
+  color: #aaa;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
 
   .top-section {
     display: flex;
     gap: 10px;
+    align-items: center;
+    @include title-font-regular;
+    font-size: 11px;
+    
+    .type {
+      padding: 2px 4px;
+      background-color: #585858;
+      border-radius: 4px;
+      font-size: 10px;
+    }
 
-    .thumbnail img {
+    .thumbnail {
       width: 18px;
       height: 18px;
       border-radius: 9px;
     }
+  }
+
+  .bottom-section {
+    color: #ccc;
+    @include two-line-clamp;
   }
 }
