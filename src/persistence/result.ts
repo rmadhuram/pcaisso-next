@@ -122,7 +122,7 @@ export async function fetchRecentLikes(): Promise<ResultSetHeader> {
     const connection = await getConnection();
 
     const [response] = (await connection.execute(
-      "SELECT uuid, prompt FROM results WHERE id IS NOT NULL ORDER BY liked_time DESC LIMIT 5"
+      "SELECT results.uuid, results.user_id, users.name, results.type, results.description, results.prompt, users.image_url, results.liked_time FROM results JOIN users ON results.user_id = users.id WHERE results.liked = 1 ORDER BY results.liked_time DESC LIMIT 5"
     )) as [ResultSetHeader, FieldPacket[]];
     return response;
   } catch (error) {
