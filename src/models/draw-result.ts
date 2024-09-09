@@ -1,5 +1,6 @@
 export interface DrawResult {
-  user_id?: number;
+  id?: number,
+  user_id: number;
   uuid: string;
   liked: boolean;
   status: string;

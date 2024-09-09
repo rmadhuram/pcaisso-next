@@ -19,6 +19,7 @@ export default function Results({
   result: DrawResult | undefined;
   created_time: any;
 }) {
+  console.log(result);
   const [isCopied, setIsCopied] = useState(false);
   const { data: session } = useSession();
   const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -26,9 +27,11 @@ export default function Results({
   const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
   const [deletedState, setDeletedState] = useState(result?.status);
   const toast = useRef<Toast>(null);
-  const id = result?.id as number;
+  const id = result?.id;
   const owner_id = result?.user_id;
   const session_id = session?.user?.id;
+
+  console.log(owner_id, session_id);
 
   const router = useRouter();
 
@@ -96,7 +99,7 @@ export default function Results({
       life: 3000,
     });
 
-    await updateDeleted(id, newDeletedState);
+    await updateDeleted(id as number, newDeletedState);
     router.push(`/draw/new`);
   };
 
@@ -144,23 +147,24 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="buttons">
-        {session && session_id === owner_id && (
-          <>
-            <div className="like-btn">
-              <LikeButton
-                liked={Boolean(+(result?.liked || 0))}
-                callback={updateLike}
-              />
-            </div>
-            <div className="delete-btn" onClick={confirmDelete}>
-              {deletedState ? (
-                <i className="fa-solid fa-trash-can"></i>
-              ) : (
-                <p>DELETED</p>
-              )}
-            </div>
-          </>
-        )}
+        {(session && session_id === owner_id) ||
+          (owner_id === 0 && ( //owner_id === 0 is included because newly created images has onwer_id = 0
+            <>
+              <div className="like-btn">
+                <LikeButton
+                  liked={Boolean(+(result?.liked || 0))}
+                  callback={updateLike}
+                />
+              </div>
+              <div className="delete-btn" onClick={confirmDelete}>
+                {deletedState ? (
+                  <i className="fa-solid fa-trash-can"></i>
+                ) : (
+                  <p>DELETED</p>
+                )}
+              </div>
+            </>
+          ))}
         <Toast ref={toast} />
         <ConfirmDialog />
       </div>
