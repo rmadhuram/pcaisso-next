@@ -117,7 +117,7 @@ export async function updateLike(
  * Retrieve the last five likes
  * @returns
  */
-export async function fetchRecentLikes(): Promise<ResultSetHeader> {
+export async function setLiked(): Promise<ResultSetHeader> {
   try {
     const connection = await getConnection();
 

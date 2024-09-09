@@ -24,8 +24,8 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href={slug ? `/draw/${slug}` : "/draw/new"}
-              className={slug && pathname === `/draw/${slug}` ? "selected" : ""}
+              href="/draw/new"
+              className={pathname.startsWith("/draw") ? "selected" : ""}
             >
               Explore
             </Link>

@@ -24,7 +24,7 @@ export default function Page() {
     if (userId) {
       const updateRecentLikes = async () => {
         try {
-          const response = await fetch("/api/liked", {
+          const response = await fetch("/api/getRecentLikes", {
             method: "GET",
             headers: {
               "Content-type": "application/json",
