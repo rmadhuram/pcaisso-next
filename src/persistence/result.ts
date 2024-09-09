@@ -29,7 +29,7 @@ export async function addResult(
     const uuid = uuidv4();
 
     const [result] = (await connection.execute(
-      "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
+      "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)",
       [
         uuid,
         userId,
@@ -42,6 +42,7 @@ export async function addResult(
         drawResult.timeTakenInSec,
         drawResult.usage.prompt_tokens,
         drawResult.usage.completion_tokens,
+        drawResult.status,
       ]
     )) as [ResultSetHeader, FieldPacket[]];
     return [result.insertId, uuid];
