@@ -19,7 +19,6 @@ export default function Results({
   result: DrawResult | undefined;
   created_time: any;
 }) {
-  console.log(result);
   const [isCopied, setIsCopied] = useState(false);
   const { data: session } = useSession();
   const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -30,8 +29,6 @@ export default function Results({
   const id = result?.id;
   const owner_id = result?.user_id;
   const session_id = session?.user?.id;
-
-  console.log(owner_id, session_id);
 
   const router = useRouter();
 
@@ -147,8 +144,8 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="buttons">
-        {(session && session_id === owner_id) ||
-          (owner_id === 0 && ( //owner_id === 0 is included because newly created images has onwer_id = 0
+        {(((owner_id === 0) ||
+          (session && session_id === owner_id)) && (
             <>
               <div className="like-btn">
                 <LikeButton
