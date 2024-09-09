@@ -35,7 +35,6 @@ export default function Page() {
           }
 
           const dataReceived = await response.json();
-          // console.log(dataReceived);
 
           setRecentLikedOnes(dataReceived);
         } catch (error) {
@@ -151,11 +150,16 @@ export default function Page() {
           </h3>
           <section className="recent-likes">
             {recentLikedOnes.length > 0 ? (
-              recentLikedOnes.map((item: RecentlyLikedItemModel) => (
-                <div onClick={() => router.push(`/draw/${item.uuid}`)}>
-                  <RecentlyLikedItem key={item.uuid} recent={item} />
-                </div>
-              ))
+              recentLikedOnes.map(
+                (item: RecentlyLikedItemModel, index: any) => (
+                  <div
+                    key={index}
+                    onClick={() => router.push(`/draw/${item.uuid}`)}
+                  >
+                    <RecentlyLikedItem key={item.uuid} recent={item} />
+                  </div>
+                )
+              )
             ) : (
               <>
                 <Skeleton className="mb-2" height="50px"></Skeleton>
