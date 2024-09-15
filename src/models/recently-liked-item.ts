@@ -5,6 +5,6 @@ export interface RecentlyLikedItemModel {
   type: string;
   description: string;
   prompt: string;
-  thumbnail_url: string;
-  liked_time: string; 
+  image_url: string;
+  liked_time: string;
 }

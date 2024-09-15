@@ -67,8 +67,10 @@ export async function POST(req: NextRequest) {
     const endTime = Date.now();
     const output: DrawResult = {
       id: 0,
+      user_id: 0,
       uuid: "",
       liked: false,
+      status: "ACTIVE",
       code: response.substring(startIndex, endIndex).trim(),
       text: response,
       timeTakenInSec: (endTime - startTime) / 1000,
@@ -91,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     output.id = id;
     output.uuid = uuid;
-
+    
     return NextResponse.json(output, { status: 200 });
   } catch (error) {
     console.error("Error fetching from OpenAI:", error);

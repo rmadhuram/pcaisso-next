@@ -86,9 +86,11 @@ export default function HomePage() {
         setLoadedData(dataReceived);
 
         let result: DrawResult = {
-          id: dataReceived.id,
+          id: dataReceived?.id,
+          user_id: dataReceived.user_id,
           uuid: dataReceived.uuid,
           liked: Boolean(+(dataReceived.liked || 0)),
+          status: dataReceived.status,
           code: dataReceived.output,
           text: "",
           timeTakenInSec: dataReceived.time_taken,

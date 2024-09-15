@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   const { id, deleted } = await req.json();
 
   try {
-    const data = await updateDelete(id as number, deleted as boolean);
+    const data = await updateDelete(id as number, deleted as string);
     console.log(data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {

@@ -29,7 +29,7 @@ export async function addResult(
     const uuid = uuidv4();
 
     const [result] = (await connection.execute(
-      "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)",
+      "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)",
       [
         uuid,
         userId,
@@ -42,6 +42,7 @@ export async function addResult(
         drawResult.timeTakenInSec,
         drawResult.usage.prompt_tokens,
         drawResult.usage.completion_tokens,
+        drawResult.status,
       ]
     )) as [ResultSetHeader, FieldPacket[]];
     return [result.insertId, uuid];
@@ -60,7 +61,7 @@ export async function getResults(uuid: string): Promise<ResultDto> {
   try {
     const connection = await getConnection();
     const [results] = (await connection.execute(
-      "SELECT id, uuid, user_id, type, description, prompt, model, output, IFNULL(created_time,'N/A') AS created_time, IFNULL(time_taken,'N/A') as time_taken, IFNULL(prompt_tokens,'N/A') as prompt_tokens, IFNULL(completion_tokens, 'N/A') as completion_tokens, IFNULL(liked,'N/A') as liked, IFNULL(status,'N/A') as status  FROM results WHERE uuid = ?",
+      "SELECT id, uuid, user_id, type, description, prompt, model, output, IFNULL(created_time,'N/A') AS created_time, IFNULL(time_taken,'N/A') as time_taken, IFNULL(prompt_tokens,'N/A') as prompt_tokens, IFNULL(completion_tokens, 'N/A') as completion_tokens, IFNULL(liked,'N/A') as liked, IFNULL(status,'ACTIVE') as status  FROM results WHERE uuid = ?",
       [uuid]
     )) as [ResultDto[], FieldPacket[]];
     return results[0];
@@ -103,8 +104,26 @@ export async function updateLike(
     const connection = await getConnection();
 
     const [response] = (await connection.execute(
-      "UPDATE results SET liked=? where id =?",
+      "UPDATE results SET liked=?, liked_time=NOW() where id =?",
       [liked, id]
+    )) as [ResultSetHeader, FieldPacket[]];
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+/**
+ * Retrieve the last five likes
+ * @returns
+ */
+export async function setLiked(): Promise<ResultSetHeader> {
+  try {
+    const connection = await getConnection();
+
+    const [response] = (await connection.execute(
+      "SELECT results.uuid, results.user_id, users.user_name, results.type, results.description, results.prompt, users.image_url, results.liked_time FROM results JOIN users ON results.user_id = users.id WHERE results.liked = 1 ORDER BY results.liked_time DESC LIMIT 5"
     )) as [ResultSetHeader, FieldPacket[]];
     return response;
   } catch (error) {
@@ -121,14 +140,14 @@ export async function updateLike(
  */
 export async function updateDelete(
   id: number,
-  deleted: boolean
+  deleted: string
 ): Promise<ResultSetHeader> {
   try {
     const connection = await getConnection();
 
     const [response] = (await connection.execute(
       "UPDATE results SET status=? where id =?",
-      [deleted === true ? "DELETED" : "ACTIVE", id]
+      [deleted === "ACTIVE" ? "ACTIVE" : "DELETED", id]
     )) as [ResultSetHeader, FieldPacket[]];
     return response;
   } catch (error) {
