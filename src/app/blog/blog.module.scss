@@ -1,0 +1,20 @@
+@import "@/styles/_mixins.scss";
+@import "@/styles/_variables.scss";
+
+.blog :global {
+  height: $default-height;
+  @include background;
+  @include primary-font-regular;
+  display: flex;
+  justify-content: center;
+
+  .blog-post {
+    width: 800px;
+
+    p {
+      @include primary-font-regular;
+      font-size: 14px;
+      color: #aaa;
+    }
+  }
+}
