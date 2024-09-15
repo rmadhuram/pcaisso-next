@@ -16,15 +16,7 @@ dayjs.extend(utc);
 dayjs.extend(relativeTime);
 dayjs.extend(timezone);
 
-function HistoryItem({
-  id,
-  ago,
-  prompt,
-  liked,
-  deleted,
-  user_id,
-  owner_id,
-}: {
+type HistoryItemProps = {
   id: number;
   ago: string;
   prompt: string;
@@ -32,7 +24,9 @@ function HistoryItem({
   deleted: string;
   user_id: number;
   owner_id: number;
-}) {
+};
+
+function HistoryItem({id, ago, prompt, liked, deleted, user_id, owner_id}: HistoryItemProps) {
   const router = useRouter();
   const [deletedState, setDeletedState] = useState(deleted);
   const toast = useRef<Toast>(null);
@@ -92,6 +86,7 @@ function HistoryItem({
   return (
     <div className="history-item">
       <div className="top-section">
+        <div className="ago">{ago}</div>
         {user_id === owner_id && (
           <>
             {liked ? (
@@ -116,7 +111,6 @@ function HistoryItem({
         )}
         <Toast ref={toast} />
         <ConfirmDialog />
-        <div className="ago">{ago}</div>
       </div>
       <div className="bottom-section">
         <div className="prompt">{prompt}</div>

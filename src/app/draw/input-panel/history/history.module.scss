@@ -27,10 +27,15 @@
 
     .top-section {
       display: flex;
-      justify-content: space-evenly;
       @include title-font-regular;
       font-size: 10px;
       color: #888;
+      align-items: center;
+      gap: 10px;
+
+      .ago {
+        flex-grow: 1;
+      }
 
       .liked {
         color: #ff0000;

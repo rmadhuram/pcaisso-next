@@ -31,6 +31,11 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
+            <Link href="/blog" className={pathname === "/blog" ? "selected" : ""}>
+              Blog
+            </Link>
+          </li>
+          <li>
             <Link href="/faq" className={pathname === "/faq" ? "selected" : ""}>
               FAQ
             </Link>
