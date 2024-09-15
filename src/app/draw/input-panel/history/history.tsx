@@ -10,7 +10,6 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { ResultDto } from "@/persistence/result.dto";
 import { Skeleton } from "primereact/skeleton";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 dayjs.extend(utc);
@@ -30,18 +29,18 @@ function HistoryItem({
   ago: string;
   prompt: string;
   liked: boolean;
-  deleted: boolean;
+  deleted: string;
   user_id: number;
   owner_id: number;
 }) {
   const router = useRouter();
-  const [deletedState, setDeletedState] = useState(deleted ?? false);
+  const [deletedState, setDeletedState] = useState(deleted);
   const toast = useRef<Toast>(null);
 
   const { data: session } = useSession();
   const userId = session?.user?.id as number;
 
-  const updateDeleted = async (id: number, deletedStatus: boolean) => {
+  const updateDeleted = async (id: number, deletedStatus: string) => {
     if (id) {
       try {
         const response = await fetch("/api/deleted", {
@@ -63,9 +62,10 @@ function HistoryItem({
     }
   };
 
-  const accept = async () => {
-    setDeletedState(true);
-    await updateDeleted(id, true);
+  const handleDelete = async () => {
+    const newDeletedState = deletedState === "ACTIVE" ? "DELETED" : "ACTIVE";
+    setDeletedState(newDeletedState);
+
     toast.current?.show({
       severity: "info",
       summary: "Deleted",
@@ -73,10 +73,9 @@ function HistoryItem({
       life: 3000,
     });
 
+    await updateDeleted(id, newDeletedState);
     router.push(`/draw/new`);
   };
-
-  const reject = () => {};
 
   const confirmDelete = () => {
     confirmDialog({
@@ -85,15 +84,14 @@ function HistoryItem({
       icon: "pi pi-info-circle",
       defaultFocus: "reject",
       acceptClassName: "p-button-danger",
-      accept,
-      reject,
+      accept: handleDelete,
+      reject: () => {},
     });
   };
 
   return (
     <div className="history-item">
       <div className="top-section">
-        <div className="ago">{ago}</div>
         {user_id === owner_id && (
           <>
             {liked ? (
@@ -101,7 +99,13 @@ function HistoryItem({
             ) : (
               <i className="fa-regular fa-heart"></i>
             )}
-            <div className="delete-btn" onClick={confirmDelete}>
+            <div
+              className="delete-btn"
+              onClick={(event) => {
+                event.stopPropagation();
+                confirmDelete();
+              }}
+            >
               {deletedState ? (
                 <i className="fa-solid fa-trash-can"></i>
               ) : (
@@ -112,6 +116,7 @@ function HistoryItem({
         )}
         <Toast ref={toast} />
         <ConfirmDialog />
+        <div className="ago">{ago}</div>
       </div>
       <div className="bottom-section">
         <div className="prompt">{prompt}</div>
@@ -126,6 +131,7 @@ export default function History() {
   const userId = session?.user?.id as number;
   const [first, setFirst] = useState<number>(0);
   const rowsPerPage = 10;
+  const router = useRouter();
 
   const onPageChange = (event: PaginatorPageChangeEvent) => {
     setFirst(event.first);
@@ -165,7 +171,7 @@ export default function History() {
     return (
       <div className={styles.history}>
         <p className="sign-in-message">
-          <i className="fa-solid fa-triangle-exclamation"></i>Your prompt
+          <i className="fa-solid fa-triangle-exclamation"></i> Your prompt
           history will be shown when you&apos;re logged in
         </p>
       </div>
@@ -176,17 +182,20 @@ export default function History() {
     <div className={styles.history}>
       {currentItems.length > 0 ? (
         currentItems.map((item: any, index: any) => (
-          <Link href={`/draw/${item.uuid}`} key={first + index}>
+          <div
+            key={first + index}
+            onClick={() => router.push(`/draw/${item.uuid}`)}
+          >
             <HistoryItem
               id={item.id}
               ago={formattedAgo(item.created_time)}
               prompt={item.prompt}
               liked={item.liked}
-              deleted={item.status === "ACTIVE" ? true : false}
+              deleted={item.status}
               user_id={userId}
               owner_id={item.user_id}
             />
-          </Link>
+          </div>
         ))
       ) : (
         <>
