@@ -2,11 +2,16 @@
  * Prompt Result persistence functions
  */
 
-import getConnection from "@/lib/db";
+import getPool from "@/lib/db";
+import { executeQuery } from "@/lib/db";
 import { FieldPacket, ResultSetHeader } from "mysql2";
 import { v4 as uuidv4 } from "uuid";
 import { DrawResult } from "@/models/draw-result";
 import { ResultDto } from "./result.dto";
+import NodeCache from "node-cache";
+
+const cache = new NodeCache();
+const KEY_LAST_LIKES = "last_likes";
 
 /**
  * Add a result to the database
@@ -25,10 +30,9 @@ export async function addResult(
   drawResult: DrawResult
 ): Promise<[number, string]> {
   try {
-    const connection = await getConnection();
     const uuid = uuidv4();
 
-    const [result] = (await connection.execute(
+    const [result] = (await executeQuery(
       "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)",
       [
         uuid,
@@ -59,8 +63,7 @@ export async function addResult(
  */
 export async function getResults(uuid: string): Promise<ResultDto> {
   try {
-    const connection = await getConnection();
-    const [results] = (await connection.execute(
+    const [results] = (await executeQuery(
       "SELECT id, uuid, user_id, type, description, prompt, model, output, IFNULL(created_time,'N/A') AS created_time, IFNULL(time_taken,'N/A') as time_taken, IFNULL(prompt_tokens,'N/A') as prompt_tokens, IFNULL(completion_tokens, 'N/A') as completion_tokens, IFNULL(liked,'N/A') as liked, IFNULL(status,'ACTIVE') as status  FROM results WHERE uuid = ?",
       [uuid]
     )) as [ResultDto[], FieldPacket[]];
@@ -78,8 +81,7 @@ export async function getResults(uuid: string): Promise<ResultDto> {
  */
 export async function getPrompts(userId: any): Promise<ResultDto[]> {
   try {
-    const connection = await getConnection();
-    const [prompts] = (await connection.execute(
+    const [prompts] = (await executeQuery(
       "SELECT id, user_id, uuid, created_time, prompt, liked, status FROM results WHERE user_id = ? AND status = ? ORDER BY created_time DESC",
       [userId, "ACTIVE"]
     )) as [ResultDto[], FieldPacket[]];
@@ -101,12 +103,11 @@ export async function updateLike(
   liked: boolean
 ): Promise<ResultSetHeader> {
   try {
-    const connection = await getConnection();
-
-    const [response] = (await connection.execute(
+    const [response] = (await executeQuery(
       "UPDATE results SET liked=?, liked_time=NOW() where id =?",
       [liked, id]
     )) as [ResultSetHeader, FieldPacket[]];
+    cache.del(KEY_LAST_LIKES); // invalidate cache
     return response;
   } catch (error) {
     console.error(error);
@@ -118,13 +119,18 @@ export async function updateLike(
  * Retrieve the last five likes
  * @returns
  */
-export async function setLiked(): Promise<ResultSetHeader> {
+export async function getLastLikes(): Promise<ResultSetHeader> {
   try {
-    const connection = await getConnection();
+    const cachedLikes = cache.get(KEY_LAST_LIKES) as ResultSetHeader;
+    if (cachedLikes) {
+      return cachedLikes;
+    }
 
-    const [response] = (await connection.execute(
-      "SELECT results.uuid, results.user_id, users.user_name, results.type, results.description, results.prompt, users.image_url, results.liked_time FROM results JOIN users ON results.user_id = users.id WHERE results.liked = 1 ORDER BY results.liked_time DESC LIMIT 5"
+    const [response] = (await executeQuery(
+      "SELECT results.uuid, results.user_id, users.user_name, results.type, results.description, results.prompt, users.image_url, results.liked_time FROM results JOIN users ON results.user_id = users.id WHERE results.liked = 1 ORDER BY results.liked_time DESC LIMIT 5",
+      []
     )) as [ResultSetHeader, FieldPacket[]];
+    cache.set(KEY_LAST_LIKES, response);
     return response;
   } catch (error) {
     console.error(error);
@@ -143,9 +149,7 @@ export async function updateDelete(
   deleted: string
 ): Promise<ResultSetHeader> {
   try {
-    const connection = await getConnection();
-
-    const [response] = (await connection.execute(
+    const [response] = (await executeQuery(
       "UPDATE results SET status=? where id =?",
       [deleted === "ACTIVE" ? "ACTIVE" : "DELETED", id]
     )) as [ResultSetHeader, FieldPacket[]];

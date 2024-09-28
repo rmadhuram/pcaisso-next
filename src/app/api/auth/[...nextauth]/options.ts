@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import getConnection from "@/lib/db";
+import getPool from "@/lib/db";
 import { addOrUpdateUser } from "@/persistence/user";
 
 export const options: NextAuthOptions = {
@@ -13,7 +13,7 @@ export const options: NextAuthOptions = {
 
   callbacks: {
     async session({ session }) {
-      const connection = await getConnection();
+      const connection = await getPool();
       try {
         if (!session.user) {
           throw new Error("User object is missing");

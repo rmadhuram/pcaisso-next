@@ -23,9 +23,11 @@ interface model {
 export default function InputPanel({
   handleSubmission,
   initialData,
+  handleHistoryClick,
 }: {
   handleSubmission: any;
   initialData?: any;
+  handleHistoryClick: any;
 }) {
   const { data: session } = useSession();
   const categories = [
@@ -134,7 +136,7 @@ export default function InputPanel({
         </TabPanel>
         <TabPanel header="History">
           <div className="history-panel">
-            <History />
+            <History handleHistoryClick={handleHistoryClick} />
           </div>
         </TabPanel>
       </TabView>

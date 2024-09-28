@@ -19,6 +19,7 @@
     "mysql2": "^3.11.0",
     "next": "^14.2.5",
     "next-auth": "^4.24.7",
+    "node-cache": "^5.1.2",
     "openai": "^4.53.2",
     "primeicons": "^7.0.0",
     "primereact": "^10.7.0",

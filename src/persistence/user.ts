@@ -2,7 +2,7 @@
  * User persistence functions
  */
 
-import getConnection from "@/lib/db";
+import { executeQuery } from "@/lib/db";
 import { FieldPacket, ResultSetHeader } from "mysql2";
 
 /**
@@ -13,8 +13,7 @@ import { FieldPacket, ResultSetHeader } from "mysql2";
  */
 export async function addOrUpdateUser(email: string, name: string, image: string): Promise<number> {
   try {
-    const connection = await getConnection();
-    const [rows] = await connection.execute(
+    const [rows] = await executeQuery(
       "SELECT * FROM users WHERE email = ?", [email]
     ) as [any[], FieldPacket[]];
 
@@ -22,7 +21,7 @@ export async function addOrUpdateUser(email: string, name: string, image: string
 
     if (rows.length === 0) {
       // Add user to the database
-      const [addUserResult] = await connection.execute(
+      const [addUserResult] = await executeQuery(
         "INSERT INTO users (email, name, image_url, created_time, last_session_time) VALUES (?, ?, ?, Now(), NOW())",
         [email, name, image]
       ) as [ResultSetHeader, FieldPacket[]];
@@ -31,7 +30,7 @@ export async function addOrUpdateUser(email: string, name: string, image: string
     } else {
       // Update user's last session time
       userId = rows[0].id;
-      await connection.execute(
+      await executeQuery(
         "UPDATE users SET last_session_time = Now() WHERE email = ?",
         [email]
       );
