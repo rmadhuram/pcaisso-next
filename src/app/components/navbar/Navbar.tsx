@@ -27,7 +27,7 @@ export default function Navbar() {
               href="/draw/new"
               className={pathname.startsWith("/draw") ? "selected" : ""}
             >
-              Explore
+              Create
             </Link>
           </li>
           <li>

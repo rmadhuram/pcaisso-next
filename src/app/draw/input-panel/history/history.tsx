@@ -119,7 +119,11 @@ function HistoryItem({id, ago, prompt, liked, deleted, user_id, owner_id}: Histo
   );
 }
 
-export default function History() {
+export default function History({
+  handleHistoryClick,
+}: {
+  handleHistoryClick: any;
+}) {
   const { data: session } = useSession();
   const [loadedData, setLoadedData] = useState<ResultDto[]>([]);
   const userId = session?.user?.id as number;
@@ -161,6 +165,10 @@ export default function History() {
     return timeDifference;
   }
 
+  function loadImage(uuid: string) {
+    console.log(uuid);
+  }
+
   if (!session) {
     return (
       <div className={styles.history}>
@@ -178,7 +186,7 @@ export default function History() {
         currentItems.map((item: any, index: any) => (
           <div
             key={first + index}
-            onClick={() => router.push(`/draw/${item.uuid}`)}
+            onClick={() => handleHistoryClick(item.uuid)}
           >
             <HistoryItem
               id={item.id}

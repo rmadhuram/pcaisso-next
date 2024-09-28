@@ -62,54 +62,53 @@ export default function HomePage() {
   const [displayState, setDisplayState] = useState<string>("intro");
   const [result, setResult] = useState<DrawResult>();
 
+  const loadData = async (uuid: string) => {
+    try {
+      const response = await fetch(`/api/getResults/${uuid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const dataReceived = await response.json();
+      setLoadedData(dataReceived);
+
+      let result: DrawResult = {
+        id: dataReceived?.id,
+        user_id: dataReceived.user_id,
+        uuid: dataReceived.uuid,
+        liked: Boolean(+(dataReceived.liked || 0)),
+        status: dataReceived.status,
+        code: dataReceived.output,
+        text: "",
+        timeTakenInSec: dataReceived.time_taken,
+        usage: {
+          prompt_tokens: dataReceived.prompt_tokens,
+          completion_tokens: dataReceived.completion_tokens,
+          total_tokens: 0, // TODO: not needed.
+        },
+      };
+      setResult(result);
+      setDisplayState("results");
+    } catch (error) {
+      console.error("Fetch error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (uuid === "new") {
       setLoading(false);
       setLoadedData(null);
       return;
     }
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/getResults/${uuid}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-
-        const dataReceived = await response.json();
-        setLoadedData(dataReceived);
-
-        let result: DrawResult = {
-          id: dataReceived?.id,
-          user_id: dataReceived.user_id,
-          uuid: dataReceived.uuid,
-          liked: Boolean(+(dataReceived.liked || 0)),
-          status: dataReceived.status,
-          code: dataReceived.output,
-          text: "",
-          timeTakenInSec: dataReceived.time_taken,
-          usage: {
-            prompt_tokens: dataReceived.prompt_tokens,
-            completion_tokens: dataReceived.completion_tokens,
-            total_tokens: 0, // TODO: not needed.
-          },
-        };
-        setResult(result);
-        setDisplayState("results");
-      } catch (error) {
-        console.error("Fetch error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    loadData(uuid);
   }, [uuid]);
 
   async function onSubmit(payload: any) {
@@ -150,6 +149,11 @@ export default function HomePage() {
     );
   }
 
+  function handleHistoryClick(uuid: string) {
+    loadData(uuid);
+    window.history.pushState(null, "", `/draw/${uuid}`);
+  }
+
   return (
     <NoSsr>
       <div className={styles.splitter}>
@@ -158,6 +162,7 @@ export default function HomePage() {
             <InputPanel
               handleSubmission={onSubmit}
               initialData={loadedData}
+              handleHistoryClick={handleHistoryClick}
             ></InputPanel>
           </SplitterPanel>
           <SplitterPanel className="panel" size={75}>

@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 
 let pool: mysql.Pool;
 
-export default async function getConnection(): Promise<mysql.Pool> {
+export default async function getPool(): Promise<mysql.Pool> {
   if (pool) {
     return pool;
   }
@@ -29,4 +29,12 @@ export default async function getConnection(): Promise<mysql.Pool> {
     console.error(error);
     throw error;
   }
+}
+
+export async function executeQuery(query: string, params: any[]): Promise<any> {
+  const pool = await getPool();
+  const connection = await pool.getConnection();
+  const results = await connection.execute(query, params);
+  connection.release();
+  return results;
 }

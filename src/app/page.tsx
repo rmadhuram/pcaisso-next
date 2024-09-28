@@ -21,29 +21,27 @@ export default function Page() {
   const userId = session?.user?.id;
 
   useEffect(() => {
-    if (userId) {
-      const updateRecentLikes = async () => {
-        try {
-          const response = await fetch("/api/getRecentLikes", {
-            method: "GET",
-            headers: {
-              "Content-type": "application/json",
-            },
-          });
-          if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
-          }
-
-          const dataReceived = await response.json();
-
-          setRecentLikedOnes(dataReceived);
-        } catch (error) {
-          console.error("Error updating the recent likes");
+    const getRecentLikes = async () => {
+      try {
+        const response = await fetch("/api/getRecentLikes", {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
         }
-      };
-      updateRecentLikes();
-    }
-  }, [userId]);
+
+        const dataReceived = await response.json();
+
+        setRecentLikedOnes(dataReceived);
+      } catch (error) {
+        console.error("Error updating the recent likes");
+      }
+    };
+    getRecentLikes();
+  }, []);
 
   return (
     <div className={styles["intro"]}>
@@ -63,7 +61,7 @@ export default function Page() {
       </p>
       <Link href="/draw/new" className="explore-link" passHref>
         <Button className="explore-button" type="submit" severity="success">
-          Start Exploring!
+          Start Creating!
         </Button>
       </Link>
       <div className="contents">
