@@ -79,13 +79,28 @@ export async function getResults(uuid: string): Promise<ResultDto> {
  * @param userId - The userId of the user
  * @returns
  */
-export async function getPrompts(userId: any): Promise<ResultDto[]> {
+export async function getPrompts(
+  userId: number,
+  limit: number,
+  offset: number
+): Promise<{ prompts: ResultDto[]; totalRecords: number }> {
   try {
     const [prompts] = (await executeQuery(
-      "SELECT id, user_id, uuid, created_time, prompt, liked, status FROM results WHERE user_id = ? AND status = ? ORDER BY created_time DESC",
-      [userId, "ACTIVE"]
+      "SELECT id, user_id, uuid, created_time, prompt, liked, status FROM results WHERE user_id = ? AND status = ? ORDER BY created_time DESC LIMIT ? OFFSET ?",
+      [userId, "ACTIVE", limit, offset]
     )) as [ResultDto[], FieldPacket[]];
-    return prompts;
+
+    const [totalResult] = (await executeQuery(
+      "SELECT COUNT(*) as count FROM results WHERE user_id = ? AND status = ?",
+      [userId, "ACTIVE"]
+    )) as [[{ count: number }], FieldPacket[]];
+
+    const totalRecords = totalResult[0]?.count ?? 0;
+
+    return {
+      prompts,
+      totalRecords,
+    };
   } catch (error) {
     console.error(error);
     throw error;
