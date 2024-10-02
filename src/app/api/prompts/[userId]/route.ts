@@ -7,9 +7,13 @@ export async function GET(
 ) {
   const userId = params.userId;
 
+  const { searchParams }= new URL(req.url);
+  const offset = Number(searchParams.get('offset')) || 0;
+  const limit = Number(searchParams.get('limit')) || 10;
+
   try {
-    const prompts = await getPrompts(userId);
-    return NextResponse.json(prompts, { status: 200 });
+    const data = await getPrompts(userId, limit, offset);
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Error fetching prompt:", error);
     return NextResponse.json(
