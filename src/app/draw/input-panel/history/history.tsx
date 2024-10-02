@@ -26,13 +26,18 @@ type HistoryItemProps = {
   owner_id: number;
 };
 
-function HistoryItem({id, ago, prompt, liked, deleted, user_id, owner_id}: HistoryItemProps) {
+function HistoryItem({
+  id,
+  ago,
+  prompt,
+  liked,
+  deleted,
+  user_id,
+  owner_id,
+}: HistoryItemProps) {
   const router = useRouter();
   const [deletedState, setDeletedState] = useState(deleted);
   const toast = useRef<Toast>(null);
-
-  const { data: session } = useSession();
-  const userId = session?.user?.id as number;
 
   const updateDeleted = async (id: number, deletedStatus: string) => {
     if (id) {
@@ -125,36 +130,41 @@ export default function History({
   handleHistoryClick: any;
 }) {
   const { data: session } = useSession();
-  const [loadedData, setLoadedData] = useState<ResultDto[]>([]);
   const userId = session?.user?.id as number;
-  const [first, setFirst] = useState<number>(0);
-  const rowsPerPage = 10;
-  const router = useRouter();
+  const [loadedData, setLoadedData] = useState<ResultDto[]>([]);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(10);
 
   const onPageChange = (event: PaginatorPageChangeEvent) => {
+    console.log(`limit: ${event.rows}, offset: ${event.first}`);
     setFirst(event.first);
+    setRows(event.rows);
   };
 
   useEffect(() => {
-    if (userId) {
-      const fetchData = async () => {
-        try {
-          const response = await fetch(`/api/prompts/${userId}`);
-          if (!response.ok) {
-            throw new Error(`Error : ${response.status}`);
-          }
+    fetchData(rows, first);
+  }, [first, rows]);
 
-          const dataReceived = await response.json();
-          setLoadedData(dataReceived);
-        } catch (error) {
-          console.error("Error fetching reply:", error);
-        }
-      };
-      fetchData();
+  const fetchData = async (limit: number, offset: number) => {
+    try {
+      const response = await fetch(
+        `/api/prompts/${userId}?limit=${limit}&offset=${offset}`
+      );
+      if (!response.ok) {
+        throw new Error(`Error : ${response.status}`);
+      }
+
+      const dataReceived = await response.json();
+      setLoadedData([]);
+      setLoadedData(dataReceived.prompts);
+      setTotalRecords(dataReceived.totalRecords);
+    } catch (error) {
+      console.error("Error fetching reply:", error);
     }
-  }, [userId]);
+  };
 
-  const currentItems = loadedData.slice(first, first + rowsPerPage);
+  const currentItems = loadedData;
 
   function formattedAgo(created_time: string) {
     const browserOffset = new Date().getTimezoneOffset();
@@ -209,8 +219,8 @@ export default function History({
       {currentItems.length > 0 && (
         <Paginator
           first={first}
-          rows={10}
-          totalRecords={loadedData.length}
+          rows={rows}
+          totalRecords={totalRecords}
           onPageChange={onPageChange}
           template={{ layout: "PrevPageLink CurrentPageReport NextPageLink" }}
         />
