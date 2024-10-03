@@ -1,7 +1,7 @@
 import { TabView, TabPanel } from "primereact/tabview";
 import styles from "./results.module.scss";
 import CodeWithLineNumbers from "@/app/components/CodeWithLineNumbers";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import copy from "clipboard-copy";
 import { Button } from "primereact/button";
 import { DrawResult } from "../../models/draw-result";
@@ -144,24 +144,23 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="buttons">
-        {(((owner_id === 0) ||
-          (session && session_id === owner_id)) && (
-            <>
-              <div className="like-btn">
-                <LikeButton
-                  liked={Boolean(+(result?.liked || 0))}
-                  callback={updateLike}
-                />
-              </div>
-              <div className="delete-btn" onClick={confirmDelete}>
-                {deletedState ? (
-                  <i className="fa-solid fa-trash-can"></i>
-                ) : (
-                  <p>DELETED</p>
-                )}
-              </div>
-            </>
-          ))}
+        {(owner_id === 0 || (session && session_id === owner_id)) && (
+          <>
+            <div className="like-btn">
+              <LikeButton
+                liked={Boolean(+(result?.liked || 0))}
+                callback={updateLike}
+              />
+            </div>
+            <div className="delete-btn" onClick={confirmDelete}>
+              {deletedState ? (
+                <i className="fa-solid fa-trash-can"></i>
+              ) : (
+                <p>DELETED</p>
+              )}
+            </div>
+          </>
+        )}
         <Toast ref={toast} />
         <ConfirmDialog />
       </div>
