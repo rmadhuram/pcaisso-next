@@ -4,8 +4,9 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ResultDto } from "@/persistence/result.dto";
 import styles from "./page.module.scss";
-// import { useRouter } from "next/router";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface ColumnMeta {
   field: string;
@@ -14,7 +15,6 @@ interface ColumnMeta {
 
 export default function PaginatorBasicDemo() {
   const [results, setResults] = useState<ResultDto[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
   const columns: ColumnMeta[] = [
     { field: "id", header: "id" },
     { field: "uuid", header: "uuid" },
@@ -34,21 +34,51 @@ export default function PaginatorBasicDemo() {
     { field: "status", header: "status" },
   ];
 
-  // const router = useRouter();
+  const { data: session } = useSession();
+  const session_email = session?.user?.email as string;
+  const [user, setUser] = useState<string | null>(null);
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   setIsMounted(true);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (isMounted) {
-  //     fetchResults();
-  //   }
-  // }, [isMounted]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchResults();
-  }, []);
+    if (session_email) {
+      fetchUserRole(session_email);
+    }
+  }, [session_email]);
+
+  useEffect(() => {
+    if (user === "admin") {
+      fetchResults();
+    } else if (user !== null && user !== "admin") {
+      router.push("/");
+    }
+  }, [user]);
+
+  const fetchUserRole = async (email: string) => {
+    if (email) {
+      try {
+        const response = await fetch("api/admin", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        const data = await response.json();
+        setUser(data[0]?.role);
+      } catch (error) {
+        console.log("Fetch error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 
   const fetchResults = async () => {
     try {
@@ -65,12 +95,13 @@ export default function PaginatorBasicDemo() {
     }
   };
 
-  // const handleOnClick = (event: any) => {
-  //   const rowData = event.data as ResultDto;
-  //   if (isMounted) {
-  //     router.push(`draw/${rowData.uuid}`);
-  //   }
-  // };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user || user !== "admin") {
+    return null;
+  }
 
   return (
     <div className={styles["card"]}>
@@ -82,7 +113,6 @@ export default function PaginatorBasicDemo() {
         columnResizeMode="fit"
         paginator
         rows={10}
-        // onRowClick={handleOnClick}
       >
         {columns.map((col) => (
           <Column
