@@ -8,12 +8,10 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
 dayjs.extend(utc);
-dayjs.extend(relativeTime);
 dayjs.extend(timezone);
 
 interface ColumnMeta {
@@ -109,8 +107,6 @@ export default function PaginatorBasicDemo() {
       }
 
       const resultsReceived = await response.json();
-      console.log(resultsReceived.totalRecords);
-      console.log(resultsReceived.results.length);
       setTotalRecords(resultsReceived.totalRecords);
       setResults(resultsReceived.results);
     } catch (error) {
@@ -124,15 +120,6 @@ export default function PaginatorBasicDemo() {
 
   if (!user || user !== "admin") {
     return null;
-  }
-
-  function formattedAgo(created_time: string) {
-    const browserOffset = new Date().getTimezoneOffset();
-    const createdTimeUTC = dayjs.utc(created_time);
-    const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
-    const now = dayjs();
-    const timeDifference = createdTimeAdjusted.from(now);
-    return timeDifference;
   }
 
   return (
@@ -157,8 +144,15 @@ export default function PaginatorBasicDemo() {
             header={col.header}
             body={(rowData) => {
               if (col.field === "created_time") {
-                const date = formattedAgo(rowData.created_time);
-                return date;
+                const browserTimeZone =
+                  Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const createdTimeLocal = dayjs
+                  .utc(rowData.created_time)
+                  .tz(browserTimeZone);
+                const formattedCreatedTime = createdTimeLocal.format(
+                  "hh:mm A, DD MM YYYY"
+                );
+                return formattedCreatedTime;
               }
               return (
                 <Link
