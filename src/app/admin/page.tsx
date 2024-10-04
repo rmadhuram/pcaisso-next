@@ -149,7 +149,6 @@ export default function PaginatorBasicDemo() {
         stripedRows
         paginator
         sortMode="multiple"
-        tableStyle={{ minWidth: "50rem" }}
       >
         {columns.map((col) => (
           <Column
@@ -158,8 +157,8 @@ export default function PaginatorBasicDemo() {
             header={col.header}
             body={(rowData) => {
               if (col.field === "created_time") {
-                const date = new Date(rowData.created_time);
-                return date.toLocaleString();
+                const date = formattedAgo(rowData.created_time);
+                return date;
               }
               return (
                 <Link
@@ -170,7 +169,9 @@ export default function PaginatorBasicDemo() {
                   passHref
                 >
                   <div
-                    style={{ cursor: "pointer" }}
+                    style={{
+                      width: col.field === "description" ? "80%" : "",
+                    }}
                     className={col.field === "description" ? "ellipsis" : ""}
                   >
                     {rowData[col.field]}
