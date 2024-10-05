@@ -1,2 +1,22 @@
 .card :global {
+  .p-datatable-thead {
+    th {
+      padding: 14px;
+    }
+  }
+
+  .p-datatable {
+    td {
+      padding: 12px;
+    }
+  }
+  .p-component {
+    font-size: 12px;
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }

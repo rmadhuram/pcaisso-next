@@ -4,7 +4,10 @@ import { getUserRole } from "@/persistence/admin";
 
 export async function GET(req: NextRequest) {
   try {
-    const data = await getResults();
+    const { searchParams } = new URL(req.url);
+    const offset = Number(searchParams.get("offset")) || 0;
+    const limit = Number(searchParams.get("limit")) || 15;
+    const data = await getResults(limit, offset);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Error fetching prompt:", error);
