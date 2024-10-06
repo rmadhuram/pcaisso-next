@@ -7,12 +7,13 @@ import styles from "./page.module.scss";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
+// import dayjs from "dayjs";
+// import utc from "dayjs/plugin/utc";
+// import timezone from "dayjs/plugin/timezone";
+import { formattedTime } from "../utils/formatTime";
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
 
 interface ColumnMeta {
   field: string;
@@ -24,6 +25,22 @@ interface LazyTableState {
   rows: number;
   page: number;
 }
+
+// function formattedDate(created_time: string) {
+//   // console.log(created_time);
+//   // const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+//   // console.log(browserTimeZone);
+//   // const createdTimeLocal = dayjs.utc(created_time).tz(browserTimeZone);
+//   // console.log(createdTimeLocal);
+//   // // return createdTimeLocal.format("hh:mm A, DD MM YYYY");
+//   // const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
+//   // console.log(formattedCreatedTime);
+//   // return formattedCreatedTime;
+//   const browserOffset = new Date().getTimezoneOffset();
+//   const createdTimeUTC = dayjs.utc(created_time);
+//   const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
+//   return createdTimeAdjusted.format("hh:mm A, DD MM YYYY");
+// }
 
 export default function PaginatorBasicDemo() {
   const [results, setResults] = useState<ResultDto[]>([]);
@@ -144,15 +161,10 @@ export default function PaginatorBasicDemo() {
             header={col.header}
             body={(rowData) => {
               if (col.field === "created_time") {
-                const browserTimeZone =
-                  Intl.DateTimeFormat().resolvedOptions().timeZone;
-                const createdTimeLocal = dayjs
-                  .utc(rowData.created_time)
-                  .tz(browserTimeZone);
-                const formattedCreatedTime = createdTimeLocal.format(
-                  "hh:mm A, DD MM YYYY"
-                );
-                return formattedCreatedTime;
+                if (col.field === "created_time") {
+                  return formattedTime(rowData.created_time);
+                }
+                return rowData[col.field];
               }
               return (
                 <Link
