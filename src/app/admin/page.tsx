@@ -180,7 +180,12 @@ export default function PaginatorBasicDemo() {
               field={col.field}
               header={col.header}
               style={{
-                width: col.field === "description" ? "40%" : "15%",
+                width:
+                  col.field === "description"
+                    ? "40%"
+                    : col.field === "id" || col.field === "model" || col.field === "tokens"
+                    ? "5% "
+                    : "15%",
               }}
               body={(rowData) => {
                 if (col.field === "created_time") {
