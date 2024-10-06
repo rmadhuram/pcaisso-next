@@ -1,16 +1,16 @@
 import { TabView, TabPanel } from "primereact/tabview";
 import styles from "./results.module.scss";
 import CodeWithLineNumbers from "@/app/components/CodeWithLineNumbers";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import copy from "clipboard-copy";
 import { Button } from "primereact/button";
 import { DrawResult } from "../../models/draw-result";
-import dayjs from "dayjs";
 import LikeButton from "../components/likeButton/LikeButton";
 import { useSession } from "next-auth/react";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
+import { formattedTime } from "../utils/formatTime";
 
 export default function Results({
   result,
@@ -21,9 +21,20 @@ export default function Results({
 }) {
   const [isCopied, setIsCopied] = useState(false);
   const { data: session } = useSession();
-  const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const createdTimeLocal = dayjs.utc(created_time).tz(browserTimeZone);
-  const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
+  console.log(created_time);
+  // const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  // console.log(browserTimeZone);
+  // const createdTimeLocal = dayjs.utc(created_time).tz(browserTimeZone);
+  // console.log(createdTimeLocal);
+  // const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
+  // console.log(formattedCreatedTime);
+  // const browserOffset = new Date().getTimezoneOffset();
+  // const createdTimeUTC = dayjs.utc(created_time);
+  // const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
+  // const formattedCreatedTime = createdTimeAdjusted.format(
+  //   "hh:mm A, DD MM YYYY"
+  // );
+  const formattedCreatedTime = formattedTime(created_time);
   const [deletedState, setDeletedState] = useState(result?.status);
   const toast = useRef<Toast>(null);
   const id = result?.id;
@@ -144,24 +155,23 @@ export default function Results({
         </TabPanel>
       </TabView>
       <div className="buttons">
-        {(((owner_id === 0) ||
-          (session && session_id === owner_id)) && (
-            <>
-              <div className="like-btn">
-                <LikeButton
-                  liked={Boolean(+(result?.liked || 0))}
-                  callback={updateLike}
-                />
-              </div>
-              <div className="delete-btn" onClick={confirmDelete}>
-                {deletedState ? (
-                  <i className="fa-solid fa-trash-can"></i>
-                ) : (
-                  <p>DELETED</p>
-                )}
-              </div>
-            </>
-          ))}
+        {(owner_id === 0 || (session && session_id === owner_id)) && (
+          <>
+            <div className="like-btn">
+              <LikeButton
+                liked={Boolean(+(result?.liked || 0))}
+                callback={updateLike}
+              />
+            </div>
+            <div className="delete-btn" onClick={confirmDelete}>
+              {deletedState ? (
+                <i className="fa-solid fa-trash-can"></i>
+              ) : (
+                <p>DELETED</p>
+              )}
+            </div>
+          </>
+        )}
         <Toast ref={toast} />
         <ConfirmDialog />
       </div>
