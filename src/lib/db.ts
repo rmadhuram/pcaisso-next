@@ -17,12 +17,7 @@ export default async function getPool(): Promise<mysql.Pool> {
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       waitForConnections: true,
-      connectionLimit: 10,
-      maxIdle: 10,
-      idleTimeout: 60000,
-      queueLimit: 0,
-      enableKeepAlive: true,
-      keepAliveInitialDelay: 0,
+      connectionLimit: 10
     });
     return pool;
   } catch (error) {
