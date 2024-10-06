@@ -1,22 +1,20 @@
-.card :global {
-  .p-datatable-thead {
-    th {
-      padding: 14px;
+.admin :global {
+  height: 100vh;
+  .head {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    background: 1f2937;
+
+    .total-tokens {
+      font-size: 16px;
+      color: #e2e3e5;
+      border: 1px solid #e2e3e5;
     }
   }
-
-  .p-datatable {
-    td {
-      padding: 12px;
+  .card {
+    .p-component {
+      font-size: 10px;
     }
-  }
-  .p-component {
-    font-size: 12px;
-  }
-
-  .ellipsis {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
 }

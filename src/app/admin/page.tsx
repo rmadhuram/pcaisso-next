@@ -45,6 +45,7 @@ interface LazyTableState {
 export default function PaginatorBasicDemo() {
   const [results, setResults] = useState<ResultDto[]>([]);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [tokens, setTokens] = useState(0);
   const columns: ColumnMeta[] = [
     { field: "id", header: "ID" },
     { field: "created_time", header: "TIME" },
@@ -55,7 +56,7 @@ export default function PaginatorBasicDemo() {
   ];
   const [lazyState, setlazyState] = useState<LazyTableState>({
     first: 0,
-    rows: 15,
+    rows: 11,
     page: 1,
   });
 
@@ -83,6 +84,7 @@ export default function PaginatorBasicDemo() {
   useEffect(() => {
     if (user === "admin") {
       fetchResults();
+      fetchTotalTokens();
     } else if (user !== null && user !== "admin") {
       router.push("/");
     }
@@ -131,6 +133,20 @@ export default function PaginatorBasicDemo() {
     }
   };
 
+  const fetchTotalTokens = async () => {
+    try {
+      const response = await fetch(`/api/totalTokens`);
+      if (!response.ok) {
+        throw new Error(`Error : ${response.status}`);
+      }
+
+      const tokens = await response.json();
+      setTokens(tokens);
+    } catch (error) {
+      console.error("Error fetching results:", error);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -140,54 +156,60 @@ export default function PaginatorBasicDemo() {
   }
 
   return (
-    <div className={styles["card"]}>
-      <DataTable
-        value={results}
-        lazy
-        dataKey="id"
-        first={lazyState.first}
-        rows={lazyState.rows}
-        totalRecords={totalRecords}
-        onPage={onPage}
-        showGridlines
-        stripedRows
-        paginator
-        sortMode="multiple"
-      >
-        {columns.map((col) => (
-          <Column
-            key={col.field}
-            field={col.field}
-            header={col.header}
-            body={(rowData) => {
-              if (col.field === "created_time") {
+    <div className={styles["admin"]}>
+      <div className="head">
+        <div className="total-tokens">Total Tokens:{tokens}</div>
+      </div>
+      <div className={styles["card"]}>
+        <DataTable
+          value={results}
+          lazy
+          dataKey="id"
+          first={lazyState.first}
+          rows={lazyState.rows}
+          totalRecords={totalRecords}
+          onPage={onPage}
+          showGridlines
+          stripedRows
+          paginator
+          sortMode="multiple"
+        >
+          {columns.map((col) => (
+            <Column
+              key={col.field}
+              field={col.field}
+              header={col.header}
+              style={{
+                width: col.field === "description" ? "40%" : "15%",
+              }}
+              body={(rowData) => {
                 if (col.field === "created_time") {
                   return formattedTime(rowData.created_time);
                 }
-                return rowData[col.field];
-              }
-              return (
-                <Link
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  href={`/draw/${rowData.uuid}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  passHref
-                >
-                  <div
-                    style={{
-                      width: col.field === "description" ? "80%" : "",
-                    }}
-                    className={col.field === "description" ? "ellipsis" : ""}
+
+                return (
+                  <Link
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    href={`/draw/${rowData.uuid}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    passHref
                   >
-                    {rowData[col.field]}
-                  </div>
-                </Link>
-              );
-            }}
-          />
-        ))}
-      </DataTable>
+                    <div
+                      style={{
+                        height: col.field === "description" ? "39px" : "",
+                      }}
+                      className={col.field === "description" ? "ellipsis" : ""}
+                    >
+                      {rowData[col.field]}
+                    </div>
+                  </Link>
+                );
+              }}
+            />
+          ))}
+        </DataTable>
+      </div>
     </div>
   );
 }

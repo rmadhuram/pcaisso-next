@@ -20,13 +20,26 @@ export async function getResults(
       []
     )) as [[{ count: number }], FieldPacket[]];
     const totalRecords = totalResult[0]?.count ?? 0;
-    console.log(totalRecords);
     return {
       results,
       totalRecords,
     };
   } catch (error) {
     console.error(error);
+    throw error;
+  }
+}
+
+export async function getTotalTokens(): Promise<number> {
+  try {
+    const [totalTokens] = (await executeQuery(
+      "SELECT SUM(prompt_tokens + completion_tokens) as totaltokens FROM results",
+      []
+    )) as [[{ totaltokens: number }], FieldPacket[]];
+    const totaltokens = totalTokens[0].totaltokens ?? 0;
+    return totaltokens;
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 }
