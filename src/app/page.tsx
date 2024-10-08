@@ -10,6 +10,19 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "primereact/skeleton";
+import { dataForDisplay } from "@/persistence/outputs";
+
+type GalleryItemType = {
+  uuid: string;
+  type: "image" | "video";
+  src: string;
+  description: string;
+};
+
+type SectionType = {
+  title: string;
+  gallery: GalleryItemType[];
+};
 
 export default function Page() {
   const { data: session } = useSession();
@@ -19,6 +32,8 @@ export default function Page() {
   const router = useRouter();
 
   const userId = session?.user?.id;
+
+  const [sections, setSections] = useState<SectionType[]>([]);
 
   useEffect(() => {
     const getRecentLikes = async () => {
@@ -41,6 +56,20 @@ export default function Page() {
       }
     };
     getRecentLikes();
+  }, []);
+
+  useEffect(() => {
+    const selectRandomItems = () => {
+      const updatedSections = dataForDisplay.sections.map((section) => {
+        const shuffledGallery = section.gallery.sort(() => 0.5 - Math.random());
+        return {
+          ...section,
+          gallery: shuffledGallery.slice(0, 3),
+        };
+      }) as SectionType[];
+      setSections(updatedSections);
+    };
+    selectRandomItems();
   }, []);
 
   return (
@@ -66,82 +95,24 @@ export default function Page() {
       </Link>
       <div className="contents">
         <div className="left-side">
-          <div className="gallery-section">
-            <h3>🌸&nbsp;&nbsp;2D Canvas</h3>
-            <section className="gallery">
-              <GalleryItem
-                uuid="2b50c478-608f-4a09-a345-d842c502c882"
-                type="image"
-                src="/demos/skyscraper-japan.png"
-                description="A Japan cityscape. Road filled with skyscrapers"
-              ></GalleryItem>
-              <GalleryItem
-                uuid="e8d3a6bc-9eb2-4a8b-b4fa-6da027a49686"
-                type="image"
-                src="/demos/parabola-art.png"
-                description="Art with parabolas and circle"
-              ></GalleryItem>
-              <GalleryItem
-                uuid="6f85516c-c2dc-46e0-9b56-539153b73807"
-                type="image"
-                src="/demos/church.png"
-                description="Church on rolling hills"
-              ></GalleryItem>
-            </section>
-          </div>
-
-          <div className="gallery-section">
-            <h3>🌟&nbsp;&nbsp;2D Canvas - Dynamic Graphics</h3>
-            <section className="gallery">
-              <GalleryItem
-                uuid="9870ce6d-a014-4596-a87d-698ed0fe9c02"
-                type="video"
-                src="/demos/clock.mp4"
-                description="A functional clock"
-              ></GalleryItem>
-              <GalleryItem
-                uuid="79902897-bc7b-493b-a263-e77fcf0da868"
-                type="video"
-                src="/demos/bricks.mp4"
-                description="Make a simple bricks game"
-              ></GalleryItem>
-              <GalleryItem
-                uuid="5521edce-c817-4bed-b6a3-8d5d0dfaaa66"
-                type="video"
-                src="/demos/fractal.mp4"
-                description="Animated fractal"
-              ></GalleryItem>
-            </section>
-          </div>
-
-          <div className="gallery-section">
-            <h3>🧊&nbsp;&nbsp;3D Graphics</h3>
-            <section className="gallery">
-              <GalleryItem
-                uuid="5521edce-c817-4bed-b6a3-8d5d0dfaaa66"
-                type="video"
-                src="/demos/cube.mp4"
-                description="Rotating Cube"
-              ></GalleryItem>
-              <GalleryItem uuid="" type="" src="" description=""></GalleryItem>
-              <GalleryItem uuid="" type="" src="" description=""></GalleryItem>
-            </section>
-          </div>
-
-          <div className="gallery-section">
-            <h3>💠&nbsp;&nbsp;Data Visualization</h3>
-            <section className="gallery">
-              <GalleryItem
-                uuid="b4316bac-c113-4daa-89ed-74bf62227106"
-                type="image"
-                src="/demos/viz1.png"
-                description="Denominations of Christianity."
-              ></GalleryItem>
-              <GalleryItem uuid="" type="" src="" description=""></GalleryItem>
-              <GalleryItem uuid="" type="" src="" description=""></GalleryItem>
-            </section>
-          </div>
+          {sections.map((section, index) => (
+            <div key={index} className="gallery-section">
+              <h3>{section.title}</h3>
+              <section className="gallery">
+                {section.gallery.map((item) => (
+                  <GalleryItem
+                    key={item.uuid}
+                    uuid={item.uuid}
+                    type={item.type}
+                    src={item.src}
+                    description={item.description}
+                  />
+                ))}
+              </section>
+            </div>
+          ))}
         </div>
+
         <div className="right-side">
           <h3>
             <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent Likes
