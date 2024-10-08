@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "primereact/skeleton";
-import { dataForDisplay } from "@/persistence/outputs";
+import { dataForDisplay } from "@/data/demo-outputs";
 
 type GalleryItemType = {
   uuid: string;

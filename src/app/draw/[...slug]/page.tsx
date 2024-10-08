@@ -8,7 +8,7 @@ import { Splitter, SplitterPanel } from "primereact/splitter";
 import NoSsr from "../../components/NoSSR";
 import styles from "../page.module.scss";
 import { DrawResult } from "@/models/draw-result";
-import { facts } from "@/persistence/facts";
+import { facts } from "@/data/facts";
 
 function Intro() {
   return (
