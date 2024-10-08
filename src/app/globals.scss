@@ -90,6 +90,12 @@ body {
     }
   }
 
+  .p-splitter {
+    .p-splitter-gutter {
+      display: none;
+    }
+  }
+
   .p-datatable {
     .p-datatable-thead {
       th {
