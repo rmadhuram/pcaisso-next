@@ -8,7 +8,7 @@ import { Splitter, SplitterPanel } from "primereact/splitter";
 import NoSsr from "../../components/NoSSR";
 import styles from "../page.module.scss";
 import { DrawResult } from "@/models/draw-result";
-import { facts } from "@/persistence/facts";
+import { facts } from "@/data/facts";
 
 function Intro() {
   return (
@@ -157,15 +157,15 @@ export default function HomePage() {
   return (
     <NoSsr>
       <div className={styles.splitter}>
-        <Splitter layout="horizontal">
-          <SplitterPanel className="panel" size={25}>
+        <Splitter layout="horizontal" style={{maxWidth: '100%'}}>
+          <SplitterPanel className="panel" style={{maxWidth: '25%'}}>
             <InputPanel
               handleSubmission={onSubmit}
               initialData={loadedData}
               handleHistoryClick={handleHistoryClick}
             ></InputPanel>
           </SplitterPanel>
-          <SplitterPanel className="panel" size={75}>
+          <SplitterPanel className="panel">
             {displayState == "intro" && <Intro></Intro>}
             {displayState == "loading" && <Loading></Loading>}
             {displayState == "results" && (

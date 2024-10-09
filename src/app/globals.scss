@@ -89,4 +89,37 @@ body {
       padding: 10px;
     }
   }
+
+  .p-splitter {
+    .p-splitter-gutter {
+      display: none;
+    }
+  }
+
+  .p-datatable {
+    .p-datatable-thead {
+      th {
+        padding: 5px;
+      }
+    }
+
+    .p-datatable-tbody {
+      tr {
+        td {
+          padding: 5px;
+          a {
+            .ellipsis {
+              max-width: calc(100% - 16px);
+              white-space: pre-wrap;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+  }
 }
