@@ -1,20 +1,52 @@
+@import "../../styles/mixins";
+
 .admin :global {
   height: 100vh;
-  .head {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  @include primary-font-regular;
+
+
+  .header {
     display: flex;
-    justify-content: flex-end;
+    background: #182b2e;
     padding: 15px;
-    background: 1f2937;
+    border-radius: 5px;
+    gap: 50px;
+    border: 1px solid #666;
 
     .total-tokens {
       font-size: 16px;
       color: #e2e3e5;
       border: 1px solid #e2e3e5;
     }
+
+    .kpi {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .title {
+        font-size: 12px;
+        color: #999;
+      }
+
+      .value {
+        font-size: 16px;
+        color: #e2e3e5;
+      }
+    }
   }
-  .card {
-    .p-component {
-      font-size: 10px;
+  .table-container {
+    .p-datatable {
+      @include primary-font-regular;
+      font-size: 12px;
+
+      .p-datatable-thead > tr > th {
+        background: #381e32;
+      }
     }
   }
 }

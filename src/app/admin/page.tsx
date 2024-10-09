@@ -48,15 +48,15 @@ export default function PaginatorBasicDemo() {
   const [tokens, setTokens] = useState(0);
   const columns: ColumnMeta[] = [
     { field: "id", header: "ID" },
-    { field: "created_time", header: "TIME" },
-    { field: "description", header: "DESCRIPTION" },
-    { field: "user_name", header: "USER" },
-    { field: "model", header: "MODEL" },
-    { field: "tokens", header: "TOKENS" },
+    { field: "created_time", header: "Created Time" },
+    { field: "description", header: "Description" },
+    { field: "user_name", header: "User" },
+    { field: "model", header: "Model" },
+    { field: "tokens", header: "Tokens" },
   ];
   const [lazyState, setlazyState] = useState<LazyTableState>({
     first: 0,
-    rows: 11,
+    rows: 12,
     page: 1,
   });
 
@@ -157,10 +157,25 @@ export default function PaginatorBasicDemo() {
 
   return (
     <div className={styles["admin"]}>
-      <div className="head">
-        <div className="total-tokens">Total Tokens:{tokens}</div>
+      <div className="header">
+        <section className="kpi">
+          <div className="title">Creations</div>
+          <div className="value">100</div>
+        </section>
+        <section className="kpi">
+          <div className="title">Users</div>
+          <div className="value">2</div>
+        </section>
+        <section className="kpi">
+          <div className="title">Total Tokens</div>
+          <div className="value">{tokens}</div>
+        </section>
+        <section className="kpi">
+          <div className="title">Cost</div>
+          <div className="value">$17.39</div>
+        </section>
       </div>
-      <div className={styles["card"]}>
+      <div className='table-container'>
         <DataTable
           value={results}
           lazy
@@ -202,7 +217,7 @@ export default function PaginatorBasicDemo() {
                   >
                     <div
                       style={{
-                        height: col.field === "description" ? "39px" : "",
+                        height: col.field === "description" ? "30px" : "",
                       }}
                       className={col.field === "description" ? "ellipsis" : ""}
                     >
