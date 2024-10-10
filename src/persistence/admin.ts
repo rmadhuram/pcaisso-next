@@ -39,33 +39,37 @@ export async function getResults(
   }
 }
 
-export async function getTotalTokens(): Promise<{
-  totalTokensUsed: number;
-  totalInputTokens: number;
-  totalOutputTokens: number;
-}> {
+export async function getTotalTokens(): Promise<
+  {
+    model: string;
+    totalTokensUsed: number;
+    totalInputTokens: number;
+    totalOutputTokens: number;
+  }[]
+> {
   try {
-    const [totalTokens] = (await executeQuery(
-      "SELECT SUM(prompt_tokens + completion_tokens) as totaltokens, SUM(prompt_tokens) as totalinputtokens,SUM(completion_tokens) as totaloutputtokens FROM results",
+    // Execute query to get tokens per model
+    const totalTokens = (await executeQuery(
+      "SELECT model, SUM(prompt_tokens + completion_tokens) as totaltokens, SUM(prompt_tokens) as totalinputtokens, SUM(completion_tokens) as totaloutputtokens FROM results GROUP BY model",
       []
     )) as [
-      [
-        {
-          totaltokens: number;
-          totalinputtokens: number;
-          totaloutputtokens: number;
-        }
-      ],
+      {
+        model: string;
+        totaltokens: number;
+        totalinputtokens: number;
+        totaloutputtokens: number;
+      }[],
       FieldPacket[]
     ];
-    const totalTokensUsed = totalTokens[0].totaltokens ?? 0;
-    const totalInputTokens = totalTokens[0].totalinputtokens ?? 0;
-    const totalOutputTokens = totalTokens[0].totaloutputtokens ?? 0;
-    return {
-      totalTokensUsed,
-      totalInputTokens,
-      totalOutputTokens,
-    };
+
+    const tokens = totalTokens.map((row: any) => ({
+      model: row.model,
+      totalTokensUsed: row.totaltokens ?? 0,
+      totalInputTokens: row.totalinputtokens ?? 0,
+      totalOutputTokens: row.totaloutputtokens ?? 0,
+    }));
+    console.log(tokens);
+    return tokens;
   } catch (error) {
     console.log(error);
     throw error;

@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 // import utc from "dayjs/plugin/utc";
 // import timezone from "dayjs/plugin/timezone";
 import { formattedTime } from "../utils/formatTime";
+import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
 
 // dayjs.extend(utc);
 // dayjs.extend(timezone);
@@ -26,16 +27,29 @@ interface LazyTableState {
   page: number;
 }
 
-function formatCost(num: number) {
+function formatCost(num: number | string | null | undefined): string {
+  if (num === null || num === undefined) {
+    return "0.00";
+  }
   const numToNumber = typeof num === "string" ? parseFloat(num) : num;
+  if (isNaN(numToNumber)) {
+    return "0.00";
+  }
   const roundedNum = numToNumber.toFixed(2);
   const parts = roundedNum.split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return parts.join(".");
 }
 
-function formatNumber(num: number): string {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+function formatNumber(num: number | string | null | undefined): string {
+  if (num === null || num === undefined) {
+    return "0";
+  }
+  const numToNumber = typeof num === "string" ? Number(num) : num;
+  if (isNaN(numToNumber)) {
+    return "0";
+  }
+  return numToNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 // function formattedDate(created_time: string) {
@@ -170,16 +184,48 @@ export default function adminPage() {
         throw new Error(`Error : ${response.status}`);
       }
 
-      const tokens = await response.json();
-      const inputTokens = tokens.totalInputTokens;
-      const outputTokens = tokens.totalOutputTokens;
-      const inputCost = 30;
-      const outputCost = 60;
-      const cost =
-        (inputTokens / 1000000) * inputCost +
-        (outputTokens / 1000000) * outputCost;
-      setTotalTokensUsed(tokens.totalTokensUsed);
-      setTotalCost(cost);
+      const tokenDetails = await response.json();
+
+      const modelCosts: any = {
+        "gpt-3.5-turbo": { inputCostPerM: 3, outputCostPerM: 5 },
+        "gpt-4": { inputCostPerM: 30, outputCostPerM: 60 },
+        "gpt-4-turbo": { inputCostPerM: 10, outputCostPerM: 30 },
+        "gpt-4o": { inputCostPerM: 5, outputCostPerM: 15 },
+        "gpt-4o-mini": { inputCostPerM: 0.300, outputCostPerM: 1.200 },
+      };
+
+      let totalCost = 0;
+      let totalTokens = 0;
+
+      const tokenDetailsbyModel = tokenDetails.map(
+        (tokens: any): { totalCost: number; totalTokens: number } => {
+          const totalInputTokens = tokens.totalInputTokens;
+          const totalOutputTokens = tokens.totalOutputTokens;
+
+          const modelCost = modelCosts[tokens.model] || {
+            inputCostPerM: 0.5,
+            outputCostPerM: 1.5,
+          };
+
+          const costForModel =
+            (totalInputTokens / 1000000) * modelCost.inputCostPerM +
+            (totalOutputTokens / 1000000) * modelCost.outputCostPerM;
+          totalCost += costForModel;
+          totalTokens += totalInputTokens + totalOutputTokens;
+          console.log(totalTokens, totalTokens);
+
+          return {
+            totalCost,
+            totalTokens,
+          };
+        }
+      );
+      console.log(
+        tokenDetailsbyModel.totalTokens,
+        tokenDetailsbyModel.totalTokens
+      );
+      setTotalTokensUsed(tokenDetailsbyModel.totalTokens);
+      setTotalCost(tokenDetailsbyModel.totalCost);
     } catch (error) {
       console.error("Error fetching results:", error);
     }
