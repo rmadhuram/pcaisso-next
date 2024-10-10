@@ -26,6 +26,18 @@ interface LazyTableState {
   page: number;
 }
 
+function formatCost(num: number) {
+  const numToNumber = typeof num === "string" ? parseFloat(num) : num;
+  const roundedNum = numToNumber.toFixed(2);
+  const parts = roundedNum.split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
+}
+
+function formatNumber(num: number): string {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 // function formattedDate(created_time: string) {
 //   // console.log(created_time);
 //   // const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -42,10 +54,13 @@ interface LazyTableState {
 //   return createdTimeAdjusted.format("hh:mm A, DD MM YYYY");
 // }
 
-export default function PaginatorBasicDemo() {
+export default function adminPage() {
   const [results, setResults] = useState<ResultDto[]>([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalTokensUsed, setTotalTokensUsed] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);
+
   const columns: ColumnMeta[] = [
     { field: "id", header: "ID" },
     { field: "created_time", header: "Created Time" },
@@ -54,11 +69,13 @@ export default function PaginatorBasicDemo() {
     { field: "model", header: "Model" },
     { field: "tokens", header: "Tokens" },
   ];
+
   const [lazyState, setlazyState] = useState<LazyTableState>({
     first: 0,
     rows: 12,
     page: 1,
   });
+
   const onPage = (event: DataTablePageEvent) => {
     setlazyState({
       first: event.first,
@@ -69,7 +86,7 @@ export default function PaginatorBasicDemo() {
 
   const { data: session } = useSession();
   const session_email = session?.user?.email as string;
-  const [user, setUser] = useState<string | null>(null);
+  const [role, setRole] = useState<string | null>(null);
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
@@ -81,13 +98,26 @@ export default function PaginatorBasicDemo() {
   }, [session_email]);
 
   useEffect(() => {
-    if (user === "admin") {
+    if (role === "admin") {
       fetchResults();
       fetchTotalTokens();
-    } else if (user !== null && user !== "admin") {
+    } else if (role !== null && role !== "admin") {
       router.push("/");
     }
-  }, [user, lazyState]);
+  }, [role, lazyState]);
+
+  // useEffect(() => {
+  //   if (session_email) {
+  //     fetchUserRole(session_email).then((fetchedRole: any) => {
+  //       if (fetchedRole === "admin") {
+  //         fetchResults();
+  //         fetchTotalTokens();
+  //       } else if (fetchedRole !== null && fetchedRole !== "admin") {
+  //         router.push("/");
+  //       }
+  //     });
+  //   }
+  // }, [session_email, lazyState]);
 
   const fetchUserRole = async (email: string) => {
     if (email) {
@@ -106,7 +136,7 @@ export default function PaginatorBasicDemo() {
           throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
-        setUser(data[0]?.role);
+        setRole(data[0]?.role);
       } catch (error) {
         console.log("Fetch error: ", error);
       } finally {
@@ -127,6 +157,7 @@ export default function PaginatorBasicDemo() {
       const resultsReceived = await response.json();
       setTotalRecords(resultsReceived.totalRecords);
       setResults(resultsReceived.results);
+      setTotalUsers(resultsReceived.totalUsers);
     } catch (error) {
       console.error("Error fetching results:", error);
     }
@@ -140,8 +171,15 @@ export default function PaginatorBasicDemo() {
       }
 
       const tokens = await response.json();
-      console.log(tokens);
-      setTotalTokensUsed(tokens);
+      const inputTokens = tokens.totalInputTokens;
+      const outputTokens = tokens.totalOutputTokens;
+      const inputCost = 30;
+      const outputCost = 60;
+      const cost =
+        (inputTokens / 1000000) * inputCost +
+        (outputTokens / 1000000) * outputCost;
+      setTotalTokensUsed(tokens.totalTokensUsed);
+      setTotalCost(cost);
     } catch (error) {
       console.error("Error fetching results:", error);
     }
@@ -169,7 +207,7 @@ export default function PaginatorBasicDemo() {
     return <div>Loading...</div>;
   }
 
-  if (!user || user !== "admin") {
+  if (!role || role !== "admin") {
     return null;
   }
 
@@ -178,22 +216,22 @@ export default function PaginatorBasicDemo() {
       <div className="header">
         <section className="kpi">
           <div className="title">Creations</div>
-          <div className="value">100</div>
+          <div className="value">{formatNumber(totalRecords)}</div>
         </section>
         <section className="kpi">
           <div className="title">Users</div>
-          <div className="value">2</div>
+          <div className="value">{formatNumber(totalUsers)}</div>
         </section>
         <section className="kpi">
           <div className="title">Total Tokens</div>
-          <div className="value">{tokens}</div>
+          <div className="value">{formatNumber(totalTokensUsed)}</div>
         </section>
         <section className="kpi">
           <div className="title">Cost</div>
-          <div className="value">$17.39</div>
+          <div className="value">${formatCost(totalCost)}</div>
         </section>
       </div>
-      <div className='table-container'>
+      <div className="table-container">
         <DataTable
           value={results}
           lazy

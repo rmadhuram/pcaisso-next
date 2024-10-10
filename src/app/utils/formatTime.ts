@@ -11,5 +11,5 @@ export function formattedTime(created_time: string): string {
   const createdTimeUTC = dayjs.utc(created_time);
   const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
   // console.log(createdTimeAdjusted.format("hh:mm A, DD MM YYYY"));
-  return createdTimeAdjusted.format("hh:mm A, DD MM YYYY");
+  return createdTimeAdjusted.format("hh:mm A, DD-MM-YYYY");
 }
