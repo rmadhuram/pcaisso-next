@@ -45,7 +45,7 @@ interface LazyTableState {
 export default function PaginatorBasicDemo() {
   const [results, setResults] = useState<ResultDto[]>([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [tokens, setTokens] = useState(0);
+  const [totalTokensUsed, setTotalTokensUsed] = useState(0);
   const columns: ColumnMeta[] = [
     { field: "id", header: "ID" },
     { field: "created_time", header: "TIME" },
@@ -59,7 +59,6 @@ export default function PaginatorBasicDemo() {
     rows: 11,
     page: 1,
   });
-
   const onPage = (event: DataTablePageEvent) => {
     setlazyState({
       first: event.first,
@@ -141,11 +140,30 @@ export default function PaginatorBasicDemo() {
       }
 
       const tokens = await response.json();
-      setTokens(tokens);
+      console.log(tokens);
+      setTotalTokensUsed(tokens);
     } catch (error) {
       console.error("Error fetching results:", error);
     }
   };
+
+  // const fetchTotalTokens = async () => {
+  //   try {
+  //     const model = selectedModel.name;
+  //     const response = await fetch(`/api/totalTokens/${model}`);
+  //     if (!response.ok) {
+  //       throw new Error(`Error : ${response.status}`);
+  //     }
+
+  //     const tokens = await response.json();
+  //     console.log(tokens);
+  //     setTotalTokensUsed(tokens.totalTokensUsed);
+  //     setTotalInputTokens(tokens.totalInputTokens);
+  //     setTotalOutputTokens(tokens.totalOutputTokens);
+  //   } catch (error) {
+  //     console.error("Error fetching results:", error);
+  //   }
+  // };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -158,7 +176,7 @@ export default function PaginatorBasicDemo() {
   return (
     <div className={styles["admin"]}>
       <div className="head">
-        <div className="total-tokens">Total Tokens:{tokens}</div>
+        <div className="header">Total Tokens Used:{totalTokensUsed}</div>
       </div>
       <div className={styles["card"]}>
         <DataTable
@@ -183,7 +201,9 @@ export default function PaginatorBasicDemo() {
                 width:
                   col.field === "description"
                     ? "40%"
-                    : col.field === "id" || col.field === "model" || col.field === "tokens"
+                    : col.field === "id" ||
+                      col.field === "model" ||
+                      col.field === "tokens"
                     ? "5% "
                     : "15%",
               }}
