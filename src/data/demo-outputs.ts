@@ -22,16 +22,22 @@ export const dataForDisplay = {
           description: "Church on rolling hills"
         },
         {
-          uuid: "59cf71c7-f809-44a6-a04a-2013ebce45e7",
+          uuid: "39508e31-956c-452e-ac55-81c0d976c7e8",
           type: "image",
-          src: "/demos/church.png",
-          description: "A baby pink color lotus in a pond"
+          src: "/demos/2D/flower.png",
+          description: "a flower using sine and cosine polar"
         },
         {
-          uuid: "3ee3e82d-eaf8-4ef0-b4bc-b84ed13067e5",
+          uuid: "0ab5174a-98c2-4969-ab03-aa0b77b0512d",
           type: "image",
-          src: "/demos/church.png",
-          description: "watermelon"
+          src: "/demos/2D/art.png",
+          description: "draw an art with parabolas and circles"
+        },
+        {
+          uuid: "24964a06-c394-4955-94a2-f4594db55d0e",
+          type: "image",
+          src: "/demos/2D/tesselation.png",
+          description: "draw a tessellation similar to islamic art"
         }
       ]
     },
@@ -39,34 +45,22 @@ export const dataForDisplay = {
       title: "🌟 2D Canvas - Dynamic Graphics",
       gallery: [
         {
-          uuid: "2b50c478-608f-4a09-a345-d842c502c882",
-          type: "image",
-          src: "/demos/skyscraper-japan.png",
-          description: "A Japan cityscape. Road filled with skyscrapers"
+          uuid: "9870ce6d-a014-4596-a87d-698ed0fe9c02",
+          type: "video",
+          src: "/demos/2D-dynamic/clock.mp4",
+          description: "A functional clock"
         },
         {
-          uuid: "e8d3a6bc-9eb2-4a8b-b4fa-6da027a49686",
-          type: "image",
-          src: "/demos/parabola-art.png",
-          description: "Art with parabolas and circle"
+          uuid: "5521edce-c817-4bed-b6a3-8d5d0dfaaa66",
+          type: "video",
+          src: "/demos/2D-dynamic/fractal.mp4",
+          description: "Animated Fractal"
         },
         {
-          uuid: "6f85516c-c2dc-46e0-9b56-539153b73807",
-          type: "image",
-          src: "/demos/church.png",
-          description: "Church on rolling hills"
-        },
-        {
-          uuid: "59cf71c7-f809-44a6-a04a-2013ebce45e7",
-          type: "image",
-          src: "/demos/church.png",
-          description: "A baby pink color lotus in a pond"
-        },
-        {
-          uuid: "3ee3e82d-eaf8-4ef0-b4bc-b84ed13067e5",
-          type: "image",
-          src: "/demos/church.png",
-          description: "watermelon"
+          uuid: "79902897-bc7b-493b-a263-e77fcf0da868",
+          type: "video",
+          src: "/demos/2D-dynamic/bricks.mp4",
+          description: "Make a simple bricks game"
         }
       ]
     },
@@ -74,10 +68,10 @@ export const dataForDisplay = {
       title: "🧊 3D Graphics",
       gallery: [
         {
-          uuid: "5521edce-c817-4bed-b6a3-8d5d0dfaaa66",
+          uuid: "dbfa73a3-4232-429f-8901-3313ac1f846d",
           type: "video",
-          src: "/demos/cube.mp4",
-          description: "Rotating Cube"
+          src: "/demos/3D/gallery.mp4",
+          description: "A room with artworks hanging on the walls."
         },
         {
           uuid: "1234abcd-1234-1234-abcd-1234567890ab",
