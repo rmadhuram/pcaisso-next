@@ -142,7 +142,7 @@ export async function getLastLikes(): Promise<ResultSetHeader> {
     }
 
     const [response] = (await executeQuery(
-      "SELECT results.uuid, results.user_id, users.user_name, results.type, results.description, results.prompt, users.image_url, results.liked_time FROM results JOIN users ON results.user_id = users.id WHERE results.liked = 1 ORDER BY results.liked_time DESC LIMIT 5",
+      "SELECT results.uuid, results.user_id, users.user_name, results.type, results.description, results.prompt, users.image_url, results.liked_time FROM results JOIN users ON results.user_id = users.id WHERE results.liked = 1 ORDER BY results.liked_time DESC LIMIT 10",
       []
     )) as [ResultSetHeader, FieldPacket[]];
     cache.set(KEY_LAST_LIKES, response);

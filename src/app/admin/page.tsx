@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 // import utc from "dayjs/plugin/utc";
 // import timezone from "dayjs/plugin/timezone";
 import { formattedTime } from "../utils/formatTime";
-import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
 
 // dayjs.extend(utc);
 // dayjs.extend(timezone);
@@ -172,6 +171,9 @@ export default function adminPage() {
       setTotalRecords(resultsReceived.totalRecords);
       setResults(resultsReceived.results);
       setTotalUsers(resultsReceived.totalUsers);
+
+      setTotalTokensUsed(resultsReceived.totalTokens);
+      setTotalCost(resultsReceived.totalCost);
     } catch (error) {
       console.error("Error fetching results:", error);
     }
@@ -179,75 +181,19 @@ export default function adminPage() {
 
   const fetchTotalTokens = async () => {
     try {
-      const response = await fetch(`/api/totalTokens`);
+      const response = await fetch("/api/totalTokens");
       if (!response.ok) {
         throw new Error(`Error : ${response.status}`);
       }
 
-      const tokenDetails = await response.json();
+      const resultsReceived = await response.json();
 
-      const modelCosts: any = {
-        "gpt-3.5-turbo": { inputCostPerM: 3, outputCostPerM: 5 },
-        "gpt-4": { inputCostPerM: 30, outputCostPerM: 60 },
-        "gpt-4-turbo": { inputCostPerM: 10, outputCostPerM: 30 },
-        "gpt-4o": { inputCostPerM: 5, outputCostPerM: 15 },
-        "gpt-4o-mini": { inputCostPerM: 0.300, outputCostPerM: 1.200 },
-      };
-
-      let totalCost = 0;
-      let totalTokens = 0;
-
-      const tokenDetailsbyModel = tokenDetails.map(
-        (tokens: any): { totalCost: number; totalTokens: number } => {
-          const totalInputTokens = tokens.totalInputTokens;
-          const totalOutputTokens = tokens.totalOutputTokens;
-
-          const modelCost = modelCosts[tokens.model] || {
-            inputCostPerM: 0.5,
-            outputCostPerM: 1.5,
-          };
-
-          const costForModel =
-            (totalInputTokens / 1000000) * modelCost.inputCostPerM +
-            (totalOutputTokens / 1000000) * modelCost.outputCostPerM;
-          totalCost += costForModel;
-          totalTokens += totalInputTokens + totalOutputTokens;
-          console.log(totalTokens, totalTokens);
-
-          return {
-            totalCost,
-            totalTokens,
-          };
-        }
-      );
-      console.log(
-        tokenDetailsbyModel.totalTokens,
-        tokenDetailsbyModel.totalTokens
-      );
-      setTotalTokensUsed(tokenDetailsbyModel.totalTokens);
-      setTotalCost(tokenDetailsbyModel.totalCost);
+      setTotalTokensUsed(resultsReceived.tokens);
+      setTotalCost(resultsReceived.cost);
     } catch (error) {
       console.error("Error fetching results:", error);
     }
   };
-
-  // const fetchTotalTokens = async () => {
-  //   try {
-  //     const model = selectedModel.name;
-  //     const response = await fetch(`/api/totalTokens/${model}`);
-  //     if (!response.ok) {
-  //       throw new Error(`Error : ${response.status}`);
-  //     }
-
-  //     const tokens = await response.json();
-  //     console.log(tokens);
-  //     setTotalTokensUsed(tokens.totalTokensUsed);
-  //     setTotalInputTokens(tokens.totalInputTokens);
-  //     setTotalOutputTokens(tokens.totalOutputTokens);
-  //   } catch (error) {
-  //     console.error("Error fetching results:", error);
-  //   }
-  // };
 
   if (loading) {
     return <div>Loading...</div>;
