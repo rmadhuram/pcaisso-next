@@ -67,7 +67,7 @@ function formatNumber(num: number | string | null | undefined): string {
 //   return createdTimeAdjusted.format("hh:mm A, DD MM YYYY");
 // }
 
-export default function adminPage() {
+export default function AdminPage() {
   const [results, setResults] = useState<ResultDto[]>([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalTokensUsed, setTotalTokensUsed] = useState(0);
