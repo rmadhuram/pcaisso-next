@@ -57,7 +57,6 @@ export async function getTotalTokens(): Promise<{
       FieldPacket[]
     ];
 
-    console.log(response);
     const modelCosts: any = {
       "gpt-3.5-turbo": { inputCostPerM: 3, outputCostPerM: 5 },
       "gpt-4": { inputCostPerM: 30, outputCostPerM: 60 },
@@ -87,8 +86,6 @@ export async function getTotalTokens(): Promise<{
       const costForModel =
         (totalInputTokens / 1000000) * modelCost.inputCostPerM +
         (totalOutputTokens / 1000000) * modelCost.outputCostPerM;
-
-        console.log(costForModel);
 
       totalCost += costForModel;
     });

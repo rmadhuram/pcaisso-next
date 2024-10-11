@@ -171,9 +171,6 @@ export default function adminPage() {
       setTotalRecords(resultsReceived.totalRecords);
       setResults(resultsReceived.results);
       setTotalUsers(resultsReceived.totalUsers);
-
-      setTotalTokensUsed(resultsReceived.totalTokens);
-      setTotalCost(resultsReceived.totalCost);
     } catch (error) {
       console.error("Error fetching results:", error);
     }
