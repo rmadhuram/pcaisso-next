@@ -33,13 +33,14 @@ export async function POST(req: NextRequest) {
       prompt = `Write an HTML code with SVG to draw this: ${input.prompt} and make it responsive based on the size of the screen it is rendered`;
       break;
     case "3D":
-      prompt = `Write an HTML code using Three.js to render this: ${input.prompt} and make it responsive based on the size of the screen it is rendered`;
+      prompt = `Write an HTML code using Three.js to render this: ${input.prompt} and 
+        make it responsive based on the size of the screen it is rendered
+        Use three.js from https://unpkg.com/three@0.133.0/build/three.min.js
+        If required, for OrbitControls use https://unpkg.com/three@0.133.0/examples/js/controls/OrbitControls.js`;
       break;
     case "d3":
       prompt = `Write an HTML code using d3.js to render this: ${input.prompt} and 
          make it responsive based on the size of the screen it is rendered. 
-         Use three.js from https://unpkg.com/three@0.133.0/build/three.min.js
-         If required, for OrbitControls use https://unpkg.com/three@0.133.0/examples/js/controls/OrbitControls.js
       `;
       break;
     default:

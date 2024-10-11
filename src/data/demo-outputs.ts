@@ -97,35 +97,23 @@ export const dataForDisplay = {
       title: "💠 Data Visualization",
       gallery: [
         {
-          uuid: "b4316bac-c113-4daa-89ed-74bf62227106",
+          uuid: "af18718f-9423-4850-9b94-6623e0f9d4d4",
           type: "image",
-          src: "/demos/viz1.png",
-          description: "Denominations of Christianity."
+          src: "/demos/viz/sunburst.png",
+          description: "Techcrunch article on new unicorns"
+        },
+        {
+          uuid: "5b52bebf-823d-476d-b469-8d9cd9147926",
+          type: "image",
+          src: "/demos/viz/chord.png",
+          description: "The number of people traveling between three cities"
         },
         {
           uuid: "b4316bac-c113-4daa-89ed-74bf62227106",
           type: "image",
           src: "/demos/viz1.png",
           description: "Denominations of Christianity."
-        },
-        {
-          uuid: "b4316bac-c113-4daa-89ed-74bf62227106",
-          type: "image",
-          src: "/demos/viz1.png",
-          description: "Denominations of Christianity."
-        },
-        {
-          uuid: "b4316bac-c113-4daa-89ed-74bf62227106",
-          type: "image",
-          src: "/demos/viz1.png",
-          description: "Denominations of Christianity."
-        },
-        {
-          uuid: "b4316bac-c113-4daa-89ed-74bf62227106",
-          type: "image",
-          src: "/demos/viz1.png",
-          description: "Denominations of Christianity."
-        },
+        }
       ]
     }
   ]
