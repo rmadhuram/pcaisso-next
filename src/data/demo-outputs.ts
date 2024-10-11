@@ -80,28 +80,16 @@ export const dataForDisplay = {
           description: "A room with artworks hanging on the walls."
         },
         {
-          uuid: "1234abcd-1234-1234-abcd-1234567890ab",
-          type: "video",
-          src: "/demos/sphere.mp4",
-          description: "Spinning Sphere"
-        },
-        {
           uuid: "c55e82fe-64af-4905-8adf-11702a376a71",
           type: "video",
           src: "/demos/3D/cubes.mp4",
           description: "30 cubes bouncing off of a floor."
         },
         {
-          uuid: "5521edce-c817-4bed-b6a3-8d5d0dfaaa66",
+          uuid: "847e7e43-391a-41b0-9158-6e22258ce700",
           type: "video",
-          src: "/demos/cube.mp4",
-          description: "Rotating Cube"
-        },
-        {
-          uuid: "5521edce-c817-4bed-b6a3-8d5d0dfaaa66",
-          type: "video",
-          src: "/demos/cube.mp4",
-          description: "Rotating Cube"
+          src: "/demos/3D/dodec.mp4",
+          description: "a spinning dodecahedron with metallic surface. Add two light sources"
         }
       ]
     },
