@@ -38,6 +38,12 @@ export const dataForDisplay = {
           type: "image",
           src: "/demos/2D/tesselation.png",
           description: "draw a tessellation similar to islamic art"
+        },
+        {
+          uuid: "07f0d587-bc94-44ba-b439-bf7aea8e9604",
+          type: "image",
+          src: "/demos/2D/duck.png",
+          description: "a duck swimming in water"
         }
       ]
     },
@@ -80,10 +86,10 @@ export const dataForDisplay = {
           description: "Spinning Sphere"
         },
         {
-          uuid: "5521edce-c817-4bed-b6a3-8d5d0dfaaa66",
+          uuid: "c55e82fe-64af-4905-8adf-11702a376a71",
           type: "video",
-          src: "/demos/cube.mp4",
-          description: "Rotating Cube"
+          src: "/demos/3D/cubes.mp4",
+          description: "30 cubes bouncing off of a floor."
         },
         {
           uuid: "5521edce-c817-4bed-b6a3-8d5d0dfaaa66",
