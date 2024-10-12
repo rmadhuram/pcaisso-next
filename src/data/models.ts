@@ -39,13 +39,13 @@ export const models = [
     provider: "OpenAI",
     inputCostPerM: 15,
     outputCoserPerM: 60,
-    enabled: true,
+    enabled: false,
   },
   {
     modelName: "o1-mini",
     provider: "OpenAI",
     inputCostPerM: 3,
     outputCoserPerM: 12,
-    enabled: true,
+    enabled: false,
   },
 ];
