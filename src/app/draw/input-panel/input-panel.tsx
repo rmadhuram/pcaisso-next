@@ -57,7 +57,9 @@ export default function InputPanel({
     categories[0]
   );
 
-  const [selectedModel, setSelectedModel] = useState<model>(modelsUsed[3]);
+  const defaultModel: model = { name: "gpt-4o", code: "gpt4o" };
+
+  const [selectedModel, setSelectedModel] = useState<model>(defaultModel);
   const [prompt, setPrompt] = useState("");
 
   useEffect(() => {
@@ -77,6 +79,7 @@ export default function InputPanel({
       if (matchedModel) {
         setSelectedModel(matchedModel);
       }
+      console.log(matchedCategory, matchedModel);
     }
   }, [initialData]);
 

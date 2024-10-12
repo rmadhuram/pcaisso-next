@@ -31,9 +31,7 @@ export async function addResult(
 ): Promise<[number, string]> {
   try {
     const uuid = uuidv4();
-
-    console.log(drawResult);
-
+    
     const [result] = (await executeQuery(
       "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens, status, input_cost, output_cost, total_cost ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)",
       [

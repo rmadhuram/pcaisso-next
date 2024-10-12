@@ -98,8 +98,6 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    console.log(output);
-
     // Add the output to the database
     // TODO: Setting userId to 0 will violate the foreign key constraint in the database.
     const [id, uuid] = await addResult(
