@@ -33,7 +33,7 @@ export async function addResult(
     const uuid = uuidv4();
 
     const [result] = (await executeQuery(
-      "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)",
+      "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens, status, input_cost, output_cost, total_cost ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)",
       [
         uuid,
         userId,
@@ -47,6 +47,9 @@ export async function addResult(
         drawResult.usage.prompt_tokens,
         drawResult.usage.completion_tokens,
         drawResult.status,
+        drawResult.cost.input_cost,
+        drawResult.cost.output_cost,
+        drawResult.cost.total_cost,
       ]
     )) as [ResultSetHeader, FieldPacket[]];
     return [result.insertId, uuid];
@@ -64,7 +67,7 @@ export async function addResult(
 export async function getResults(uuid: string): Promise<ResultDto> {
   try {
     const [results] = (await executeQuery(
-      "SELECT id, uuid, user_id, type, description, prompt, model, output, IFNULL(created_time,'N/A') AS created_time, IFNULL(time_taken,'N/A') as time_taken, IFNULL(prompt_tokens,'N/A') as prompt_tokens, IFNULL(completion_tokens, 'N/A') as completion_tokens, IFNULL(liked,'N/A') as liked, IFNULL(status,'ACTIVE') as status  FROM results WHERE uuid = ?",
+      "SELECT id, uuid, user_id, type, description, prompt, model, output, IFNULL(created_time,'N/A') AS created_time, IFNULL(time_taken,'N/A') as time_taken, IFNULL(prompt_tokens,'N/A') as prompt_tokens, IFNULL(completion_tokens, 'N/A') as completion_tokens, IFNULL(liked,'N/A') as liked, IFNULL(status,'ACTIVE') as status, IFNULL(input_cost, 'N/A') as input_cost, IFNULL(output_cost, 'N/A') as output_cost, IFNULL(total_cost, 'N/A') as total_cost, FROM results WHERE uuid = ?",
       [uuid]
     )) as [ResultDto[], FieldPacket[]];
     return results[0];

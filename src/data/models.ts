@@ -1,0 +1,51 @@
+export const models = [
+  {
+    modelName: "gpt-3.5-turbo",
+    provider: "OpenAI",
+    inputCostPerM: 3,
+    outputCoserPerM: 5,
+    enabled: true,
+  },
+  {
+    modelName: "gpt-4",
+    provider: "OpenAI",
+    inputCostPerM: 30,
+    outputCoserPerM: 60,
+    enabled: true,
+  },
+  {
+    modelName: "gpt-4-turbo",
+    provider: "OpenAI",
+    inputCostPerM: 10,
+    outputCoserPerM: 30,
+    enabled: true,
+  },
+  {
+    modelName: "gpt-4o",
+    provider: "OpenAI",
+    inputCostPerM: 2.5,
+    outputCoserPerM: 10,
+    enabled: true,
+  },
+  {
+    modelName: "gpt-4o-mini",
+    provider: "OpenAI",
+    inputCostPerM: 0.015,
+    outputCoserPerM: 0.6,
+    enabled: true,
+  },
+  {
+    modelName: "o1-preview",
+    provider: "OpenAI",
+    inputCostPerM: 15,
+    outputCoserPerM: 60,
+    enabled: true,
+  },
+  {
+    modelName: "o1-mini",
+    provider: "OpenAI",
+    inputCostPerM: 3,
+    outputCoserPerM: 12,
+    enabled: true,
+  },
+];

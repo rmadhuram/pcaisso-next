@@ -1,5 +1,5 @@
 export interface DrawResult {
-  id?: number,
+  id?: number;
   user_id: number;
   uuid: string;
   liked: boolean;
@@ -11,5 +11,10 @@ export interface DrawResult {
     prompt_tokens: number;
     completion_tokens: number;
     total_tokens: number;
+  };
+  cost: {
+    input_cost: number;
+    output_cost: number;
+    total_cost: number;
   };
 }

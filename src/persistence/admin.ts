@@ -1,7 +1,7 @@
 import { executeQuery } from "@/lib/db";
 import { FieldPacket, ResultSetHeader } from "mysql2";
 import { ResultDto } from "./result.dto";
-import { constants } from "buffer";
+import { calculateCost } from "@/app/utils/calculateCost";
 
 export async function getResults(
   limit: number,
@@ -50,52 +50,69 @@ export async function getTotalTokens(): Promise<{
     )) as [
       {
         model: string;
-        tokensUsed: number;
+        totaltokens: number;
         totalinputtokens: number;
         totaloutputtokens: number;
       }[],
       FieldPacket[]
     ];
 
-    const modelCosts: any = {
-      "gpt-3.5-turbo": { inputCostPerM: 3, outputCostPerM: 5 },
-      "gpt-4": { inputCostPerM: 30, outputCostPerM: 60 },
-      "gpt-4-turbo": { inputCostPerM: 10, outputCostPerM: 30 },
-      "gpt-4o": { inputCostPerM: 5, outputCostPerM: 15 },
-      "gpt-4o-mini": { inputCostPerM: 0.3, outputCostPerM: 1.2 },
-    };
-
+    // console.log(response[0]);
     let totalCost = 0;
-    let totaltokens = 0;
-    let totalinput = 0;
-    let totaloutput = 0;
+    let totaltokensUsed = 0;
 
-    response[0].forEach((tokens) => {
-      const totalInputTokens = Number(tokens.totalinputtokens);
-      totalinput += totalInputTokens;
-      const totalOutputTokens = Number(tokens.totaloutputtokens);
-      totaloutput += totalOutputTokens;
-
-      const modelCost = modelCosts[tokens.model] || {
-        inputCostPerM: 0,
-        outputCostPerM: 0,
-      };
-
-      console.log(modelCost);
-
-      const costForModel =
-        (totalInputTokens / 1000000) * modelCost.inputCostPerM +
-        (totalOutputTokens / 1000000) * modelCost.outputCostPerM;
-
-      totalCost += costForModel;
+    response[0].forEach((model) => {
+      console.log(model.totaltokens, typeof model.totaltokens);
+      totaltokensUsed += Number(model.totaltokens);
+      const calculatedCost = calculateCost(
+        model.model,
+        model.totalinputtokens,
+        model.totaloutputtokens
+      );
+      totalCost += calculatedCost.totalCost;
     });
 
-    totaltokens = totalinput + totaloutput;
+    // const modelCosts: any = {
+    //   "gpt-3.5-turbo": { inputCostPerM: 3, outputCostPerM: 5 },
+    //   "gpt-4": { inputCostPerM: 30, outputCostPerM: 60 },
+    //   "gpt-4-turbo": { inputCostPerM: 10, outputCostPerM: 30 },
+    //   "gpt-4o": { inputCostPerM: 2.5, outputCostPerM: 10 },
+    //   "gpt-4o-mini": { inputCostPerM: 0.15, outputCostPerM: 0.6 },
+    //   "o1-preview": { inputCostPerM: 15, outputCostPerM: 60 },
+    //   "o1-mini": { inputCostPerM: 3, outputCostPerM: 12 },
+    // };
 
-    console.log(totalCost, totaltokens);
+    // let totalCost = 0;
+    // let totaltokens = 0;
+    // let totalinput = 0;
+    // let totaloutput = 0;
+
+    // response[0].forEach((tokens) => {
+    //   const totalInputTokens = Number(tokens.totalinputtokens);
+    //   totalinput += totalInputTokens;
+    //   const totalOutputTokens = Number(tokens.totaloutputtokens);
+    //   totaloutput += totalOutputTokens;
+
+    //   const modelCost = modelCosts[tokens.model] || {
+    //     inputCostPerM: 0,
+    //     outputCostPerM: 0,
+    //   };
+
+    //   console.log(modelCost);
+
+    //   const costForModel =
+    //     (totalInputTokens / 1000000) * modelCost.inputCostPerM +
+    //     (totalOutputTokens / 1000000) * modelCost.outputCostPerM;
+
+    //   totalCost += costForModel;
+    // });
+
+    // totaltokens = totalinput + totaloutput;
+
+    // console.log(totalCost, totaltokensUsed);
     return {
       cost: totalCost,
-      tokens: totaltokens,
+      tokens: totaltokensUsed,
     };
   } catch (error) {
     console.error("Error fetching results:", error);

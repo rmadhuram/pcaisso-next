@@ -151,6 +151,12 @@ export default function Results({
             <div className="stats-item value">
               {result?.usage.completion_tokens}
             </div>
+            <div className="stats-item label">Input Cost</div>
+            <div className="stats-item value">{result?.cost.input_cost}</div>
+            <div className="stats-item label">Output Cost</div>
+            <div className="stats-item value">{result?.cost.output_cost}</div>
+            <div className="stats-item label">Total Cost</div>
+            <div className="stats-item value">{result?.cost.total_cost}</div>
           </div>
         </TabPanel>
       </TabView>
