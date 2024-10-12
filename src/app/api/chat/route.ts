@@ -5,6 +5,7 @@ import { DrawResult } from "../../../models/draw-result";
 import { options } from "../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { addResult } from "@/persistence/result";
+import { calculateCost } from "@/app/utils/calculate-cost";
 
 dotenv.config();
 
@@ -70,6 +71,12 @@ export async function POST(req: NextRequest) {
         : response.length;
 
     const endTime = Date.now();
+    const calculatedCost = calculateCost(
+      input.model,
+      completion.usage?.prompt_tokens,
+      completion.usage?.completion_tokens
+    );
+    console.log(calculatedCost);
     const output: DrawResult = {
       id: 0,
       user_id: 0,
@@ -83,6 +90,11 @@ export async function POST(req: NextRequest) {
         prompt_tokens: 0,
         completion_tokens: 0,
         total_tokens: 0,
+      },
+      cost: {
+        input_cost: calculatedCost.inputCost,
+        output_cost: calculatedCost.outputCost,
+        total_cost: calculatedCost.totalCost,
       },
     };
 
@@ -98,7 +110,7 @@ export async function POST(req: NextRequest) {
 
     output.id = id;
     output.uuid = uuid;
-    
+
     return NextResponse.json(output, { status: 200 });
   } catch (error) {
     console.error("Error fetching from OpenAI:", error);

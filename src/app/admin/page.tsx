@@ -7,13 +7,8 @@ import styles from "./page.module.scss";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-// import dayjs from "dayjs";
-// import utc from "dayjs/plugin/utc";
-// import timezone from "dayjs/plugin/timezone";
-import { formattedTime } from "../utils/formatTime";
-
-// dayjs.extend(utc);
-// dayjs.extend(timezone);
+import { formattedTime } from "../utils/format-time";
+import numeral from "numeral";
 
 interface ColumnMeta {
   field: string;
@@ -25,47 +20,6 @@ interface LazyTableState {
   rows: number;
   page: number;
 }
-
-function formatCost(num: number | string | null | undefined): string {
-  if (num === null || num === undefined) {
-    return "0.00";
-  }
-  const numToNumber = typeof num === "string" ? parseFloat(num) : num;
-  if (isNaN(numToNumber)) {
-    return "0.00";
-  }
-  const roundedNum = numToNumber.toFixed(2);
-  const parts = roundedNum.split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return parts.join(".");
-}
-
-function formatNumber(num: number | string | null | undefined): string {
-  if (num === null || num === undefined) {
-    return "0";
-  }
-  const numToNumber = typeof num === "string" ? Number(num) : num;
-  if (isNaN(numToNumber)) {
-    return "0";
-  }
-  return numToNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-// function formattedDate(created_time: string) {
-//   // console.log(created_time);
-//   // const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-//   // console.log(browserTimeZone);
-//   // const createdTimeLocal = dayjs.utc(created_time).tz(browserTimeZone);
-//   // console.log(createdTimeLocal);
-//   // // return createdTimeLocal.format("hh:mm A, DD MM YYYY");
-//   // const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
-//   // console.log(formattedCreatedTime);
-//   // return formattedCreatedTime;
-//   const browserOffset = new Date().getTimezoneOffset();
-//   const createdTimeUTC = dayjs.utc(created_time);
-//   const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
-//   return createdTimeAdjusted.format("hh:mm A, DD MM YYYY");
-// }
 
 export default function AdminPage() {
   const [results, setResults] = useState<ResultDto[]>([]);
@@ -205,19 +159,19 @@ export default function AdminPage() {
       <div className="header">
         <section className="kpi">
           <div className="title">Creations</div>
-          <div className="value">{formatNumber(totalRecords)}</div>
+          <div className="value">{numeral(totalRecords).format("0,0")}</div>
         </section>
         <section className="kpi">
           <div className="title">Users</div>
-          <div className="value">{formatNumber(totalUsers)}</div>
+          <div className="value">{numeral(totalUsers).format("0,0")}</div>
         </section>
         <section className="kpi">
           <div className="title">Total Tokens</div>
-          <div className="value">{formatNumber(totalTokensUsed)}</div>
+          <div className="value">{numeral(totalTokensUsed).format("0,0")}</div>
         </section>
         <section className="kpi">
           <div className="title">Cost</div>
-          <div className="value">${formatCost(totalCost)}</div>
+          <div className="value">${numeral(totalCost).format("0,0.00")}</div>
         </section>
       </div>
       <div className="table-container">

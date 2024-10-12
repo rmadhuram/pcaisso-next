@@ -9,6 +9,7 @@ import { SelectButton } from "primereact/selectbutton";
 import { TabView, TabPanel } from "primereact/tabview";
 import History from "./history/history";
 import { useSession } from "next-auth/react";
+import { models } from "@/data/models";
 
 interface Category {
   name: string;
@@ -37,19 +38,28 @@ export default function InputPanel({
     { name: "d3", key: "d3" },
   ];
 
-  const models: model[] = [
-    { name: "gpt-3.5-turbo", code: "gpt3.5turbo" },
-    { name: "gpt-4", code: "gpt4" },
-    { name: "gpt-4-turbo", code: "gpt4turbo" },
-    { name: "gpt-4o", code: "gpt4o" },
-    { name: "gpt-4o-mini", code: "gpt4omini" },
-  ];
+  // const models: model[] = [
+  //   { name: "gpt-3.5-turbo", code: "gpt3.5turbo" },
+  //   { name: "gpt-4", code: "gpt4" },
+  //   { name: "gpt-4-turbo", code: "gpt4turbo" },
+  //   { name: "gpt-4o", code: "gpt4o" },
+  //   { name: "gpt-4o-mini", code: "gpt4omini" },
+  // ];
+
+  const modelsUsed: model[] = models
+    .filter((model) => model.enabled)
+    .map((model) => ({
+      name: model.modelName,
+      code: model.modelName.replace(/[.-]/g, "").toLowerCase(),
+    }));
 
   const [selectedCategory, setSelectedCategory] = useState<Category>(
     categories[0]
   );
 
-  const [selectedModel, setSelectedModel] = useState<model>(models[3]);
+  const defaultModel: model = { name: "gpt-4o", code: "gpt4o" };
+
+  const [selectedModel, setSelectedModel] = useState<model>(defaultModel);
   const [prompt, setPrompt] = useState("");
 
   useEffect(() => {
@@ -63,12 +73,13 @@ export default function InputPanel({
         setSelectedCategory(matchedCategory);
       }
 
-      const matchedModel = models.find(
+      const matchedModel = modelsUsed.find(
         (model) => model.code === initialData.model
       );
       if (matchedModel) {
         setSelectedModel(matchedModel);
       }
+      console.log(matchedCategory, matchedModel);
     }
   }, [initialData]);
 
@@ -103,7 +114,7 @@ export default function InputPanel({
               <Dropdown
                 value={selectedModel}
                 onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
-                options={models}
+                options={modelsUsed}
                 optionLabel="name"
                 placeholder="Select a GPT model"
               />

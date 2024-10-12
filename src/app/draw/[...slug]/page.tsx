@@ -92,6 +92,11 @@ export default function HomePage() {
           completion_tokens: dataReceived.completion_tokens,
           total_tokens: 0, // TODO: not needed.
         },
+        cost : {
+          input_cost: dataReceived.input_cost,
+          output_cost: dataReceived.output_cost,
+          total_cost: dataReceived.total_cost
+        }
       };
       setResult(result);
       setDisplayState("results");
