@@ -90,8 +90,6 @@ export default function InputPanel({
     });
   };
 
-  console.log(modelsUsed);
-
   return (
     <div className={styles["input-panel"]}>
       <TabView>

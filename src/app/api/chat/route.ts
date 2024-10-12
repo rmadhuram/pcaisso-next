@@ -5,7 +5,7 @@ import { DrawResult } from "../../../models/draw-result";
 import { options } from "../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { addResult } from "@/persistence/result";
-import { calculateCost } from "@/app/utils/calculateCost";
+import { calculateCost } from "@/app/utils/calculate-cost";
 
 dotenv.config();
 
@@ -76,6 +76,7 @@ export async function POST(req: NextRequest) {
       completion.usage?.prompt_tokens,
       completion.usage?.completion_tokens
     );
+    console.log(calculatedCost);
     const output: DrawResult = {
       id: 0,
       user_id: 0,
@@ -96,6 +97,8 @@ export async function POST(req: NextRequest) {
         total_cost: calculatedCost.totalCost,
       },
     };
+
+    console.log(output);
 
     // Add the output to the database
     // TODO: Setting userId to 0 will violate the foreign key constraint in the database.

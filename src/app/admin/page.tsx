@@ -7,7 +7,7 @@ import styles from "./page.module.scss";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { formattedTime } from "../utils/formatTime";
+import { formattedTime } from "../utils/format-time";
 import numeral from "numeral";
 
 interface ColumnMeta {

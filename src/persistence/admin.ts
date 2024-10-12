@@ -1,7 +1,7 @@
 import { executeQuery } from "@/lib/db";
 import { FieldPacket, ResultSetHeader } from "mysql2";
 import { ResultDto } from "./result.dto";
-import { calculateCost } from "@/app/utils/calculateCost";
+import { calculateCost } from "@/app/utils/calculate-cost";
 
 export async function getResults(
   limit: number,

@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
-import { formattedTime } from "../utils/formatTime";
+import { formattedTime } from "../utils/format-time";
 
 export default function Results({
   result,
@@ -21,19 +21,6 @@ export default function Results({
 }) {
   const [isCopied, setIsCopied] = useState(false);
   const { data: session } = useSession();
-  console.log(created_time);
-  // const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  // console.log(browserTimeZone);
-  // const createdTimeLocal = dayjs.utc(created_time).tz(browserTimeZone);
-  // console.log(createdTimeLocal);
-  // const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
-  // console.log(formattedCreatedTime);
-  // const browserOffset = new Date().getTimezoneOffset();
-  // const createdTimeUTC = dayjs.utc(created_time);
-  // const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
-  // const formattedCreatedTime = createdTimeAdjusted.format(
-  //   "hh:mm A, DD MM YYYY"
-  // );
   const formattedCreatedTime = formattedTime(created_time);
   const [deletedState, setDeletedState] = useState(result?.status);
   const toast = useRef<Toast>(null);
@@ -151,12 +138,6 @@ export default function Results({
             <div className="stats-item value">
               {result?.usage.completion_tokens}
             </div>
-            <div className="stats-item label">Input Cost</div>
-            <div className="stats-item value">{result?.cost.input_cost}</div>
-            <div className="stats-item label">Output Cost</div>
-            <div className="stats-item value">{result?.cost.output_cost}</div>
-            <div className="stats-item label">Total Cost</div>
-            <div className="stats-item value">{result?.cost.total_cost}</div>
           </div>
         </TabPanel>
       </TabView>
