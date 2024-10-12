@@ -7,14 +7,8 @@ import styles from "./page.module.scss";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-// import dayjs from "dayjs";
-// import utc from "dayjs/plugin/utc";
-// import timezone from "dayjs/plugin/timezone";
 import { formattedTime } from "../utils/formatTime";
 import numeral from "numeral";
-
-// dayjs.extend(utc);
-// dayjs.extend(timezone);
 
 interface ColumnMeta {
   field: string;
@@ -26,61 +20,6 @@ interface LazyTableState {
   rows: number;
   page: number;
 }
-
-// function formatCost(num: number | string | null | undefined): string {
-//   if (num === null || num === undefined) {
-//     return "0.00";
-//   }
-//   const numToNumber = typeof num === "string" ? parseFloat(num) : num;
-//   if (isNaN(numToNumber)) {
-//     return "0.00";
-//   }
-//   const roundedNum = numToNumber.toFixed(2);
-//   const parts = roundedNum.split(".");
-//   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-//   return parts.join(".");
-// }
-
-// function formatNumber(num: number | string | null | undefined): string {
-//   if (num === null || num === undefined) {
-//     return "0";
-//   }
-//   const numToNumber = typeof num === "string" ? Number(num) : num;
-//   if (isNaN(numToNumber)) {
-//     return "0";
-//   }
-//   return numToNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-// }
-
-// function formattedDate(created_time: string) {
-//   // console.log(created_time);
-//   // const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-//   // console.log(browserTimeZone);
-//   // const createdTimeLocal = dayjs.utc(created_time).tz(browserTimeZone);
-//   // console.log(createdTimeLocal);
-//   // // return createdTimeLocal.format("hh:mm A, DD MM YYYY");
-//   // const formattedCreatedTime = createdTimeLocal.format("hh:mm A, DD MM YYYY");
-//   // console.log(formattedCreatedTime);
-//   // return formattedCreatedTime;
-//   const browserOffset = new Date().getTimezoneOffset();
-//   const createdTimeUTC = dayjs.utc(created_time);
-//   const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
-//   return createdTimeAdjusted.format("hh:mm A, DD MM YYYY");
-// }
-
-// function formatNumber(num: number | string | null | undefined): string {
-//   if (num === null || num === undefined || isNaN(Number(num))) {
-//     return "0";
-//   }
-//   return numeral(num).format('0,0'); // Formats with commas and no decimal places
-// }
-
-// function formatCost(num: number | string | null | undefined): string {
-//   if (num === null || num === undefined || isNaN(Number(num))) {
-//     return "0.00";
-//   }
-//   return numeral(num).format('0,0.00'); // Formats with commas and two decimal places
-// }
 
 export default function AdminPage() {
   const [results, setResults] = useState<ResultDto[]>([]);
