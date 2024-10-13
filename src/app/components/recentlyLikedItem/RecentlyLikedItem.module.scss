@@ -9,7 +9,7 @@
   color: #aaa;
   display: flex;
   flex-direction: column;
-  gap: 10px; 
+  gap: 10px;
   cursor: pointer;
 
   .top-section {
@@ -18,7 +18,7 @@
     align-items: center;
     @include title-font-regular;
     font-size: 11px;
-    
+
     .type {
       padding: 2px 4px;
       background-color: #585858;
