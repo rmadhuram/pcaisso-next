@@ -32,7 +32,9 @@ export default function RecentlyLikedItem({
         <div className="ago">{formattedAgo(recent.liked_time)}</div>
       </div>
       <div className="bottom-section">
-        <div className="model">{recent.model}</div>
+        <div>
+          <span className="model">{recent.model}</span>
+        </div>
         <div className="prompt">{recent.prompt}</div>
       </div>
     </div>

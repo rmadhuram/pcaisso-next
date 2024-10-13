@@ -5,7 +5,7 @@
   border-radius: 10px;
   padding: 10px;
   background-color: #222;
-  height: 85px;
+  height: 105px;
   color: #aaa;
   display: flex;
   flex-direction: column;
@@ -35,6 +35,20 @@
 
   .bottom-section {
     color: #ccc;
-    @include two-line-clamp;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .model {
+      background-color: #aaaa21;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #000;
+    }
+
+    .prompt {
+      @include two-line-clamp;
+    }
   }
 }
