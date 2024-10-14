@@ -33,7 +33,17 @@ export default function RecentlyLikedItem({
       </div>
       <div className="bottom-section">
         <div>
-          <span className="model">{recent.model}</span>
+          <span
+            className={`model ${
+              recent.model.toLowerCase().includes("gpt")
+                ? "gpt"
+                : recent.model.toLowerCase().includes("claude")
+                ? "claude"
+                : " "
+            }`}
+          >
+            {recent.model}
+          </span>
         </div>
         <div className="prompt">{recent.prompt}</div>
       </div>
