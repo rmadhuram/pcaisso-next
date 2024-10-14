@@ -44,14 +44,14 @@
       border-radius: 4px;
       font-size: 10px;
       color: #000;
-    }
 
-    .gpt {
-      background-color: #aaaa21;
-    }
-
-    .claude {
-      background-color: #1ea56e;
+      &.gpt {
+        background-color: #aaaa21;
+      }
+  
+      &.claude {
+        background-color: #1ea56e;
+      }
     }
 
     .prompt {
