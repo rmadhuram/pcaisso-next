@@ -10,6 +10,12 @@ import { useRouter } from "next/navigation";
 import { formattedTime } from "../utils/format-time";
 import numeral from "numeral";
 
+interface GroupBy {
+  provider: string;
+  totalcost: number;
+  totaltokens: number;
+}
+
 interface ColumnMeta {
   field: string;
   header: string;
@@ -27,6 +33,7 @@ export default function AdminPage() {
   const [totalTokensUsed, setTotalTokensUsed] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
+  const [groupBy, setGroupBy] = useState<GroupBy[]>([]);
 
   const columns: ColumnMeta[] = [
     { field: "id", header: "ID" },
@@ -68,6 +75,7 @@ export default function AdminPage() {
     if (role === "admin") {
       fetchResults();
       fetchTotalTokens();
+      fetchGroupBy();
     } else if (role !== null && role !== "admin") {
       router.push("/");
     }
@@ -146,6 +154,22 @@ export default function AdminPage() {
     }
   };
 
+  const fetchGroupBy = async () => {
+    try {
+      const response = await fetch("/api/adminGroupBy");
+      if (!response.ok) {
+        throw new Error(`Error : ${response.status}`);
+      }
+
+      const resultsReceived = await response.json();
+
+      setGroupBy(resultsReceived.result);
+      console.log(resultsReceived.result);
+    } catch (error) {
+      console.error("Error fetching results:", error);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -183,16 +207,23 @@ export default function AdminPage() {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              {/* <tr>
                 <td>OpenAI</td>
-                <td>100,000</td>
+                <td>{numeral(provider.totalTokens).format("0,0")}</td>
                 <td>$100</td>
               </tr>
               <tr>
                 <td>Anthropic</td>
                 <td>100,000</td>
-                <td>$100</td>
-              </tr>
+                <td>$1</td>
+              </tr> */}
+              {groupBy.map((provider) => (
+                <tr key={provider.provider}>
+                  <td>{provider.provider}</td>
+                  <td>{numeral(Number(provider.totaltokens)).format("0,0")}</td>
+                  <td>${numeral(provider.totalcost).format("0,0.00")}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </section>
