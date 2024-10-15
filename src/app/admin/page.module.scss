@@ -38,6 +38,24 @@
         color: #e2e3e5;
       }
     }
+
+    .breakdown {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10px;
+      }
+
+      th {
+        text-align: left;
+        padding: 0 10px 5px 10px;
+        color: #999;
+      }
+
+      td {
+        padding: 0 10px;
+      }
+    }
   }
   .table-container {
     .p-datatable {

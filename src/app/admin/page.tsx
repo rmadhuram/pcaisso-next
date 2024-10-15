@@ -173,6 +173,29 @@ export default function AdminPage() {
           <div className="title">Cost</div>
           <div className="value">${numeral(totalCost).format("0,0.00")}</div>
         </section>
+        <section className="breakdown">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Tokens</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OpenAI</td>
+                <td>100,000</td>
+                <td>$100</td>
+              </tr>
+              <tr>
+                <td>Anthropic</td>
+                <td>100,000</td>
+                <td>$100</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
       </div>
       <div className="table-container">
         <DataTable
