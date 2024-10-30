@@ -2,6 +2,7 @@ import { executeQuery } from "@/lib/db";
 import { FieldPacket, ResultSetHeader } from "mysql2";
 import { ResultDto } from "./result.dto";
 import { calculateCost } from "@/app/utils/calculate-cost";
+import { models } from "@/data/models";
 
 export async function getResults(
   limit: number,
@@ -62,7 +63,6 @@ export async function getTotalTokens(): Promise<{
     let totaltokensUsed = 0;
 
     response[0].forEach((model) => {
-      console.log(model.totaltokens, typeof model.totaltokens);
       totaltokensUsed += Number(model.totaltokens);
       const calculatedCost = calculateCost(
         model.model,
@@ -72,44 +72,6 @@ export async function getTotalTokens(): Promise<{
       totalCost += calculatedCost.totalCost;
     });
 
-    // const modelCosts: any = {
-    //   "gpt-3.5-turbo": { inputCostPerM: 3, outputCostPerM: 5 },
-    //   "gpt-4": { inputCostPerM: 30, outputCostPerM: 60 },
-    //   "gpt-4-turbo": { inputCostPerM: 10, outputCostPerM: 30 },
-    //   "gpt-4o": { inputCostPerM: 2.5, outputCostPerM: 10 },
-    //   "gpt-4o-mini": { inputCostPerM: 0.15, outputCostPerM: 0.6 },
-    //   "o1-preview": { inputCostPerM: 15, outputCostPerM: 60 },
-    //   "o1-mini": { inputCostPerM: 3, outputCostPerM: 12 },
-    // };
-
-    // let totalCost = 0;
-    // let totaltokens = 0;
-    // let totalinput = 0;
-    // let totaloutput = 0;
-
-    // response[0].forEach((tokens) => {
-    //   const totalInputTokens = Number(tokens.totalinputtokens);
-    //   totalinput += totalInputTokens;
-    //   const totalOutputTokens = Number(tokens.totaloutputtokens);
-    //   totaloutput += totalOutputTokens;
-
-    //   const modelCost = modelCosts[tokens.model] || {
-    //     inputCostPerM: 0,
-    //     outputCostPerM: 0,
-    //   };
-
-    //   console.log(modelCost);
-
-    //   const costForModel =
-    //     (totalInputTokens / 1000000) * modelCost.inputCostPerM +
-    //     (totalOutputTokens / 1000000) * modelCost.outputCostPerM;
-
-    //   totalCost += costForModel;
-    // });
-
-    // totaltokens = totalinput + totaloutput;
-
-    // console.log(totalCost, totaltokensUsed);
     return {
       cost: totalCost,
       tokens: totaltokensUsed,
@@ -129,6 +91,37 @@ export async function getUserRole(email: string): Promise<ResultSetHeader> {
     return role;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+}
+
+export async function getGroupBy(): Promise<{
+  result: {
+    provider: string;
+    totalcost: number;
+    totalTokens: number;
+  }[];
+}> {
+  try {
+    const [results] = (await executeQuery(
+      "SELECT provider, SUM(total_cost) as totalcost, SUM(prompt_tokens + completion_tokens) as totaltokens FROM results GROUP BY provider",
+      []
+    )) as [
+      { provider: string; totalcost: number; totalTokens: number }[],
+      FieldPacket[]
+    ];
+
+    const filteredPrompts = results.filter((result) =>
+      models.some((model) => model.provider === result.provider)
+    );
+
+    console.log(filteredPrompts);
+
+    return {
+      result: filteredPrompts,
+    };
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 }

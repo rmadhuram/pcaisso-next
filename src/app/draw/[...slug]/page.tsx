@@ -17,6 +17,12 @@ function Intro() {
       <div className="circle circle-2"></div>
       <div className="circle circle-3"></div>
       <div className="circle circle-4"></div>
+      <div className="title">
+        <h1 className="animate__animated animate__flipInX">
+          🎨 Pc<span>ai</span>sso
+        </h1>
+        <h2>Drawing Studio</h2>
+      </div>
       <div className="description-box">
         <p>
           Welcome to the Pcaisso Drawing Studio! Here, you can harness the power

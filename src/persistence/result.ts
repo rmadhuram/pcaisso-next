@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DrawResult } from "@/models/draw-result";
 import { ResultDto } from "./result.dto";
 import NodeCache from "node-cache";
+import { models } from "@/data/models";
 
 const cache = new NodeCache();
 const KEY_LAST_LIKES = "last_likes";
@@ -31,9 +32,16 @@ export async function addResult(
 ): Promise<[number, string]> {
   try {
     const uuid = uuidv4();
-    
+    const providerFetched = models.find(
+      (modelInJSON) => modelInJSON.modelName === model
+    )?.provider;
+
+    console.log(providerFetched);
+
+    const provider = providerFetched || "";
+
     const [result] = (await executeQuery(
-      "INSERT INTO results (uuid, user_id, type, description, prompt, model, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens, status, input_cost, output_cost, total_cost ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO results (uuid, user_id, type, description, prompt, model, provider, output, thumbnail_url, created_time, time_taken, prompt_tokens, completion_tokens, status, input_cost, output_cost, total_cost ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)",
       [
         uuid,
         userId,
@@ -41,6 +49,7 @@ export async function addResult(
         prompt,
         prompt,
         model,
+        provider,
         drawResult.code,
         "",
         drawResult.timeTakenInSec,

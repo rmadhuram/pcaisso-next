@@ -113,6 +113,12 @@ export const dataForDisplay = {
           type: "image",
           src: "/demos/viz1.png",
           description: "Denominations of Christianity."
+        },
+        {
+          uuid: "920d3045-0180-41b7-bef2-60528bc4775d",
+          type: "image",
+          src: "/demos/classdiagram.png",
+          description: "Classdiagram - Music Recommendation System."
         }
       ]
     }
