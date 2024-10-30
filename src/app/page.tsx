@@ -21,6 +21,7 @@ type GalleryItemType = {
 
 type SectionType = {
   title: string;
+  description: string;
   gallery: GalleryItemType[];
 };
 
@@ -96,7 +97,10 @@ export default function Page() {
         <div className="left-side">
           {sections.map((section, index) => (
             <div key={index} className="gallery-section">
-              <h3>{section.title}</h3>
+              <div className="gallery-section-header">
+                <h3>{section.title}</h3>
+                <p>{section.description}</p>
+              </div>
               <section className="gallery">
                 {section.gallery.map((item) => (
                   <GalleryItem
