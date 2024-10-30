@@ -45,6 +45,27 @@
   padding: 10px;
   position: relative;
 
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+      margin: 0;
+      font-size: 40px;
+      color: #ddd;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 200;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 0 0 50px 0;
+      color: #999;
+    }
+  }
+
   .circle {
     position: absolute;
     width: 2px;
@@ -99,6 +120,7 @@
     color: #ddd;
     font-size: 14px;
     z-index: 100;
+    margin-bottom: 150px;
 
     ul {
       padding: 0;
