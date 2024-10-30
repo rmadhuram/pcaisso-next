@@ -109,6 +109,19 @@
     }
   }
 
+  .title {
+    h1 {
+      @include title-font-regular;
+      font-size: 40px;
+      font-weight: normal;
+      margin: 0;
+
+      span {
+        color: $red-variation;
+      }
+    }
+  }
+
   .description-box {
     width: 70%;
     border: 1px solid #29447e;
