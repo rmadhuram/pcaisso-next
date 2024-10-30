@@ -88,7 +88,7 @@ export default function Page() {
         generate images on mobile devices.
       </p>
       <Link href="/draw/new" className="explore-link" passHref>
-        <Button className="explore-button" type="submit" severity="success">
+        <Button className="explore-button" type="submit">
           Start Creating!
         </Button>
       </Link>
