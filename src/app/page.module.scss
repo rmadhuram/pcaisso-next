@@ -106,15 +106,17 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      cursor: pointer;
+
+      .href {
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+      }
 
       .liked {
         color: $red-variation;
       }
-
     }
-
-    
   }
 
   .recent-likes {
@@ -147,7 +149,6 @@
   }
 
   @media (min-width: 320px) and (max-width: 480px) {
-
     .left-side {
       .gallery-section {
         .gallery-section-header {
@@ -195,5 +196,4 @@
       }
     }
   }
-
 }

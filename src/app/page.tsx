@@ -122,7 +122,9 @@ export default function Page() {
               <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent
               Likes
             </h3>
-            <Link href="./allLikes">View All</Link>
+            <Link className="href" href="./allLikes">
+              View All
+            </Link>
           </div>
           <section className="recent-likes">
             {recentLikedOnes.length > 0 ? (
