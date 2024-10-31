@@ -113,9 +113,13 @@ export default function Page() {
         </div>
 
         <div className="right-side">
-          <h3>
-            <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent Likes
-          </h3>
+          <div className="right-side-header">
+            <h3>
+              <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent
+              Likes
+            </h3>
+            <Link href="./allLikes">View All</Link>
+          </div>
           <section className="recent-likes">
             {recentLikedOnes.length > 0 ? (
               recentLikedOnes.map(

@@ -91,9 +91,19 @@
   }
 
   .right-side {
-    .liked {
-      color: $red-variation;
+    .right-side-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      cursor: pointer;
+
+      .liked {
+        color: $red-variation;
+      }
+
     }
+
+    
   }
 
   .recent-likes {
