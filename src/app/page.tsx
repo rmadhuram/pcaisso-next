@@ -128,9 +128,9 @@ export default function Page() {
               Likes
             </h3>
             <Link className="href" href="./all-likes">
-              View all{" "}
-              <span>
-                <FontAwesomeIcon icon={faAnglesRight}/>
+              View all
+              <span className="double-arrow">
+                <FontAwesomeIcon icon={faAnglesRight} />
               </span>
             </Link>
           </div>

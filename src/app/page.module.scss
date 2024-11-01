@@ -121,6 +121,10 @@
         display: flex;
         flex-direction:row;
         align-items: center;
+
+        .double-arrow {
+          margin-left: 10px;
+        }
       }
 
       .liked {
