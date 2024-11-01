@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import { addResult } from "@/persistence/result";
 import { getCode } from "@/lib/llms/get-code";
 
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
   const input = await req.json();

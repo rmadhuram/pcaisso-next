@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLastLikes } from "@/persistence/result";
 
+export const maxDuration = 60;
+
 export async function GET(req: NextRequest) {
   try {
     const data = await getLastLikes();

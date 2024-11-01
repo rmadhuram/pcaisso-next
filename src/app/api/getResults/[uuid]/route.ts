@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getResults } from "@/persistence/result";
 
+export const maxDuration = 60;
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { uuid: any } }
