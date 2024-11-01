@@ -49,6 +49,14 @@
     }
   }
 
+  .right-side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-right: 5px;
+  }
+
   h3 {
     margin: 0;
     font-weight: 100;
@@ -63,7 +71,7 @@
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .navbar{
+  .navbar {
     display: none;
   }
 }

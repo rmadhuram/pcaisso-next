@@ -4,6 +4,8 @@ import Signin from "../signIn/Signin";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useParams } from "next/navigation";
+import Image from "next/image";
+import discordIcon from "../../../../public/discord-icon.svg";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -31,7 +33,10 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/blog" className={pathname === "/blog" ? "selected" : ""}>
+            <Link
+              href="/blog"
+              className={pathname === "/blog" ? "selected" : ""}
+            >
               Blog
             </Link>
           </li>
@@ -50,7 +55,17 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-      <Signin />
+      <div className="right-side">
+        <Signin />
+        <Link href="https://discord.com/channels/1301703780064165940/1301703780064165943">
+          <Image
+            src={discordIcon}
+            alt="Discord icon"
+            width={25}
+            height={25}
+          ></Image>
+        </Link>
+      </div>
     </div>
   );
 }
