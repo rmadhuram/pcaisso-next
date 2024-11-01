@@ -57,7 +57,12 @@ export default function Navbar() {
       </div>
       <div className="right-side">
         <Signin />
-        <Link href="https://discord.com/channels/1301703780064165940/1301703780064165943">
+        <Link
+          href="https://discord.com/channels/1301703780064165940/1301703780064165943"
+          target="_blank"
+          rel="noopener noreferrer"
+          passHref
+        >
           <FontAwesomeIcon icon={faDiscord} className="discord-icon" />
         </Link>
       </div>
