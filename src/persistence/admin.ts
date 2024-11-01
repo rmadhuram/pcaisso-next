@@ -58,7 +58,6 @@ export async function getTotalTokens(): Promise<{
       FieldPacket[]
     ];
 
-    // console.log(response[0]);
     let totalCost = 0;
     let totaltokensUsed = 0;
 
@@ -114,8 +113,6 @@ export async function getGroupBy(): Promise<{
     const filteredPrompts = results.filter((result) =>
       models.some((model) => model.provider === result.provider)
     );
-
-    console.log(filteredPrompts);
 
     return {
       result: filteredPrompts,
