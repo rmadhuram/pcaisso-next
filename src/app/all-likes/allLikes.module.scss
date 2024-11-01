@@ -1,12 +1,11 @@
 @import "../../styles/mixins";
 
 .likes-page :global {
+  height: 100vh;
   padding: 20px;
   overflow-y: scroll;
 
   .table-container {
-    
-
     .p-datatable {
       @include primary-font-regular;
       font-size: 12px;
