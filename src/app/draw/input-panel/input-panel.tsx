@@ -50,7 +50,8 @@ export default function InputPanel({
     .filter((model) => model.enabled)
     .map((model) => ({
       name: model.modelName,
-      code: model.modelName.replace(/[.-]/g, "").toLowerCase(),
+      // code: model.modelName.replace(/[.-]/g, "").toLowerCase(),
+      code: model.modelName.toLowerCase(),
     }));
 
   const [selectedCategory, setSelectedCategory] = useState<Category>(
@@ -79,6 +80,7 @@ export default function InputPanel({
       if (matchedModel) {
         setSelectedModel(matchedModel);
       }
+
       console.log(matchedCategory, matchedModel);
     }
   }, [initialData]);
