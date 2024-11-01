@@ -125,7 +125,7 @@ export default function Page() {
               <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent
               Likes
             </h3>
-            <Link className="href" href="./allLikes">
+            <Link className="href" href="./all-likes">
               View All
             </Link>
           </div>
