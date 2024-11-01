@@ -12,6 +12,7 @@
     "@anthropic-ai/sdk": "^0.29.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@next/third-parties": "^14.2.7",
     "animate.css": "^4.1.1",

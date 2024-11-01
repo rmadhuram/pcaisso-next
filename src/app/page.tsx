@@ -11,6 +11,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "primereact/skeleton";
 import { dataForDisplay } from "@/data/demo-outputs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 
 type GalleryItemType = {
   uuid: string;
@@ -126,7 +128,10 @@ export default function Page() {
               Likes
             </h3>
             <Link className="href" href="./all-likes">
-              View All
+              View all
+              <span className="double-arrow">
+                <FontAwesomeIcon icon={faAnglesRight} />
+              </span>
             </Link>
           </div>
           <section className="recent-likes">
