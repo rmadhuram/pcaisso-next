@@ -13,18 +13,25 @@
   overflow-x: auto;
   overflow-y: auto;
 
-  .title {
+  .title-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+    justify-content: center;
 
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
   .contents {
     margin-top: 20px;
     width: 1200px;
     display: flex;
     gap: 20px;
     flex-direction: row;
+    padding-bottom: 10px;
 
     .left-side {
       flex-grow: 1;
@@ -110,7 +117,7 @@
       .href {
         cursor: pointer;
         text-decoration: none;
-      color: white;
+        color: white;
       }
 
       .liked {
@@ -125,14 +132,16 @@
     gap: 10px;
   }
 
-  .footer {
-    margin-top: 50px;
+  .footer-section {
+    margin-top: 100px;
     font-size: 14px;
 
-    a {
-      color: wheat;
-      text-decoration: underline;
-      cursor: pointer;
+    .footer {
+      a {
+        color: wheat;
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
   }
 
@@ -145,6 +154,10 @@
   @media (max-width: 1200px) {
     .contents {
       width: 90%;
+    }
+
+    .footer-section {
+      margin-top: 40px;
     }
   }
 

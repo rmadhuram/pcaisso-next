@@ -75,24 +75,27 @@ export default function Page() {
 
   return (
     <div className={styles["intro"]}>
-      <div className="title">
-        <h1 className="animate__animated animate__flipInX">
-          🎨 Pc<span>ai</span>sso
-        </h1>
+      <div className="title-card">
+        <div className="title">
+          <h1 className="animate__animated animate__flipInX">
+            🎨 Pc<span>ai</span>sso
+          </h1>
+        </div>
+        <p className="explain">
+          Did you know that LLMs can draw cool things? 2D & 3D graphics, simple
+          games & data visualizations! Come, explore with us!
+        </p>
+        <p className="explain mobile-only">
+          Pcaisso is best experienced on a desktop/laptop. You will not be able
+          to generate images on mobile devices.
+        </p>
+        <Link href="/draw/new" className="explore-link" passHref>
+          <Button className="explore-button" type="submit">
+            Start Creating!
+          </Button>
+        </Link>
       </div>
-      <p className="explain">
-        Did you know that LLMs can draw cool things? 2D & 3D graphics, simple
-        games & data visualizations! Come, explore with us!
-      </p>
-      <p className="explain mobile-only">
-        Pcaisso is best experienced on a desktop/laptop. You will not be able to
-        generate images on mobile devices.
-      </p>
-      <Link href="/draw/new" className="explore-link" passHref>
-        <Button className="explore-button" type="submit">
-          Start Creating!
-        </Button>
-      </Link>
+
       <div className="contents">
         <div className="left-side">
           {sections.map((section, index) => (
@@ -148,14 +151,18 @@ export default function Page() {
         </div>
       </div>
 
-      <p className="footer animated bounceInUp animate-delay-2s">
-        Made with 💖 by{" "}
-        <Link href="https://www.linkedin.com/in/rmadhuram/">Raj Madhuram</Link>{" "}
-        & the <Link href="/draw/contributions">students and friends</Link> of{" "}
-        <Link target="_blank" href="https://gct.ac.in/">
-          GCT, Coimbatore
-        </Link>
-      </p>
+      <div className="footer-section">
+        <p className="footer animated bounceInUp animate-delay-2s">
+          Made with 💖 by{" "}
+          <Link href="https://www.linkedin.com/in/rmadhuram/">
+            Raj Madhuram
+          </Link>{" "}
+          & the <Link href="/draw/contributions">students and friends</Link> of{" "}
+          <Link target="_blank" href="https://gct.ac.in/">
+            GCT, Coimbatore
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
