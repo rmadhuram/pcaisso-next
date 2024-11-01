@@ -2,7 +2,7 @@ import { executeQuery } from "@/lib/db";
 import { FieldPacket } from "mysql2";
 import { ResultDto } from "./result.dto";
 
-export async function getRecentLikes(
+export async function getAllLikes(
   limit: number,
   offset: number
 ): Promise<{

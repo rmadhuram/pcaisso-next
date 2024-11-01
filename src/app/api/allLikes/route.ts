@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getRecentLikes } from "@/persistence/allLikes";
+import { getAllLikes } from "@/persistence/allLikes";
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const offset = Number(searchParams.get("offset")) || 0;
     const limit = Number(searchParams.get("limit")) || 15;
-    const data = await getRecentLikes(limit, offset);
+    const data = await getAllLikes(limit, offset);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Error fetching recent likes:", error);
