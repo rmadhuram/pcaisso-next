@@ -2,6 +2,7 @@ export const dataForDisplay = {
   sections: [
     {
       title: "🌸 2D Canvas",
+      description: "Images created with HTML Canvas",
       gallery: [
         {
           uuid: "2b50c478-608f-4a09-a345-d842c502c882",
@@ -49,6 +50,7 @@ export const dataForDisplay = {
     },
     {
       title: "🌟 2D Canvas - Dynamic Graphics",
+      description: "Dynamic graphics created with HTML Canvas",
       gallery: [
         {
           uuid: "9870ce6d-a014-4596-a87d-698ed0fe9c02",
@@ -72,6 +74,7 @@ export const dataForDisplay = {
     },
     {
       title: "🧊 3D Graphics",
+      description: "3D graphics created with Three.js",
       gallery: [
         {
           uuid: "dbfa73a3-4232-429f-8901-3313ac1f846d",
@@ -95,6 +98,7 @@ export const dataForDisplay = {
     },
     {
       title: "💠 Data Visualization",
+      description: "Data visualization created with D3.js",
       gallery: [
         {
           uuid: "af18718f-9423-4850-9b94-6623e0f9d4d4",

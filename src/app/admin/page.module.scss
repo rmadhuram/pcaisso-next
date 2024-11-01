@@ -7,7 +7,7 @@
   gap: 20px;
   padding: 20px;
   @include primary-font-regular;
-
+  overflow: scroll;  
 
   .header {
     display: flex;

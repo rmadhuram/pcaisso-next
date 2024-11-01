@@ -1,0 +1,19 @@
+@import "../../styles/mixins";
+
+.likes-page :global {
+  padding: 20px;
+  overflow-y: scroll;
+
+  .table-container {
+    
+
+    .p-datatable {
+      @include primary-font-regular;
+      font-size: 12px;
+
+      .p-datatable-thead > tr > th {
+        background: #381e32;
+      }
+    }
+  }
+}

@@ -4,6 +4,8 @@ import Signin from "../signIn/Signin";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useParams } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -31,7 +33,10 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/blog" className={pathname === "/blog" ? "selected" : ""}>
+            <Link
+              href="/blog"
+              className={pathname === "/blog" ? "selected" : ""}
+            >
               Blog
             </Link>
           </li>
@@ -50,7 +55,17 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-      <Signin />
+      <div className="right-side">
+        <Signin />
+        <Link
+          href="https://discord.com/channels/1301703780064165940/1301703780064165943"
+          target="_blank"
+          rel="noopener noreferrer"
+          passHref
+        >
+          <FontAwesomeIcon icon={faDiscord} className="discord-icon" />
+        </Link>
+      </div>
     </div>
   );
 }

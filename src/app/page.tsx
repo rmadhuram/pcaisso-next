@@ -21,6 +21,7 @@ type GalleryItemType = {
 
 type SectionType = {
   title: string;
+  description: string;
   gallery: GalleryItemType[];
 };
 
@@ -74,29 +75,35 @@ export default function Page() {
 
   return (
     <div className={styles["intro"]}>
-      <div className="title">
-        <h1 className="animate__animated animate__flipInX">
-          🎨 Pc<span>ai</span>sso
-        </h1>
+      <div className="title-card">
+        <div className="title">
+          <h1 className="animate__animated animate__flipInX">
+            🎨 Pc<span>ai</span>sso
+          </h1>
+        </div>
+        <p className="explain">
+          Did you know that LLMs can draw cool things? 2D & 3D graphics, simple
+          games & data visualizations! Come, explore with us!
+        </p>
+        <p className="explain mobile-only">
+          Pcaisso is best experienced on a desktop/laptop. You will not be able
+          to generate images on mobile devices.
+        </p>
+        <Link href="/draw/new" className="explore-link" passHref>
+          <Button className="explore-button" type="submit">
+            Start Creating!
+          </Button>
+        </Link>
       </div>
-      <p className="explain">
-        Did you know that LLMs can draw cool things? 2D & 3D graphics, simple
-        games & data visualizations! Come, explore with us!
-      </p>
-      <p className="explain mobile-only">
-        Pcaisso is best experienced on a desktop/laptop. You will not be able to
-        generate images on mobile devices.
-      </p>
-      <Link href="/draw/new" className="explore-link" passHref>
-        <Button className="explore-button" type="submit" severity="success">
-          Start Creating!
-        </Button>
-      </Link>
+
       <div className="contents">
         <div className="left-side">
           {sections.map((section, index) => (
             <div key={index} className="gallery-section">
-              <h3>{section.title}</h3>
+              <div className="gallery-section-header">
+                <h3>{section.title}</h3>
+                <p>{section.description}</p>
+              </div>
               <section className="gallery">
                 {section.gallery.map((item) => (
                   <GalleryItem
@@ -113,9 +120,15 @@ export default function Page() {
         </div>
 
         <div className="right-side">
-          <h3>
-            <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent Likes
-          </h3>
+          <div className="right-side-header">
+            <h3>
+              <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;Recent
+              Likes
+            </h3>
+            <Link className="href" href="./all-likes">
+              View All
+            </Link>
+          </div>
           <section className="recent-likes">
             {recentLikedOnes.length > 0 ? (
               recentLikedOnes.map(
@@ -138,14 +151,18 @@ export default function Page() {
         </div>
       </div>
 
-      <p className="footer animated bounceInUp animate-delay-2s">
-        Made with 💖 by{" "}
-        <Link href="https://www.linkedin.com/in/rmadhuram/">Raj Madhuram</Link>{" "}
-        & the <Link href="/draw/contributions">students and friends</Link> of{" "}
-        <Link target="_blank" href="https://gct.ac.in/">
-          GCT, Coimbatore
-        </Link>
-      </p>
+      <div className="footer-section">
+        <p className="footer animated bounceInUp animate-delay-2s">
+          Made with 💖 by{" "}
+          <Link href="https://www.linkedin.com/in/rmadhuram/">
+            Raj Madhuram
+          </Link>{" "}
+          & the <Link href="/draw/contributions">students and friends</Link> of{" "}
+          <Link target="_blank" href="https://gct.ac.in/">
+            GCT, Coimbatore
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

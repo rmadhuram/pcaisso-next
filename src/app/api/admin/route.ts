@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getResults } from "@/persistence/admin";
 import { getUserRole } from "@/persistence/admin";
 
+export const maxDuration = 60;
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);

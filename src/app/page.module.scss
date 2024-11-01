@@ -13,24 +13,42 @@
   overflow-x: auto;
   overflow-y: auto;
 
-  .title {
+  .title-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+    justify-content: center;
 
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
   .contents {
     margin-top: 20px;
     width: 1200px;
     display: flex;
     gap: 20px;
     flex-direction: row;
+    padding-bottom: 10px;
 
     .left-side {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
       gap: 20px;
+
+      .gallery-section {
+        .gallery-section-header {
+          display: flex;
+
+          p {
+            margin: 0 0 0 30px;
+            color: #999;
+          }
+        }
+      }
     }
 
     .right-side {
@@ -91,8 +109,20 @@
   }
 
   .right-side {
-    .liked {
-      color: $red-variation;
+    .right-side-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .href {
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+      }
+
+      .liked {
+        color: $red-variation;
+      }
     }
   }
 
@@ -102,14 +132,16 @@
     gap: 10px;
   }
 
-  .footer {
-    margin-top: 50px;
+  .footer-section {
+    margin-top: 100px;
     font-size: 14px;
 
-    a {
-      color: wheat;
-      text-decoration: underline;
-      cursor: pointer;
+    .footer {
+      a {
+        color: wheat;
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
   }
 
@@ -123,9 +155,26 @@
     .contents {
       width: 90%;
     }
+
+    .footer-section {
+      margin-top: 40px;
+    }
   }
 
   @media (min-width: 320px) and (max-width: 480px) {
+    .left-side {
+      .gallery-section {
+        .gallery-section-header {
+          flex-direction: column;
+
+          p {
+            margin: 0 !important;
+            margin-bottom: 10px !important;
+          }
+        }
+      }
+    }
+
     p.explain {
       width: 90%;
       font-size: 12px;
@@ -160,5 +209,4 @@
       }
     }
   }
-
 }

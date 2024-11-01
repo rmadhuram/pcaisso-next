@@ -16,6 +16,8 @@ import { getTotalTokens } from "@/persistence/admin";
 //   }
 // }
 
+export const maxDuration = 60;
+
 export async function GET(req: NextRequest) {
   try {
     const data = await getTotalTokens();
