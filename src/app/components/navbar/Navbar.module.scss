@@ -54,7 +54,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding-right: 5px;
+    padding-right: 10px;
+
+    .discord-icon {
+      font-size: 18px;
+      color: white;
+    }
   }
 
   h3 {
