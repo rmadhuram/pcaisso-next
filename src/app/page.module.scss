@@ -117,7 +117,10 @@
       .href {
         cursor: pointer;
         text-decoration: none;
-        color: white;
+        color: #999;
+        display: flex;
+        flex-direction:row;
+        align-items: center;
       }
 
       .liked {
