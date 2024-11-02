@@ -49,7 +49,7 @@ export default function InputPanel({
     categories[0]
   );
 
-  const defaultModel: model = { name: "gpt-4o", code: "gpt-4o" };
+  const defaultModel: model = { name: "", code: "" };
 
   const [selectedModel, setSelectedModel] = useState<model>(defaultModel);
   const [prompt, setPrompt] = useState("");
@@ -109,7 +109,7 @@ export default function InputPanel({
                 onChange={(e: DropdownChangeEvent) => setSelectedModel(e.value)}
                 options={modelsUsed}
                 optionLabel="name"
-                placeholder="Select a GPT model"
+                placeholder="Select a model"
               />
             </div>
             <div className="input-area">
