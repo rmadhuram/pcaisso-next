@@ -64,6 +64,14 @@ export default function Navbar() {
           >
             <FontAwesomeIcon icon={faDiscord} className="discord-icon" />
           </Link>
+          <Link
+            href="https://x.com/pcaisso_"
+            target="_blank"
+            rel="noopener noreferrer"
+            passHref
+          >
+            <FontAwesomeIcon icon={faXTwitter} className="Xtwitter-icon" />
+          </Link>
         </span>
       </div>
       <div className="right-side">
