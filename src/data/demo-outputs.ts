@@ -134,7 +134,7 @@ export const dataForDisplay = {
   sections: [
     {
       title: "🌸 2D Canvas",
-      description: "Images created with HTML Canvas",
+      description: "Images created with HTML Canvas / SVG",
       gallery: [
         {
           uuid: "f361c899-15ac-4105-aeeb-6ed9b4d32ec8",
@@ -159,7 +159,7 @@ export const dataForDisplay = {
     },
     {
       title: "🌟 2D Canvas - Dynamic Graphics",
-      description: "Dynamic graphics created with HTML Canvas",
+      description: "Dynamic graphics created with HTML Canvas / SVG",
       gallery: [
         {
           uuid: "9870ce6d-a014-4596-a87d-698ed0fe9c02",
