@@ -36,7 +36,7 @@ export default function Page() {
 
   const userId = session?.user?.id;
 
-  const [sections, setSections] = useState<SectionType[]>([]);
+  const [sections, setSections] = useState<SectionType[]>(dataForDisplay.sections as SectionType[]);
 
   useEffect(() => {
     const getRecentLikes = async () => {
@@ -61,19 +61,19 @@ export default function Page() {
     getRecentLikes();
   }, []);
 
-  useEffect(() => {
-    const selectRandomItems = () => {
-      const updatedSections = dataForDisplay.sections.map((section) => {
-        const shuffledGallery = section.gallery.sort(() => 0.5 - Math.random());
-        return {
-          ...section,
-          gallery: shuffledGallery.slice(0, 3),
-        };
-      }) as SectionType[];
-      setSections(updatedSections);
-    };
-    selectRandomItems();
-  }, []);
+  // useEffect(() => {
+  //   const selectRandomItems = () => {
+  //     const updatedSections = dataForDisplay.sections.map((section) => {
+  //       const shuffledGallery = section.gallery.sort(() => 0.5 - Math.random());
+  //       return {
+  //         ...section,
+  //         gallery: shuffledGallery.slice(0, 3),
+  //       };
+  //     }) as SectionType[];
+  //     setSections(updatedSections);
+  //   };
+  //   selectRandomItems();
+  // }, []);
 
   return (
     <div className={styles["intro"]}>
@@ -100,6 +100,25 @@ export default function Page() {
 
       <div className="contents">
         <div className="left-side">
+          {/* {sections.map((section, index) => (
+            <div key={index} className="gallery-section">
+              <div className="gallery-section-header">
+                <h3>{section.title}</h3>
+                <p>{section.description}</p>
+              </div>
+              <section className="gallery">
+                {section.gallery.map((item) => (
+                  <GalleryItem
+                    key={item.uuid}
+                    uuid={item.uuid}
+                    type={item.type}
+                    src={item.src}
+                    description={item.description}
+                  />
+                ))}
+              </section>
+            </div>
+          ))} */}
           {sections.map((section, index) => (
             <div key={index} className="gallery-section">
               <div className="gallery-section-header">
