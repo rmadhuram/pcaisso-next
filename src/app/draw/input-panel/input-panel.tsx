@@ -38,19 +38,10 @@ export default function InputPanel({
     { name: "d3", key: "d3" },
   ];
 
-  // const models: model[] = [
-  //   { name: "gpt-3.5-turbo", code: "gpt3.5turbo" },
-  //   { name: "gpt-4", code: "gpt4" },
-  //   { name: "gpt-4-turbo", code: "gpt4turbo" },
-  //   { name: "gpt-4o", code: "gpt4o" },
-  //   { name: "gpt-4o-mini", code: "gpt4omini" },
-  // ];
-
   const modelsUsed: model[] = models
     .filter((model) => model.enabled)
     .map((model) => ({
       name: model.modelName,
-      // code: model.modelName.replace(/[.-]/g, "").toLowerCase(),
       code: model.modelName.toLowerCase(),
     }));
 
@@ -58,7 +49,7 @@ export default function InputPanel({
     categories[0]
   );
 
-  const defaultModel: model = { name: "gpt-4o", code: "gpt4o" };
+  const defaultModel: model = { name: "gpt-4o", code: "gpt-4o" };
 
   const [selectedModel, setSelectedModel] = useState<model>(defaultModel);
   const [prompt, setPrompt] = useState("");
