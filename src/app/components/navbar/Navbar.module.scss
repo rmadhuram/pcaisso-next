@@ -47,6 +47,15 @@
         display: none;
       }
     }
+
+    .socials {
+      margin-left: 25px;
+      .icon {
+        font-size: 18px;
+        color: white;
+        padding: 15px;
+      }
+    }
   }
 
   .right-side {
@@ -55,11 +64,6 @@
     align-items: center;
     justify-content: center;
     padding-right: 10px;
-
-    .discord-icon {
-      font-size: 18px;
-      color: white;
-    }
   }
 
   h3 {

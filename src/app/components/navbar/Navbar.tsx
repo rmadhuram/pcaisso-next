@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useParams } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -54,17 +55,28 @@ export default function Navbar() {
             </Link>
           </li>
         </ul>
+        <div className="socials">
+          <Link
+            href="https://discord.com/channels/1301703780064165940/1301703780064165943"
+            target="_blank"
+            rel="noopener noreferrer"
+            passHref
+          >
+            <FontAwesomeIcon icon={faDiscord} className="icon" />
+          </Link>
+
+          <Link
+            href="https://x.com/pcaisso_"
+            target="_blank"
+            rel="noopener noreferrer"
+            passHref
+          >
+            <FontAwesomeIcon icon={faXTwitter} className="icon" />
+          </Link>
+        </div>
       </div>
       <div className="right-side">
         <Signin />
-        <Link
-          href="https://discord.com/channels/1301703780064165940/1301703780064165943"
-          target="_blank"
-          rel="noopener noreferrer"
-          passHref
-        >
-          <FontAwesomeIcon icon={faDiscord} className="discord-icon" />
-        </Link>
       </div>
     </div>
   );
