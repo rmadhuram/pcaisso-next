@@ -168,17 +168,17 @@ export const dataForDisplay = {
           description: "A functional clock",
         },
         {
+          uuid: "79902897-bc7b-493b-a263-e77fcf0da868",
+          type: "video",
+          src: "/demos/2D-dynamic/bricks.mp4",
+          description: "Make a simple bricks game",
+        },
+        {
           uuid: "eed4b013-db32-4f5d-ade3-b9b7cf41a6d3",
           type: "video",
           src: "/demos/2D-dynamic/pendulum.mp4",
           description:
             "Draw an oscillating pendulum.dark mode.make it draggable and releasable.",
-        },
-        {
-          uuid: "79902897-bc7b-493b-a263-e77fcf0da868",
-          type: "video",
-          src: "/demos/2D-dynamic/bricks.mp4",
-          description: "Make a simple bricks game",
         },
       ],
     },
