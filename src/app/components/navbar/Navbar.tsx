@@ -55,25 +55,16 @@ export default function Navbar() {
             </Link>
           </li>
         </ul>
-        <div className="socials">
+        <span>
           <Link
             href="https://discord.com/channels/1301703780064165940/1301703780064165943"
             target="_blank"
             rel="noopener noreferrer"
             passHref
           >
-            <FontAwesomeIcon icon={faDiscord} className="icon" />
+            <FontAwesomeIcon icon={faDiscord} className="discord-icon" />
           </Link>
-
-          <Link
-            href="https://x.com/pcaisso_"
-            target="_blank"
-            rel="noopener noreferrer"
-            passHref
-          >
-            <FontAwesomeIcon icon={faXTwitter} className="icon" />
-          </Link>
-        </div>
+        </span>
       </div>
       <div className="right-side">
         <Signin />

@@ -42,6 +42,13 @@
       }
     }
 
+    .discord-icon {
+      margin-left: 50px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+    }
+
     @media (min-width: 320px) and (max-width: 480px) {
       .menu {
         display: none;
@@ -63,7 +70,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding-right: 10px;
   }
 
   h3 {
