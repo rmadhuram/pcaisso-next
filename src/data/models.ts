@@ -1,5 +1,26 @@
 export const models = [
   {
+    modelName: "claude-3-5-sonnet-20240620",
+    provider: "Anthropic",
+    inputCostPerM: 3,
+    outputCoserPerM: 15,
+    enabled: true,
+  },
+  {
+    modelName: "claude-3-sonnet-20240229",
+    provider: "Anthropic",
+    inputCostPerM: 3,
+    outputCoserPerM: 15,
+    enabled: true,
+  },
+  {
+    modelName: "claude-3-haiku-20240307",
+    provider: "Anthropic",
+    inputCostPerM: 0.25,
+    outputCoserPerM: 1.25,
+    enabled: true,
+  },
+  {
     modelName: "gpt-3.5-turbo",
     provider: "OpenAI",
     inputCostPerM: 3,
@@ -48,27 +69,6 @@ export const models = [
     outputCoserPerM: 12,
     enabled: false,
   },
-  {
-    modelName: "claude-3-5-sonnet-20240620",
-    provider: "Anthropic",
-    inputCostPerM: 3,
-    outputCoserPerM: 15,
-    enabled: true,
-  },
-  {
-    modelName: "claude-3-sonnet-20240229",
-    provider: "Anthropic",
-    inputCostPerM: 3,
-    outputCoserPerM: 15,
-    enabled: true,
-  },
-  {
-    modelName: "claude-3-haiku-20240307",
-    provider: "Anthropic",
-    inputCostPerM: 0.25,
-    outputCoserPerM: 1.25,
-    enabled: true,
-  }
 ];
 
 export function getModel(modelName: string) {
