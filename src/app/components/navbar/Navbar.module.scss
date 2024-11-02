@@ -42,12 +42,21 @@
       }
     }
 
-    .discord-icon, .Xtwitter-icon {
+    .socials {
+      display: flex;
+      flex-direction: row;
       margin-left: 50px;
       font-size: 16px;
       color: white;
       cursor: pointer;
+      gap: 10px;
+
+      .discord-icon, .x-twitter-icon {
+        color: white;
+      }
     }
+
+
 
     @media (min-width: 320px) and (max-width: 480px) {
       .menu {
@@ -55,14 +64,6 @@
       }
     }
 
-    .socials {
-      margin-left: 25px;
-      .icon {
-        font-size: 18px;
-        color: white;
-        padding: 15px;
-      }
-    }
   }
 
   .right-side {
