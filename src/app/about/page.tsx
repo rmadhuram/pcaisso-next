@@ -8,7 +8,7 @@ export default function page() {
       <h2>Drawing Studio</h2>
     </div>
 
-    <h3 className="team">Current Team</h3>
+    <h3 className="team">Brought to you by</h3>
     <ul>
       <li><a href="https://www.linkedin.com/in/rmadhuram/">Raj Madhuram</a></li>
       <li><a href="https://www.linkedin.com/in/aleena-joseph-918072258/">Aleena Joseph</a></li>
