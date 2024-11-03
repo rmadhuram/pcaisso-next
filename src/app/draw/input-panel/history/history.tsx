@@ -167,11 +167,15 @@ export default function History({
   const currentItems = loadedData;
 
   function formattedAgo(created_time: string) {
-    const browserOffset = new Date().getTimezoneOffset();
-    const createdTimeUTC = dayjs.utc(created_time);
-    const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
+    // const browserOffset = new Date().getTimezoneOffset();
+    // const createdTimeUTC = dayjs.utc(created_time);
+    // const createdTimeAdjusted = createdTimeUTC.add(-browserOffset, "minute");
+    // const now = dayjs();
+    // const timeDifference = createdTimeAdjusted.from(now);
+    // return timeDifference;
+    const createdTime = dayjs(created_time);
     const now = dayjs();
-    const timeDifference = createdTimeAdjusted.from(now);
+    const timeDifference = createdTime.from(now);
     return timeDifference;
   }
 
