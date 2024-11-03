@@ -171,7 +171,7 @@ export default function AdminPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="spinner"></div>;
   }
 
   if (!role || role !== "admin") {
