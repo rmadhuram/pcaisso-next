@@ -1,0 +1,53 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.about :global {
+  height: $default-height;
+  width: 100%;
+  @include background;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    h2 {
+      font-size: 20px;
+      font-weight: 200;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 0 0 50px 0;
+      color: #999;
+    }
+
+    h1 {
+      @include title-font-regular;
+      font-size: 40px;
+      font-weight: normal;
+      margin: 0;
+      color: #ddd;
+
+
+      span {
+        color: $red-variation;
+      }
+    }
+
+  }
+
+  h3 {
+    color: wheat;
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}
