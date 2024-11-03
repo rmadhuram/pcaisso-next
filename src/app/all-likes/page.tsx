@@ -72,7 +72,7 @@ export default function AdminPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className={styles["spinner"]}></div>;
   }
 
   return (
