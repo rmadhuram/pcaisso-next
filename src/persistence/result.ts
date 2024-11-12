@@ -143,7 +143,7 @@ export async function updateLike(
 }
 
 /**
- * Retrieve the last five likes
+ * Retrieve the last nine likes
  * @returns
  */
 export async function getLastLikes(): Promise<ResultSetHeader> {
