@@ -69,7 +69,7 @@ function HistoryItem({
       severity: "info",
       summary: "Deleted",
       detail: "Successfully Deleted",
-      life: 3000,
+      life: 1000,
     });
 
     await updateDeleted(id, newDeletedState);
@@ -81,7 +81,7 @@ function HistoryItem({
       message: "Do you want to delete this record?",
       header: "Delete Confirmation",
       icon: "pi pi-info-circle",
-      defaultFocus: "reject",
+      defaultFocus: "accept",
       acceptClassName: "p-button-danger",
       accept: handleDelete,
       reject: () => {},
@@ -90,6 +90,7 @@ function HistoryItem({
 
   return (
     <div className="history-item">
+      <Toast ref={toast} />
       <div className="top-section">
         <div className="ago">{ago}</div>
         {user_id === owner_id && (
@@ -114,8 +115,6 @@ function HistoryItem({
             </div>
           </>
         )}
-        <Toast ref={toast} />
-        <ConfirmDialog />
       </div>
       <div className="bottom-section">
         <div className="prompt">{prompt}</div>

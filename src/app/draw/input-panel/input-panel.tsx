@@ -35,7 +35,7 @@ export default function InputPanel({
     { name: "2D Canvas", key: "2D" },
     { name: "SVG", key: "SVG" },
     { name: "3D", key: "3D" },
-    { name: "d3", key: "d3" },
+    { name: "d3", key: "D3" },
   ];
 
   const modelsUsed: model[] = models
@@ -125,7 +125,9 @@ export default function InputPanel({
                 className="submit-button"
                 type="submit"
                 onClick={handleSubmit}
-                disabled={!selectedModel || !session}
+                disabled={
+                  selectedModel === defaultModel || !selectedModel || !session
+                }
               >
                 Generate
               </Button>
