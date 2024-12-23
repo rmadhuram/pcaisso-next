@@ -148,10 +148,10 @@ export async function updateLike(
  */
 export async function getLastLikes(): Promise<ResultSetHeader> {
   try {
-    const cachedLikes = cache.get(KEY_LAST_LIKES) as ResultSetHeader;
-    if (cachedLikes) {
-      return cachedLikes;
-    }
+    //const cachedLikes = cache.get(KEY_LAST_LIKES) as ResultSetHeader;
+    //if (cachedLikes) {
+    //  return cachedLikes;
+    //}
 
     const [response] = (await executeQuery(
       "SELECT results.uuid, results.user_id, results.model, users.user_name, results.type, results.description, results.prompt, users.image_url, results.liked_time FROM results JOIN users ON results.user_id = users.id WHERE results.liked = 1 ORDER BY results.liked_time DESC LIMIT 9",
