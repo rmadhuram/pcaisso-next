@@ -1,8 +1,27 @@
 Welcome to Pcaisso!!!
 
+Pcaisso is a tool for generating graphics using AI. I was curious to see how LLMs can generate code for drawing things, and hence this project was born!
+
+<img src="docs/screen0.png" alt="Pcaisso" />
+
+<img src="docs/screen1.png" alt="Pcaisso" />
+
+
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:  
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -16,7 +35,6 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ## Learn More
 
@@ -25,10 +43,11 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contributing to Pcaisso
 
-## Deploy on Vercel
+Pcaisso is an open source project, and we welcome contributions from the community. If you have an idea for a new feature or have found a bug, please feel free to open an issue or submit a pull request. 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contact me at [@rmadhuram](https://www.linkedin.com/in/rmadhuram/) for more information.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
