@@ -21,6 +21,14 @@ pnpm install
 bun install
 ```
 
+Then, create a .env file and add the following:
+
+```bash
+cp .env.template .env
+```
+
+Update the .env file with the appropriate values.
+
 Then, run the development server:
 
 ```bash
