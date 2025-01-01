@@ -44,13 +44,6 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
 ## Contributing to Pcaisso
 
 Pcaisso is an open source project, and we welcome contributions from the community. If you have an idea for a new feature or have found a bug, please feel free to open an issue or submit a pull request. 
