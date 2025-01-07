@@ -2,8 +2,21 @@ export const dataForDisplay = {
   sections: [
     {
       title: "🌸 2D Canvas",
-      description: "Images created with HTML Canvas",
+      description: "Images created with HTML Canvas / SVG",
       gallery: [
+        {
+          uuid: "f361c899-15ac-4105-aeeb-6ed9b4d32ec8",
+          type: "image",
+          src: "/demos/cherry-blossom.png",
+          description: "cherry blossoms",
+        },
+        {
+          uuid: "c9735da8-df41-4599-b9e9-2731100e3a04",
+          type: "image",
+          src: "/demos/japan-city.png",
+          description:
+            "A Japan cityscape. Road filled with skyscrapers. Have Mt. fuji in the background. make it snow capped.",
+        },
         {
           uuid: "2b50c478-608f-4a09-a345-d842c502c882",
           type: "image",
@@ -50,8 +63,15 @@ export const dataForDisplay = {
     },
     {
       title: "🌟 2D Canvas - Dynamic Graphics",
-      description: "Dynamic graphics created with HTML Canvas",
+      description: "Dynamic graphics created with HTML Canvas / SVG",
       gallery: [
+        {
+          uuid: "eed4b013-db32-4f5d-ade3-b9b7cf41a6d3",
+          type: "video",
+          src: "/demos/2D-dynamic/pendulum.mp4",
+          description:
+            "Draw an oscillating pendulum.dark mode.make it draggable and releasable.",
+        },
         {
           uuid: "9870ce6d-a014-4596-a87d-698ed0fe9c02",
           type: "video",

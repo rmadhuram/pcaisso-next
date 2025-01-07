@@ -72,11 +72,14 @@ export default function AdminPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className={styles["spinner"]}></div>;
   }
 
   return (
     <div className={styles["likes-page"]}>
+      <h3>
+        <i className="fa-solid fa-heart liked"></i>&nbsp;&nbsp;All Liked Results
+      </h3>
       <div className="table-container">
         <DataTable
           value={results}
