@@ -1,8 +1,10 @@
 import { DrawResult } from "@/models/draw-result";
-import { getProvider } from "@/data/models";
+import { getProvider } from "./models";
 import { InvokeLLM } from "@/lib/llms/invoke-llm.interface";
 import { InvokeOpenAI } from "@/lib/llms/invoke-openai";
 import { InvokeAnthropic } from "@/lib/llms/invoke-anthropic";
+import { getDeepSeek } from "./llm.factory";
+import { getOpenAI } from "./llm.factory";
 
 /**
  * Invokes the LLM to get the code for the given type, model and input prompt
@@ -45,11 +47,17 @@ export async function getCode(type: string, model: string, inputPrompt: string):
   let provider = getProvider(model);
   switch (provider) {
     case "OpenAI": 
-      invokeLLM = new InvokeOpenAI();
+      invokeLLM = new InvokeOpenAI(getOpenAI());
       break;
+
+    case "DeepSeek":
+      invokeLLM = new InvokeOpenAI(getDeepSeek());
+      break;
+
     case "Anthropic":
       invokeLLM = new InvokeAnthropic();
       break;
+
   }
   if (!invokeLLM) {
     throw new Error("Invalid model");

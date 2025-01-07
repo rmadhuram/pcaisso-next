@@ -9,7 +9,7 @@ import { SelectButton } from "primereact/selectbutton";
 import { TabView, TabPanel } from "primereact/tabview";
 import History from "./history/history";
 import { useSession } from "next-auth/react";
-import { models } from "@/data/models";
+import { models } from "@/lib/llms/models";
 
 interface Category {
   name: string;

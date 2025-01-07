@@ -68,6 +68,13 @@ export const models = [
     inputCostPerM: 0.25,
     outputCoserPerM: 1.25,
     enabled: true,
+  },
+  {
+    modelName: "deepseek-chat",
+    provider: "DeepSeek",
+    inputCostPerM: 0.14,
+    outputCoserPerM: 0.28,
+    enabled: true,
   }
 ];
 
