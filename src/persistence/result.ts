@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DrawResult } from "@/models/draw-result";
 import { ResultDto } from "./result.dto";
 import NodeCache from "node-cache";
-import { models } from "@/data/models";
+import { models } from "@/lib/llms/models";
 
 const cache = new NodeCache();
 const KEY_LAST_LIKES = "last_likes";

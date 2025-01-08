@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import dotenv from "dotenv";  
 let openai: OpenAI;
 let anthropic: Anthropic;
+let deepSeek: OpenAI;
 
 dotenv.config();
 
@@ -22,4 +23,15 @@ export function getAnthropic(): Anthropic {
     });
   }
   return anthropic;
+}
+
+// DeepSeek is compatible with OpenAI API
+export function getDeepSeek(): OpenAI {
+  if (!deepSeek) {
+    deepSeek = new OpenAI({
+      baseURL: "https://api.deepseek.com",
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    });
+  }
+  return deepSeek;
 }

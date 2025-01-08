@@ -2,15 +2,20 @@ import { InvokeLLM } from "./invoke-llm.interface";
 import { DrawResult } from "@/models/draw-result";
 import { getOpenAI } from "./llm.factory";  
 import { calculateCost } from "@/app/utils/calculate-cost";
+import OpenAI from "openai";
 
 export class InvokeOpenAI implements InvokeLLM {
+  constructor(private readonly openai: OpenAI) {
+    this.openai = openai;
+  }
+
   async invoke(prompt: string, model: string): Promise<DrawResult> {
-    const openai = getOpenAI();
+    //const openai = getOpenAI();
     const startTime = Date.now();
 
     console.log(`Invoking OpenAI with model: ${model}`);
 
-    const completion = await openai.chat.completions.create({
+    const completion = await this.openai.chat.completions.create({
       model: model,
       messages: [
         {

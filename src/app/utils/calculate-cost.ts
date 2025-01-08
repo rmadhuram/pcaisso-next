@@ -1,4 +1,4 @@
-import { models } from "@/data/models";
+import { models } from "@/lib/llms/models";
 
 export function calculateCost(
   model: string,
