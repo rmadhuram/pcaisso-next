@@ -4,6 +4,7 @@ import { InvokeLLM } from "@/lib/llms/invoke-llm.interface";
 import { InvokeOpenAI } from "@/lib/llms/invoke-openai";
 import { InvokeAnthropic } from "@/lib/llms/invoke-anthropic";
 import { getDeepSeek } from "./llm.factory";
+import { getMicrosoft } from "./llm.factory";
 import { getOpenAI } from "./llm.factory";
 
 /**
@@ -56,6 +57,10 @@ export async function getCode(type: string, model: string, inputPrompt: string):
 
     case "Anthropic":
       invokeLLM = new InvokeAnthropic();
+      break;
+    
+    case "Microsoft":
+      invokeLLM = new InvokeOpenAI(getMicrosoft());
       break;
 
   }
