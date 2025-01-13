@@ -75,6 +75,13 @@ export const models = [
     inputCostPerM: 0.14,
     outputCoserPerM: 0.28,
     enabled: true,
+  },
+  {
+    modelName: "phi4:latest",
+    provider: "Microsoft",
+    inputCostPerM: 0,
+    outputCoserPerM: 0,
+    enabled: true,
   }
 ];
 

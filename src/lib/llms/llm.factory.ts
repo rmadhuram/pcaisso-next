@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 let openai: OpenAI;
 let anthropic: Anthropic;
 let deepSeek: OpenAI;
+let microsoft: OpenAI;
 
 dotenv.config();
 
@@ -34,4 +35,14 @@ export function getDeepSeek(): OpenAI {
     });
   }
   return deepSeek;
+}
+
+export function getMicrosoft(): OpenAI {
+  if (!microsoft) {
+    microsoft = new OpenAI({
+      baseURL: "http://localhost:11434",
+      apiKey: process.env.OLLAMA_API_KEY, // Random string, Ollama has no API keys
+    });
+  }
+  return microsoft;
 }
