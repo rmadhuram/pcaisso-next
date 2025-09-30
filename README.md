@@ -172,5 +172,9 @@ Contact me at [@rmadhuram](https://www.linkedin.com/in/rmadhuram/) for more info
 
 ## 📜 License
 
-This project is licensed under the **[Placeholder License Name]** - see the `LICENSE.md` file (if available) for details. (Assuming an Open Source license will be added).
+This project is licensed under the **MIT License** - 
+
+-----
+
+README documentatiom created by [srcery](https://github.com/rmadhuram/srcery). Use it for your projects!
 
